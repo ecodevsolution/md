@@ -2,41 +2,17 @@
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 use common\models\Image;
+use frontend\models\MainCategory;
 use yii\widgets\ListView;
 $this->registerCss("
 	.summary{
 		display:none;
 	}
 ");
-?>
-<?php /** @var $model \common\models\Product */ ?>
 
-	<div class="page-title category-title">
-       <h1>Fashion</h1>
-    </div>
-                       
-    <script type="text/javascript">
-       jQuery(function($) {
-        
-         $("#owl_women_category").owlCarousel({
-               lazyLoad: true,
-               slideSpeed : 300,
-               paginationSpeed : 400,
-               responsiveRefreshRate: 50,
-               slideSpeed: 200,
-               paginationSpeed: 500,
-               stopOnHover: true,
-               rewindNav: true,
-               rewindSpeed: 600,
-               singleItem : true
-         });
-        
-       });
-    </script>    
-	<script type="text/javascript">
-       var dailydealTimeCountersCategory = new Array();
-		var i = 0;
-    </script>
+?>
+     
+
     
 	<div class="category-products">
         <div class="toolbar">

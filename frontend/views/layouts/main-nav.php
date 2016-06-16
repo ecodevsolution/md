@@ -16,6 +16,9 @@
 	use frontend\models\Logo;
 	use yz\shoppingcart\ShoppingCart;
 	use yii\web\View;
+	use frontend\models\MainCategory;
+	use frontend\models\SubCategory;
+	use frontend\models\DetailCategory;
 	
 	AppAsset::register($this);
 ?>
@@ -330,36 +333,62 @@
 								<div class="menu-wrapper">
 									<div class="menu-all-pages-container">
 										<ul class="menu">
-											<li class="menu-item menu-parent-item  "><a href="motors.html">Home</a></li>
-											<li class="menu-item menu-parent-item  "><a href="motors.html">About</a></li>
-											<li class="menu-item menu-parent-item  "><a href="motors.html">Sale</a></li>
-											<li class="menu-item menu-item-has-children menu-parent-item  ">
-												<a href="motors.html">Motors</a>
-												<div class="nav-sublist-dropdown" style="display: none;">
+										<!---------------------------------------------------------- MENU ------------------------------------------------------------------------------->
+											<li class=" "><a href="<?= Yii::$app->homeUrl; ?>">Home</a></li>
+											<li class="menu-static-width  ">
+												<a href="//newsmartwave.net/magento/porto/index.php/demo6_en/fashion.html">Product </a>
+												<div class="nav-sublist-dropdown" style="width: 600px; display: none; list-style: none;">
 													<div class="container">
-														<ul>
-															<li class="menu-item  "><a class="level1" href="motors/cars-and-trucks.html"><span>Cars and Trucks</span></a></li>
-															<li class="menu-item  "><a class="level1" href="motors/motorcycles.html"><span>Motorcycles &amp; Powersports</span></a></li>
-															<li class="menu-item menu-item-has-children menu-parent-item  ">
-																<a class="level1" href="motors/parts.html"><span>Parts &amp; Accessories</span></a>
-																<div class="nav-sublist level1">
+														<div class="mega-columns row">
+															<div class="block1 col-sm-7">
+																<div class="row">
 																	<ul>
-																		<li class="menu-item "><a class="level2" href="motors/parts/motorcycle-parts.html"><span>Motorcycle Parts</span></a></li>
-																		<li class="menu-item "><a class="level2" href="motors/parts/atv-parts.html"><span>ATV Parts</span></a></li>
-																		<li class="menu-item "><a class="level2" href="motors/parts/snowmobile-parts.html"><span>Snowmobile Parts</span></a></li>
-																		<li class="menu-item "><a class="level2" href="motors/parts/personal-watercraft-parts.html"><span>Personal Watercraft Parts</span></a></li>
-																		<li class="menu-item "><a class="level2" href="motors/parts/other-vehicle-parts.html"><span>Other Vehicle Parts</span></a></li>
+																		<?php 	
+																			$models=MainCategory::find()
+																				->all();
+																			foreach ($models as $model):
+																			
+																			$count_submenu = SubCategory::find()
+																							->where (["idmaincategory"=>$model->idmain])
+																							->count();
+																			if($count_submenu > 0){
+																		?>
+																		<li class="menu-item menu-item-has-children menu-parent-item col-sw-2  " style="list-style: none;">
+																			<a class="level1" href="category-<?= strtolower(str_replace(' ','_',$model->main_category_name)); ?>"><span><?= $model->main_category_name ?></span></a>
+																			<div class="nav-sublist level1">
+																				<ul>
+																					<?php 
+																						$modelsubs=SubCategory::find()
+																							->where (["idmaincategory"=>$model->idmain])
+																							->all();
+																						foreach ($modelsubs as $modelsub):
+																					?>
+																					<li class="menu-item " style="list-style: none;"><a class="level2" href="product-<?= strtolower(str_replace(' ','_',$model->main_category_name)); ?>-<?= strtolower(str_replace(' ','_',$modelsub->sub_category_name)); ?>"><span><?= $modelsub->sub_category_name; ?></span></a></li>
+																					<?php endforeach; ?>
+																				</ul>
+																			</div>
+																		</li>
+																		<?php
+			
+																		}else{
+																			echo"<li class='menu-item menu-item-has-children menu-parent-item col-sw-2' style='list-style: none;'>				
+																					<a class='level1' href='category-";?><?= strtolower(str_replace(' ','_',$model->main_category_name));?><?php echo"'>
+																						<span>$model->main_category_name</span>
+																					</a>
+																				</li>";
+																		}
+																			endforeach;
+																		?>
 																	</ul>
 																</div>
-															</li>
-															<li class="menu-item  "><a class="level1" href="motors/boats.html"><span>Boats</span></a></li>
-															<li class="menu-item  "><a class="level1" href="motors/auto-tools-supplies.html"><span>Auto Tools &amp; Supplies</span></a></li>
-														</ul>
+															</div>
+															<div class="right-mega-block col-sm-5"><img src="//newsmartwave.net/magento/porto/media/wysiwyg/porto/category/banner/fashion_b.png" alt="" style="position: absolute;right: 10px;top: -10px;height: 273px;width: auto;max-width: none;z-index: -1;border-radius: 8px;"></div>
+														</div>
 													</div>
 												</div>
-											</li>
-											
+											</li>											
 										</ul>
+										<!----------------------------------------------------------- /END OF MENU------------------------------------------->
 									</div>
 								</div>
 							</div>
@@ -426,10 +455,21 @@
 									<?= Breadcrumbs::widget([
 										'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 									]) ?>
-						       </div>
+								</div>
 							</div>
 						</div>
 					</div>
+					<!--<div class="breadcrumbs">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-12 a-left">
+									<?= Breadcrumbs::widget([
+										'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+									]) ?>
+						       </div>
+							</div>
+						</div>
+					</div>-->
 				</div>
 				
 				<?= $content ?>

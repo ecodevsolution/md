@@ -20,7 +20,7 @@
 				if($count_submenu > 0){
 			?>
             <li class="menu-item menu-item-has-children menu-parent-item">
-               <a href="category-<?= $model->idmain ?>"><?= $model->main_category_name ?></a>
+               <a href="category-<?= strtolower(str_replace(' ','_',$model->main_category_name)); ?>"><?= $model->main_category_name ?></a>
 				<div class="nav-sublist-dropdown" style="display:none">
 					<div class="container">
 						<?php 
@@ -43,7 +43,7 @@
 								}
 							?>
 							<li class="menu-item <?= $class; ?>">
-								<a class="level1" href="product-<?= $model->idmain ?>-<?= $modelsub->idsubcategory ?>">
+								<a class="level1" href="product-<?= strtolower(str_replace(' ','_',$model->main_category_name)); ?>-<?= strtolower(str_replace(' ','_',$modelsub->sub_category_name)); ?>">
 									<span><?= $modelsub->sub_category_name; ?></span>
 								</a>
 								<div class="nav-sublist level1">
@@ -56,7 +56,7 @@
 											foreach ($modeldets as $modeldet): 
 										?>
 										<li class="menu-item ">
-											<a class="level2" href="product_detail-<?= $model->idmain ?>-<?= $modelsub->idsubcategory ?>-<?= $modeldet->iddetail ?>">
+											<a class="level2" href="product_detail-<?= strtolower(str_replace(' ','_',$model->main_category_name)); ?>-<?= strtolower(str_replace(' ','_',$modelsub->sub_category_name)); ?>-<?= strtolower(str_replace(' ','_',$modeldet->detail_name)); ?>">
 											<span><?= $modeldet->detail_name ?></span>
 											</a>
 										</li>
@@ -72,9 +72,10 @@
 				</div>
 			</li>		
 			<?php
+			
 			}else{
 				echo"<li class='menu-item'>				
-						<a class='level1' href='category-$model->idmain'>
+						<a class='level1' href='category-";?><?= strtolower(str_replace(' ','_',$model->main_category_name));?><?php echo"'>
 							<span>$model->main_category_name</span>
 						</a>
 					</li>";

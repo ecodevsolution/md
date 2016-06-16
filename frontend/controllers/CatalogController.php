@@ -20,11 +20,29 @@ class CatalogController extends \yii\web\Controller
             return false;
         }
     }
-
+	
+	public function actionBrand($brand){
+		
+		$findIDb = Brand::find()
+				->where(['brand_name'=>$brand])
+				->One();
+		$brand = Product::find()
+				->where(['idbrand'=>$findIDb])
+				->all();
+		return $this->render('brand',[
+			'brand'=>$brand,
+		]);
+		
+	}
     public function actionCategory($route)
     {
         /** @var Category $category */
         //$category = null;
+		$replace_route = str_replace('_',' ',$route);
+		$findID = MainCategory::find()
+				->where(['main_category_name'=>$replace_route])
+				->One();
+		$route = $findID->idmain;
 
         $categories = MainCategory::find()->indexBy('idmain')->orderBy('idmain')->all();
 
@@ -53,7 +71,19 @@ class CatalogController extends \yii\web\Controller
     {
         /** @var Category $category */
         //$category = null;
-
+		$replace_route = str_replace('_',' ',$route);
+		$findID = MainCategory::find()
+				->where(['main_category_name'=>$replace_route])
+				->One();
+				
+		$replace_routes = str_replace('_',' ',$routes);
+		$findIDs = SubCategory::find()
+				->where(['sub_category_name'=>$replace_routes])
+				->One();
+		
+		$route = $findID->idmain;
+		$routes = $findIDs->idsubcategory;
+		
         $categories = MainCategory::find()->indexBy('idmain')->orderBy('idmain')->all();
 		$subcategories = SubCategory::find()->indexBy('idsubcategory')->orderBy('idsubcategory')->all();
 
@@ -85,7 +115,26 @@ class CatalogController extends \yii\web\Controller
     {
         /** @var Category $category */
         //$category = null;
-
+		$replace_route = str_replace('_',' ',$route);
+		$findID = MainCategory::find()
+				->where(['main_category_name'=>$replace_route])
+				->One();
+				
+		$replace_routes = str_replace('_',' ',$routes);
+		$findIDs = SubCategory::find()
+				->where(['sub_category_name'=>$replace_routes])
+				->One();
+		
+		$replace_router = str_replace('_',' ',$router);
+		$findIDr = DetailCategory::find()
+				->where(['detail_name'=>$replace_router])
+				->One();
+		
+		$route = $findID->idmain;
+		$routes = $findIDs->idsubcategory;
+		$router = $findIDr->iddetail;
+		
+		
         $categories = MainCategory::find()->indexBy('idmain')->orderBy('idmain')->all();
 		$subcategories = SubCategory::find()->indexBy('idsubcategory')->orderBy('idsubcategory')->all();
 		$detcategories = DetailCategory::find()->indexBy('iddetail')->orderBy('iddetail')->all();
