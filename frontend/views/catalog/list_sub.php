@@ -23,6 +23,7 @@ $this->title = 'Product';
 					<?= ListView::widget([
 						'dataProvider' => $productsDataProvider,
 						'itemView' => '_product',
+						'emptyText' => '<div class="category-products"><p class="note-msg">There are no products matching the selection.</div>'
 					]) ?>
 				</div>
 				

@@ -4,129 +4,34 @@
 	use frontend\models\DetailCategory;
 	use frontend\models\Product;
 	
-	if(isset($_GET['route']) && !isset($_GET['routes']) && !isset($_GET['router'])){
-		$title = str_replace('_',' ',$_GET['route']);
-		$this->title = $title;
-		$this->params['breadcrumbs'][] = $title;
-
+	if(isset($_GET['brand']) && isset($_GET['filter'])){
+		$title1 = str_replace('_',' ',$_GET['brand']);
+		$title2 = str_replace('_',' ',$_GET['filter']);
+		$this->params['breadcrumbs'][] = ['label' => $title1, 'url' => ['./category-'.$_GET['brand']]];
+		$this->params['breadcrumbs'][] = $title2;		
 	}
-	if(isset($_GET['route']) && isset($_GET['routes']) && !isset($_GET['router'])){
-		$title1 = str_replace('_',' ',$_GET['route']);
-		$title2 = str_replace('_',' ',$_GET['routes']);
-		$this->params['breadcrumbs'][] = ['label' => $title1, 'url' => ['./category-'.$_GET['route']]];
-		$this->params['breadcrumbs'][] = $title2;
-		
-	}
-	if(isset($_GET['route']) && isset($_GET['routes']) && isset($_GET['router'])){
-		$title1 = str_replace('_',' ',$_GET['route']);
-		$title2 = str_replace('_',' ',$_GET['routes']);
-		$title3 = str_replace('_',' ',$_GET['router']);
-		$this->params['breadcrumbs'][] = ['label' => $title1, 'url' => ['./category-'.$_GET['route']]];
-		$this->params['breadcrumbs'][] = ['label' => $title2, 'url' => ['./product-'.$_GET['route'].'-'.$_GET['routes']]];
-		$this->params['breadcrumbs'][] = $title3;
-
-		
-	}
-
 
 ?>
 
 <div class="col-left sidebar f-left col-sm-3">
 
 	<?php
-		if(isset($_GET['route'])){
-			$title = str_replace('_',' ',$_GET['route']);
-			$modelmain=MainCategory::find()
-				->where (["main_category_name"=>$title])
-				->One();
-			$brand = Product::find()
-				->joinWith(['brand'])
-				->where(['idmain'=>$modelmain->idmain])
-				->groupBy(['idbrand', 'idbrand'])
-				->all();
-			$link = str_replace(' ','_',$title);
-		}
-		if(isset($_GET['routes']) || isset($_GET['router'])){
-			$modelsubs=SubCategory::find()
-				->where (["sub_category_name"=>$title2])
-				->One();
+
+			if(isset($_GET['brand']) && isset($_GET['filter'])){
+				$filter=MainCategory::find()
+					->where (["main_category_name"=>$title2])
+					->One();
 					
-			if(isset($_GET['route']) && isset($_GET['routes']) && !isset($_GET['router'])){				
+					
 				$brand = Product::find()
 					->joinWith(['brand'])
-					->where(['idsub'=>$modelsubs->idsubcategory])
+					->where(['idmain'=>$filter->idmain])
 					->groupBy(['idbrand', 'idbrand'])
 					->all();
 				$link = str_replace(' ','_',$title2);
-			}
-			
-			if(isset($_GET['route']) && isset($_GET['routes']) && isset($_GET['router'])){
-				$modeldetail=DetailCategory::find()
-					->where (["detail_name"=>$title3])
-					->One();
-					
-				$brand = Product::find()
-					->joinWith(['brand'])
-					->where(['iddetail'=>$modeldetail->iddetail])
-					->groupBy(['idbrand', 'idbrand'])
-					->all();
-				$link = str_replace(' ','_',$title3);
-			}
-					
-			
-		$detailCount=DetailCategory::find()
-			->where (["idsubcategory"=>$modelsubs->idsubcategory])
-			->count();
-		if($detailCount > 0){
+			}			
 	?>
-	<div class="block block-category-nav">
-		<div class="block-title">
-			<strong><span><?= strtoupper($title2); ?></span></strong>
-		</div>
-		<div class="block-content" style="display: block;">
-			<ul class="category-list">
-			<?php 
-				$modeldets=DetailCategory::find()
-					->where (["idsubcategory"=>$modelsubs->idsubcategory])
-					->all();
-				foreach ($modeldets as $modeldet): 
-			?>
-				<li class="menu-item ">
-					<a class="level2" href="product_detail-<?= strtolower(str_replace(' ','_',$_GET['route'])); ?>-<?= strtolower(str_replace(' ','_',$modelsubs->sub_category_name)); ?>-<?= strtolower(str_replace(' ','_',$modeldet->detail_name)); ?>">
-					<span><?= $modeldet->detail_name ?></span>
-					</a>
-				</li>
-			<?php
-				endforeach;
-			?>
-			</ul>
-		</div>
-		<script type="text/javascript">
-			jQuery(function($){
-				$(".block.block-category-nav .block-title").click(function(){
-					if($(this).hasClass("closed")){
-						$(".block.block-category-nav .block-content").slideDown();
-						$(this).removeClass("closed");
-					} else {
-						$(".block.block-category-nav .block-content").slideUp();
-						$(this).addClass("closed");
-					}
-				});
-				$(".block.block-category-nav .category-list a.plus").click(function(){
-					if($(this).parent().hasClass("opened")){
-						$(this).parent().children("ul").slideUp();
-						$(this).parent().removeClass("opened");
-						$(this).children("i.icon-minus-squared").removeClass("icon-minus-squared").addClass("icon-plus-squared");
-					} else {
-						$(this).parent().children("ul").slideDown();
-						$(this).parent().addClass("opened");
-						$(this).children("i.icon-plus-squared").removeClass("icon-plus-squared").addClass("icon-minus-squared");
-					}
-				});
-			});
-		</script>
-	</div>
-		<?php }}?>
+
     <div class="block block-layered-nav">
         <div class="block-content">
             <dl id="narrow-by-list">
@@ -285,17 +190,11 @@
                 <dt class="odd">Brand</dt>
                 <dd class="odd">
                     <ol>
-						<?php
-							
-							foreach($brand as $brands):
-						?>
-                        <li>
-							<a href="brand-<?= strtolower($brands->brand->brand_name); ?>-<?= $link;  ?>" class="swatch-link" style="line-height: 30px;">
-								<span class="swatch-label" style="height:28px; min-width:28px; line-height: 30px;"><?= $brands->brand->brand_name; ?></span>
-							</a>
-                           
-                        </li>
-						<?php endforeach; ?>
+						<li>
+							<?php foreach($brand as $brands): ?>                       
+								<a style="margin-left:5px;" href="brand-<?= strtolower($brands->brand->brand_name); ?>-<?= $link;  ?>"><?= $brands->brand->brand_name; ?></a>
+							<?php endforeach; ?>
+						</li>
                     </ol>
                 </dd>
                 <dt class="last even">Color</dt>

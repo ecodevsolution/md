@@ -29,7 +29,7 @@ $this->title = 'Product';
 				
 				<div class="row" style="margin:0 -10px;">
 					<?php 
-						include "left_sub.php";
+						include "left_brand.php";
 					?>
 				</div>
 			</div>

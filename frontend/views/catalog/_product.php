@@ -11,9 +11,6 @@ $this->registerCss("
 ");
 
 ?>
-     
-
-    
 	<div class="category-products">
         <div class="toolbar">
             <div class="sorter">
