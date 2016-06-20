@@ -24,50 +24,7 @@ class CatalogController extends \yii\web\Controller
         }
     }
 	
-	public function actionBrand($brand, $filter)
-    {
-        /** @var Category $category */
-        //$category = null;
-		$replace_route = str_replace('_',' ',$filter);
-		$findID = MainCategory::find()
-				->where(['main_category_name'=>$replace_route])
-				->One();
-				
-		$replace_routes = str_replace('_',' ',$brand);
-		$findIDb = Brand::find()
-				->where(['brand_name'=>$replace_routes])
-				->One();
-		
-		$route = $findID->idmain;
-		$routes = $findIDb->idbrand;
-		
-        $categories = MainCategory::find()->indexBy('idmain')->orderBy('idmain')->all();
-		$brands = Brand::find()->indexBy('idbrand')->orderBy('idbrand')->all();
-
-        $productsQuery = Product::find();
-        if ($route !== null && isset($categories[$route]) || $routes !== null && isset($brands[$routes])) {
-            $category = $categories[$route];
-			$brandy = $brands[$routes];
-            $productsQuery->where(['idmain' => $this->getCategoryIds($categories, $route)])
-						->AndWhere(['idbrand'=> $this->getBrandIds($brands, $routes)]);
-        }
-
-        $productsDataProvider = new ActiveDataProvider([
-            'query' => $productsQuery,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-        ]);
-
-        return $this->render('brand', [
-            'category' => $category,
-			'brandy' => $brandy,
-            'BrandItems' => $this->getBrandItems($brands, isset($brandy->idbrand) ? $brandy->idbrand : null),
-            'productsDataProvider' => $productsDataProvider,
-        ]);
-    }
-	
-	
+	// -------------------------------------------------------------------------------- BEGIN NAVIGASI------------------------------------------------//
     public function actionCategory($route)
     {
         /** @var Category $category */
@@ -203,17 +160,7 @@ class CatalogController extends \yii\web\Controller
         ]);
     }
 
-    public function actionView()
-    {
-        return $this->render('view');
-    }
-
-    /**
-     * @param Category[] $categories
-     * @param int $activeId
-     * @param int $parent
-     * @return array
-     */
+	
     private function getMenuItems($categories, $activeId = null, $parent = null)
     {
         $menuItems = [];
@@ -246,22 +193,6 @@ class CatalogController extends \yii\web\Controller
         return $SubmenuItems;
     }
 	
-	private function getBrandItems($brands, $brandactiveId = null, $brandparent = null)
-    {
-        $BrandItems = [];
-        foreach ($brands as $brandy) {
-            if ($brandy->idbrand === $brandparent) {
-                $SubmenuItems[$brandy->idsubcategory] = [
-                    'active' => $subactiveId === $brandy->idsubcategory,
-                    'label' => $brandy->title,
-                    'url' => ['catalog/brand', 'brand' => $brandy->idbrand],
-                    'items' => $this->getBrandItems($brands, $brandactiveId, $brandparent->id),
-                ];
-            }
-        }
-        return $BrandItems;
-    }
-	
 	private function getDetMenuItems($detcategories, $parent = null, $sub = null, $activeId = null)
     {
         $detmenuItems = [];
@@ -285,18 +216,6 @@ class CatalogController extends \yii\web\Controller
      * @param array $categoryIds
      * @return array $categoryIds
      */
-	private function getBrandIds($brands, $brandyId, &$brandyIds = [])
-    {
-        foreach ($brands as $brandy) {
-            if ($brandy->idbrand == $brandyId) {
-                $brandyIds[] = $brandy->idbrand;
-            }
-            elseif ($brandy->idbrand == $brandyId){
-                $this->getCategoryIds($subcategories, $brandy->idbrand, $brandyIds);
-            }
-        }
-        return $brandyIds;
-    }
 	
     private function getCategoryIds($categories, $categoryId, &$categoryIds = [])
     {
@@ -338,5 +257,176 @@ class CatalogController extends \yii\web\Controller
     }
 	
 	
+	// -------------------------------------------------------------------------------- END NAVIGASI------------------------------------------------//
+	
+	
+	
+	
+	
+	
+	
+	// -------------------------------------------------------------------------------- BEGIN BRAND ------------------------------------------------//
+	
+	
+	
+	public function actionBrand($brand, $filter)
+    {
+        /** @var Category $category */
+        //$category = null;
+		$replace_route = str_replace('_',' ',$filter);
+		$findID = MainCategory::find()
+				->where(['main_category_name'=>$replace_route])
+				->One();
+				
+		$replace_routes = str_replace('_',' ',$brand);
+		$findIDb = Brand::find()
+				->where(['brand_name'=>$replace_routes])
+				->One();
+		
+		$route = $findID->idmain;
+		$routes = $findIDb->idbrand;
+		
+        $categories = MainCategory::find()->indexBy('idmain')->orderBy('idmain')->all();
+		$brands = Brand::find()->indexBy('idbrand')->orderBy('idbrand')->all();
 
+        $productsQuery = Product::find();
+        if ($route !== null && isset($categories[$route]) || $routes !== null && isset($brands[$routes])) {
+            $category = $categories[$route];
+			$brandy = $brands[$routes];
+            $productsQuery->where(['idmain' => $this->getCategoryIds($categories, $route)])
+						->AndWhere(['idbrand'=> $this->getBrandIds($brands, $routes)]);
+        }
+
+        $productsDataProvider = new ActiveDataProvider([
+            'query' => $productsQuery,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $this->render('brand', [
+            'category' => $category,
+			'brandy' => $brandy,
+            'BrandItems' => $this->getBrandItems($brands, isset($brandy->idbrand) ? $brandy->idbrand : null),
+            'productsDataProvider' => $productsDataProvider,
+        ]);
+    }
+	
+	public function actionBrands($brand, $filter)
+    {
+        /** @var Category $category */
+        //$category = null;
+		$replace_route = str_replace('_',' ',$filter);
+		$findID = SubCategory::find()
+				->where(['sub_category_name'=>$replace_route])
+				->One();
+				
+		$replace_routes = str_replace('_',' ',$brand);
+		$findIDb = Brand::find()
+				->where(['brand_name'=>$replace_routes])
+				->One();
+		
+		$route = $findID->idsubcategory;
+		$routes = $findIDb->idbrand;
+		
+        $categories = SubCategory::find()->indexBy('idsubcategory')->orderBy('idsubcategory')->all();
+		$brands = Brand::find()->indexBy('idbrand')->orderBy('idbrand')->all();
+
+        $productsQuery = Product::find();
+        if ($route !== null && isset($categories[$route]) || $routes !== null && isset($brands[$routes])) {
+            $category = $categories[$route];
+			$brandy = $brands[$routes];
+            $productsQuery->where(['idsub' => $this->getSubCategoryIds($categories, $route)])
+						->AndWhere(['idbrand'=> $this->getBrandIds($brands, $routes)]);
+        }
+
+        $productsDataProvider = new ActiveDataProvider([
+            'query' => $productsQuery,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $this->render('brands', [
+            'category' => $category,
+			'brandy' => $brandy,
+            'BrandItems' => $this->getBrandItems($brands, isset($brandy->idbrand) ? $brandy->idbrand : null),
+            'productsDataProvider' => $productsDataProvider,
+        ]);
+    }
+	
+
+	public function actionBrandd($brand, $filter)
+    {
+        /** @var Category $category */
+        //$category = null;
+		$replace_route = str_replace('_',' ',$filter);
+		$findID = DetailCategory::find()
+				->where(['detail_name'=>$replace_route])
+				->One();
+				
+		$replace_routes = str_replace('_',' ',$brand);
+		$findIDb = Brand::find()
+				->where(['brand_name'=>$replace_routes])
+				->One();
+		
+		$route = $findID->iddetail;
+		$routes = $findIDb->idbrand;
+		
+        $categories = DetailCategory::find()->indexBy('iddetail')->orderBy('iddetail')->all();
+		$brands = Brand::find()->indexBy('idbrand')->orderBy('idbrand')->all();
+
+        $productsQuery = Product::find();
+        if ($route !== null && isset($categories[$route]) || $routes !== null && isset($brands[$routes])) {
+            $category = $categories[$route];
+			$brandy = $brands[$routes];
+            $productsQuery->where(['iddetail' => $this->getDetCategoryIds($categories, $route)])
+						->AndWhere(['idbrand'=> $this->getBrandIds($brands, $routes)]);
+        }
+
+        $productsDataProvider = new ActiveDataProvider([
+            'query' => $productsQuery,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $this->render('brandd', [
+            'category' => $category,
+			'brandy' => $brandy,
+            'BrandItems' => $this->getBrandItems($brands, isset($brandy->idbrand) ? $brandy->idbrand : null),
+            'productsDataProvider' => $productsDataProvider,
+        ]);
+    }
+	
+	private function getBrandItems($brands, $brandactiveId = null, $brandparent = null)
+    {
+        $BrandItems = [];
+        foreach ($brands as $brandy) {
+            if ($brandy->idbrand === $brandparent) {
+                $SubmenuItems[$brandy->idsubcategory] = [
+                    'active' => $subactiveId === $brandy->idsubcategory,
+                    'label' => $brandy->title,
+                    'url' => ['catalog/brand', 'brand' => $brandy->idbrand],
+                    'items' => $this->getBrandItems($brands, $brandactiveId, $brandparent->id),
+                ];
+            }
+        }
+        return $BrandItems;
+    }
+	
+	private function getBrandIds($brands, $brandyId, &$brandyIds = [])
+    {
+        foreach ($brands as $brandy) {
+            if ($brandy->idbrand == $brandyId) {
+                $brandyIds[] = $brandy->idbrand;
+            }
+            elseif ($brandy->idbrand == $brandyId){
+                $this->getCategoryIds($subcategories, $brandy->idbrand, $brandyIds);
+            }
+        }
+        return $brandyIds;
+    }
+	
+	// -------------------------------------------------------------------------------- END BRAND ------------------------------------------------//
 }

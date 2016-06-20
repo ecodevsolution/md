@@ -27,11 +27,9 @@ return [
 				'category-<route>' => 'catalog/category',
 				'product-<route>-<routes>' => 'catalog/sub-category',
 				'product_detail-<route>-<routes>-<router>' => 'catalog/det-category',
-				'filter?<filter>' => 'catalog/brand',
 				'brand-<brand>-<filter>' => 'catalog/brand',
-				'search?<search>' => 'catalog/brand',
-				'category?<category>' => 'catalog/brand',
-				'catalog-list' => 'catalog/list',
+				'brands-<brand>-1-<filter>' => 'catalog/brands',
+				'brandd-<brand>-1-<filter>' => 'catalog/brandd',
 				'detail-product-<id>' => 'product/detail-product',
 
 				//PRODUCT CART LINK
