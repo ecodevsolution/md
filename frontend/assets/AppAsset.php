@@ -24,10 +24,11 @@ class AppAsset extends AssetBundle
         'css/jqueryui.css',
 		'css/style.css',
 		'css/local.css',
+		
 
     ];
     public $js = [
-	
+		'js/jquery-ui.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

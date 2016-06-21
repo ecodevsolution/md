@@ -47,6 +47,7 @@
 				->groupBy(['idbrand', 'idbrand'])
 				->all();
 			$link = str_replace(' ','_',$title);
+			$name = "p";
 		}
 		if(isset($_GET['routes']) || isset($_GET['router'])){
 			$modelsubs=SubCategory::find()
@@ -59,8 +60,10 @@
 					->where(['idsub'=>$modelsubs->idsubcategory])
 					->groupBy(['idbrand', 'idbrand'])
 					->all();
-				$link = str_replace(' ','_','1-'.$title2);
+				$link = str_replace(' ','_',strtolower($title2));
+				$name = "q";
 			}
+			
 			
 			if(isset($_GET['route']) && isset($_GET['routes']) && isset($_GET['router'])){
 				$modeldetail=DetailCategory::find()
@@ -72,7 +75,8 @@
 					->where(['iddetail'=>$modeldetail->iddetail])
 					->groupBy(['idbrand', 'idbrand'])
 					->all();
-				$link = str_replace(' ','_','1-'.$title3);
+				$link = str_replace(' ','_',strtolower($title3));
+				$name = "r";
 			}
 					
 	
@@ -130,10 +134,12 @@
 
 	</div>
 	<?php }}
-		$title2 = str_replace('_',' ',isset($_GET['filter']));
+	
+		// MAIN---------------------------------//
 		if(isset($_GET['brand']) && isset($_GET['filter'])){
+				$title2 = str_replace('_',' ',$_GET['filter']);
 				$filter=MainCategory::find()
-					->where (["main_category_name"=>ucwords($_GET['filter'])])
+					->where (["main_category_name"=>ucwords($title2)])
 					->One();
 					
 				
@@ -142,137 +148,253 @@
 					->where(['idmain'=>$filter->idmain])
 					->groupBy(['idbrand', 'idbrand'])
 					->all();
-				$link = str_replace(' ','_',$_GET['filter']);
+				$link = strtolower(str_replace(' ','_',$_GET['filter']));
+				$name = "p";
 				$varbrand = "brand";
+				
+				$b = $_GET['brand'];
 			}
+			
+		// SUB---------------------------------//	
+		if(isset($_GET['brands']) && isset($_GET['filter'])){
+				$title2 = str_replace('_',' ',$_GET['filter']);
+				$filter=SubCategory::find()
+					->where (["sub_category_name"=>ucwords($title2)])
+					->One();
+					
+				
+				$brand = Product::find()
+					->joinWith(['brand'])	
+					->where(['idsub'=>$filter->idsubcategory])
+					->groupBy(['idbrand', 'idbrand'])
+					->all();
+				$link = strtolower(str_replace(' ','_',$_GET['filter']));
+				$name = "q";
+				$varbrand = "brands";
+				
+				$b = $_GET['brands'];
+			}
+			
+		// DETAIL---------------------------------//
+		if(isset($_GET['brandd']) && isset($_GET['filter'])){
+				$title2 = str_replace('_',' ',$_GET['filter']);
+				$filter=DetailCategory::find()
+					->where (["detail_name"=>ucwords($title2)])
+					->One();
+					
+				
+				$brand = Product::find()
+					->joinWith(['brand'])	
+					->where(['iddetail'=>$filter->iddetail])
+					->groupBy(['idbrand', 'idbrand'])
+					->all();
+				$link = strtolower(str_replace(' ','_',$_GET['filter']));
+				$name = "r";
+				$varbrand = "brandd";
+				
+				$b = $_GET['brandd'];
+			}
+		
+		
+		
+		
+		// MAIN---------------------------------//
+		if(isset($_GET['pr_min']) && isset($_GET['pr_max']) && isset($_GET['p'])){
+				$title2 = str_replace('_',' ',$_GET['p']);
+				$filter=MainCategory::find()
+					->where (["main_category_name"=>ucwords($title2)])
+					->One();
+					
+				
+				$brand = Product::find()
+					->joinWith(['brand'])	
+					->where(['idmain'=>$filter->idmain])
+					->groupBy(['idbrand', 'idbrand'])
+					->all();
+				$link = strtolower(str_replace(' ','_',$_GET['p']));
+				$name = "p";
+				$varbrand = "brand";				
+				$b = $_GET['b'];
+			}
+			
+		// SUB---------------------------------//	
+		if(isset($_GET['pr_min']) && isset($_GET['pr_max']) && isset($_GET['q'])){
+				$title2 = str_replace('_',' ',$_GET['q']);
+				$filter=SubCategory::find()
+					->where (["sub_category_name"=>ucwords($title2)])
+					->One();
+					
+				
+				$brand = Product::find()
+					->joinWith(['brand'])	
+					->where(['idsub'=>$filter->idsubcategory])
+					->groupBy(['idbrand', 'idbrand'])
+					->all();
+				$link = strtolower(str_replace(' ','_',$_GET['q']));
+				$name = "q";
+				$varbrand = "brands";				
+				$b = $_GET['b'];
+			}
+			
+		// DETAIL---------------------------------//
+		if(isset($_GET['pr_min']) && isset($_GET['pr_max']) && isset($_GET['r'])){
+				$title2 = str_replace('_',' ',$_GET['r']);
+				$filter=DetailCategory::find()
+					->where (["detail_name"=>ucwords($title2)])
+					->One();
+					
+				
+				$brand = Product::find()
+					->joinWith(['brand'])	
+					->where(['iddetail'=>$filter->iddetail])
+					->groupBy(['idbrand', 'idbrand'])
+					->all();
+				$link = strtolower(str_replace(' ','_',$_GET['r']));
+				$name = "r";
+				$varbrand = "brandd";				
+				$b = $_GET['b'];
+			}
+			
 	?>
-	
+
     <div class="block block-layered-nav">
         <div class="block-content">
             <dl id="narrow-by-list">
                 <dt class="odd">Price</dt>
                 <dd class="odd">
+					<?php
+						$this->registerCss("							
+							@media (min-width:320px) and (max-width: 1023px) { 
+								.form-small{
+									width: 100%;
+									border-radius: 4px;
+									background-color: #fff;
+									background-image: none;
+									border: 1px solid #ccc;
+									height: 34px;
+									margin-left: 15px;
+									font-size: 10px;
+									text-align: center;
+								}
+								
+								.blok{							
+									position: absolute;
+									left: 19px;
+									margin: 0;
+									padding: 7px;
+									border-radius: 3px;
+									border-left: 1px solid;
+									border-top: 1px solid;
+									border-bottom: 1px solid;
+									border-color: #ccc;
+									margin-left: 12px;
+								}
+								
+								.form-smalls{
+									max-width: 100%;
+									border-radius: 4px;
+									background-color: #fff;
+									background-image: none;
+									border: 1px solid #ccc;
+									height: 34px;
+									margin-left: 15px;
+									font-size: 10px;
+									text-align: center;
+								}
+								
+								.alert-gray {
+									background-color: #f0f0f0;
+									border-color: #eee;
+								}
+								
+								.bloks{							
+									position: absolute;
+									margin: 0;
+									padding: 7px;
+									border-radius: 3px;
+									border-left: 1px solid;
+									border-top: 1px solid;
+									border-bottom: 1px solid;
+									border-color: #ccc;
+									display: block;
+								}						
+								
+							}
+							@media (min-width:1024px) { 
+								.form-small{
+									width: 35%;
+									border-radius: 4px;
+									background-color: #fff;
+									background-image: none;
+									border: 1px solid #ccc;
+									height: 34px;
+									margin-left: 15px;
+									font-size: 10px;
+									text-align: center;
+								}
+								
+								.blok{							
+									position: absolute;
+									left: 19px;
+									margin: 0;
+									padding: 7px;
+									border-radius: 3px;
+									border-left: 1px solid;
+									border-top: 1px solid;
+									border-bottom: 1px solid;
+									border-color: #ccc;
+									margin-left: 12px;
+								}
+								
+								.form-smalls{
+									max-width: 39%;
+									border-radius: 4px;
+									background-color: #fff;
+									background-image: none;
+									border: 1px solid #ccc;
+									height: 34px;
+									margin-left: 15px;
+									font-size: 10px;
+									text-align: center;
+								}
+								
+								.alert-gray {
+									background-color: #f0f0f0;
+									border-color: #eee;
+								}
+								
+								.bloks{							
+									position: absolute;
+									margin: 0;
+									padding: 7px;
+									border-radius: 3px;
+									border-left: 1px solid;
+									border-top: 1px solid;
+									border-bottom: 1px solid;
+									border-color: #ccc;
+								}
+							}
+							
+							
+						");
+					?>
                     <div class="price price-filter-slider">
-                        <div>
-                            <div class="slider-range ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
-                                <div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 0%; width: 100%;"></div>
-                                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 0%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 100%;"></span>
-                            </div>
-                            <div class="text-box">
-                                <span>from</span> <input type="text" name="min" id="minPrice" class="priceTextBox minPrice" value="30" style="border:solid 1px #eee; color: #a3a2a2; padding: 2px 5px; font-size: 14px; margin: 0 2px; width: 50px;"> 
-                                <span>to</span> <input type="text" name="max" id="maxPrice" class="priceTextBox maxPrice" value="230" style="border:solid 1px #eee; color: #a3a2a2; padding: 2px 5px; font-size: 14px; margin: 0 2px; width: 50px;">
-                                <input type="button" value="FILTER" name="go" class="go" style="">
-                                <input type="hidden" id="amount" class="price-amount" style="background:none; border:none;" value="$30 - $230">
-                            </div>
-                        </div>
+						<form action="price" method="GET">
+						<span class="price-range ml-10">
+							<label class="muted alert-gray blok" for="">Rp</label>
+							<input type="text" name="pr_min" class="form-small" value="" id="pr-min" title="Harga Terendah" placeholder="Min" />
+							<input type="hidden" value="<?= $link; ?>" name="<?= $name ?>" >
+							<input type="hidden" value="<?php if(isset($b)){ echo"$b"; }; ?>" name="b" >
+						</span>
+						<label for="" class=" connector ml-5 mr-5">To</label>
+						<span class="price-range ml-10">
+							<label class="muted alert-gray bloks" for="">Rp</label>
+							<input type="text" name="pr_max" class="form-small" value="" id="pr-max" title="Harga Tertinggi" placeholder="Maks" />
+						</span>
+						<input type="submit" class="btn btn-primary" style="float:right;margin-top:10px;"value="Filter">
                         <div class="clearer"></div>
                     </div>
-                    <script type="text/javascript">
-                        jQuery(function($) {
-                        	var newMinPrice, newMaxPrice, url, temp;
-                        	var categoryMinPrice = 30;
-                        	var categoryMaxPrice = 230;
-                                        
-                        	function isNumber(n) {
-                        	  return !isNaN(parseFloat(n)) && isFinite(n);
-                        	}
-                        	
-                        	$(".priceTextBox").focus(function(){
-                        		temp = $(this).val();	
-                        	});
-                        	
-                        	$(".priceTextBox").keyup(function(){
-                        		var value = $(this).val();
-                        		if(value!="" && !isNumber(value)){
-                        			$(this).val(temp);	
-                        		}
-                        	});
-                        	
-                        	$(".priceTextBox").keypress(function(e){
-                        		if(e.keyCode == 13){
-                        			var value = $(this).val();
-                        			if(value < categoryMinPrice || value > categoryMaxPrice){
-                        				$(this).val(temp);	
-                        			}
-                        			url = getUrl($(".minPrice").val(), $(".maxPrice").val());
-                        			sliderAjax(url);	
-                        		}	
-                        	});
-                        	
-                        	$(".priceTextBox").blur(function(){
-                        		var value = $(this).val();
-                        		if(value < categoryMinPrice || value > categoryMaxPrice){
-                        			$(this).val(temp);	
-                        		}
-                        		
-                        	});
-                        	
-                        	$(".go").click(function(){
-                        		url = getUrl($(".minPrice").val(), $(".maxPrice").val());
-                        		sliderAjax(url);	
-                        	});					
-                        	$( ".slider-range" ).slider({
-                        		range: true,
-                        		min: categoryMinPrice,
-                        		max: categoryMaxPrice,
-                        		values: [ 30, 230 ],
-                        		slide: function( event, ui ) {
-                        			newMinPrice = ui.values[0];
-                        			newMaxPrice = ui.values[1];
-                        			
-                        			$( ".price-amount" ).val( "$" + newMinPrice + " - $" + newMaxPrice );
-                        			
-                        			
-                        			// Update TextBox Price
-                        			$(".minPrice").val(newMinPrice); 
-                        			$(".maxPrice").val(newMaxPrice);
-                        			
-                        		},stop: function( event, ui ) {
-                        			
-                        			// Current Min and Max Price
-                        			var newMinPrice = ui.values[0];
-                        			var newMaxPrice = ui.values[1];
-                        			
-                        			// Update Text Price
-                        			$( ".price-amount" ).val( "$"+newMinPrice+" - $"+newMaxPrice );
-                        			
-                        			
-                        			// Update TextBox Price
-                        			$(".minPrice").val(newMinPrice); 
-                        			$(".maxPrice").val(newMaxPrice);
-                        			
-                        			url = getUrl(newMinPrice,newMaxPrice);
-                        			if(newMinPrice != 30 && newMaxPrice != 230){
-                        				clearTimeout(timer);
-                        				//window.location= url;
-                        				
-                        			}else{
-                        					timer = setTimeout(function(){
-                        						sliderAjax(url);
-                        					}, 0);     
-                        				}
-                        		}
-                        	});
-                        	
-                        	function getUrl(newMinPrice, newMaxPrice){
-                        		return "http://newsmartwave.net/magento/porto/index.php/demo6_en/fashion/women/tops-blouses.html"+"?min="+newMinPrice+"&max="+newMaxPrice+"";
-                        	}
-                        });
-                    </script>
                     <style type="text/css">.ui-slider .ui-slider-handle{background:#0088cc;width:13px; height:18px; border: 0; margin-top: -1px; cursor: pointer; border-radius: 5px; }.ui-slider{background:#eeeeee; width:px; height:7px; border:none; border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0; cursor: pointer; margin: 5px 5px 20px 8px; }.ui-slider .ui-slider-range{background:#1ab2ff;border:none; cursor: pointer; box-shadow: inset 0px 1px 2px 0px rgba(0,0,0,.38); }#amount{}</style>
-                </dd>
-                <dt class="even">Size</dt>
-                <dd class="even">
-                    <ol class="configurable-swatch-list no-count">
-                       
-                        <li>
-                            <a href="http://newsmartwave.net/magento/porto/index.php/demo6_en/fashion/women/tops-blouses.html?size=3" class="swatch-link" style="line-height: 30px;">
-                            <span class="swatch-label" style="height:28px; min-width:28px; line-height: 30px;">
-                            3XL                                    </span>
-                            </a>
-                        </li>
-						
-                    </ol>
                 </dd>
                 <dt class="odd">Brand</dt>
                 <dd class="odd">
@@ -282,19 +404,6 @@
 								<a style="margin-left:5px;" href="<?= $varbrand; ?>-<?= strtolower($brands->brand->brand_name); ?>-<?= $link;  ?>"><?= $brands->brand->brand_name; ?></a>
 							<?php endforeach; ?>
 						</li>
-                    </ol>
-                </dd>
-                <dt class="last even">Color</dt>
-                <dd class="last even">
-                    <ol class="configurable-swatch-list no-count">
-					
-                        <li style="line-height: 30px;">
-                            <a href="http://newsmartwave.net/magento/porto/index.php/demo6_en/fashion/women/tops-blouses.html?color=27" class="swatch-link has-image">
-                            <span class="swatch-label" style="height:28px; width:28px; line-height: 30px;">
-                            <img src="http://newsmartwave.net/magento/porto/media/catalog/swatches/11/26x26/media/black.png" alt="Black" title="Black" width="26" height="26">
-                            </span>
-                            </a>
-                        </li>                      
                     </ol>
                 </dd>
             </dl>
@@ -325,15 +434,21 @@
                         <div class="owl-item" style="width: 266px;">
                             <div class="item">
 							
-							
+								<?php
+									$modelPromo = Product::find()
+												->joinWith(['image'])
+												->where(['status'=>2])
+												->All();
+									foreach($modelPromo as $modelsPromo):
+								?>
                                 <div class="item-area">
                                     <div class="product-image-area">
-                                        <a href="http://newsmartwave.net/magento/porto/index.php/demo6_en/diamond-rings-l.html" title="Diamond Rings-L" class="product-image">
-                                        <img src="http://newsmartwave.net/magento/porto/media/catalog/product/cache/11/small_image/300x/17f82f742ffe127f42dca9de82fb58b1/1/3/13_2_2.jpg" alt="Diamond Rings-L">
+                                        <a href="detail-<?= $modelsPromo->idproduk; ?>-<?= $modelsPromo->title; ?>" title="<?= $modelsPromo->title; ?>" class="product-image">
+                                        <img src="img/cart/<?= $modelsPromo->image->image_name; ?>" alt="<?= $modelsPromo->image->title; ?>">
                                         </a>
                                     </div>
                                     <div class="details-area">
-                                        <h2 class="product-name"><a href="http://newsmartwave.net/magento/porto/index.php/demo6_en/diamond-rings-l.html" title="Diamond Rings-L">Diamond Rings-L</a></h2>
+                                        <h2 class="product-name"><a href="detail-<?= $modelsPromo->idproduk; ?>-<?= $modelsPromo->title; ?>" title="<?= $modelsPromo->title; ?>"><?= $modelsPromo->title; ?></a></h2>
                                         <div class="ratings">
                                             <div class="rating-box">
                                                 <div class="rating" style="width:0"></div>
@@ -341,14 +456,14 @@
                                         </div>
                                         <div class="price-box">
                                             <span class="regular-price" id="product-price-115">
-												<span class="price">€71.44</span>
+												<span class="price">Rp <?= $modelsPromo->final_price; ?></span>
 											</span>
                                         </div>
                                     </div>
                                     <div class="clearer"></div>
                                 </div>
+								<?php endforeach; ?>
 								
-                               
                             </div>
                         </div>
                     </div>

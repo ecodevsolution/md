@@ -21,6 +21,9 @@ return [
 				//BASIC LINK
 				'login' => 'site/login',
 				'create-account' => 'site/signup',
+				'about-us' => 'site/about-us',
+				'contact-us' => 'site/contact-us',
+				'order-tracking' => 'site/order-tracking',
 				'not-found' => 'site/error',
 				
 				//CATALOG AND PRODUCT LINK
@@ -28,8 +31,9 @@ return [
 				'product-<route>-<routes>' => 'catalog/sub-category',
 				'product_detail-<route>-<routes>-<router>' => 'catalog/det-category',
 				'brand-<brand>-<filter>' => 'catalog/brand',
-				'brands-<brand>-1-<filter>' => 'catalog/brands',
-				'brandd-<brand>-1-<filter>' => 'catalog/brandd',
+				'brands-<brands>-<filter>' => 'catalog/brands',
+				'brandd-<brandd>-<filter>' => 'catalog/brandd',
+				'price' => 'catalog/price',
 				'detail-product-<id>' => 'product/detail-product',
 
 				//PRODUCT CART LINK

@@ -391,40 +391,35 @@
 						<div class="footer-middle">
 							<div class="container">
 								<div class="footer-ribbon">
-									<span>Ribbon Text</span>
+									<span>Support</span>
 								</div>
 								
 								<div class="row">
 									<div class="col-sm-3">
-										<div class="block">
-											<div class="block-title">
-												<strong>
-													<span>My Account</span>
-												</strong>
-											</div>
-											
-											<div class="block-content">
-												<ul class="links">
-													<li>
-														<i class="icon-right-dir theme-color"></i>
-														<a href="about-porto.html" title="About us">About us</a>
-													</li>
-													<li>
-														<i class="icon-right-dir theme-color"></i>
-														<a href="contacts.html" title="Contact us">Contact us</a>
-													</li>
-													<li>
-														<i class="icon-right-dir theme-color"></i>
-														<a href="myaccount" title="My account">My account</a>
-													</li>
-													<li>
-														<i class="icon-right-dir theme-color"></i>
-														<a href="customer/account/login/index.html" title="Orders history">Orders history</a>
-													</li>
-													<li>
-														<i class="icon-right-dir theme-color"></i><a href="catalogsearch/advanced.html" title="Advanced search">Advanced search</a>
-													</li>
-												</ul>
+										<div class="col-sm-3">
+											<div class="block">
+												<div class="block-title">
+													<strong>
+														<span>My Account</span>
+													</strong>
+												</div>
+												
+												<div class="block-content">
+													<ul class="links">
+														<li>
+															<i class="icon-right-dir theme-color"></i>
+															<a href="about-us" title="About us">About us</a>
+														</li>
+														<li>
+															<i class="icon-right-dir theme-color"></i>
+															<a href="contact-us" title="Contact us">Contact us</a>
+														</li>
+														<li>
+															<i class="icon-right-dir theme-color"></i>
+															<a href="order-tracking" title="Orders history">Order Tracking</a>
+														</li>
+													</ul>
+												</div>
 											</div>
 										</div>
 									</div>

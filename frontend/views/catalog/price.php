@@ -14,7 +14,17 @@ use frontend\models\SubCategory;
 use frontend\models\DetailCategory;
 /* @var $this yii\web\View */
 
-$this->title = 'Product';
+$main = isset($_GET['p']) ? $_GET['p']:"";
+$subs = isset($_GET['q']) ? $_GET['q']:"";
+$detail = isset($_GET['r']) ? $_GET['r']:"";
+	if($main != ""){
+		$title = str_replace('_',' ',ucwords($main));
+	}else if($subs != ""){
+		$title = str_replace('_',' ',ucwords($subs ));
+	}else if($detail != ""){
+		$title = str_replace('_',' ',ucwords($detail ));
+	}
+$this->title = ucwords($title);
 ?>
 	<div class="main-container col2-left-layout">
         <div class="main container">
@@ -78,7 +88,7 @@ $this->title = 'Product';
 				
 				<div class="row" style="margin:0 -10px;">
 					<?php 
-						include "left_brands.php";
+						include "left_sub.php";
 					?>
 				</div>
 			</div>

@@ -479,7 +479,7 @@
 						<div class="footer-middle">
 							<div class="container">
 								<div class="footer-ribbon">
-									<span>Ribbon Text</span>
+									<span>Support</span>
 								</div>
 								
 								<div class="row">
@@ -495,22 +495,15 @@
 												<ul class="links">
 													<li>
 														<i class="icon-right-dir theme-color"></i>
-														<a href="about-porto.html" title="About us">About us</a>
+														<a href="about-us" title="About us">About us</a>
 													</li>
 													<li>
 														<i class="icon-right-dir theme-color"></i>
-														<a href="contacts.html" title="Contact us">Contact us</a>
+														<a href="contact-us" title="Contact us">Contact us</a>
 													</li>
 													<li>
 														<i class="icon-right-dir theme-color"></i>
-														<a href="customer/account/login/index.html" title="My account">My account</a>
-													</li>
-													<li>
-														<i class="icon-right-dir theme-color"></i>
-														<a href="customer/account/login/index.html" title="Orders history">Orders history</a>
-													</li>
-													<li>
-														<i class="icon-right-dir theme-color"></i><a href="catalogsearch/advanced.html" title="Advanced search">Advanced search</a>
+														<a href="order-tracking" title="Orders history">Order Tracking</a>
 													</li>
 												</ul>
 											</div>

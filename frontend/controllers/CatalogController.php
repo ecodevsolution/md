@@ -261,10 +261,6 @@ class CatalogController extends \yii\web\Controller
 	
 	
 	
-	
-	
-	
-	
 	// -------------------------------------------------------------------------------- BEGIN BRAND ------------------------------------------------//
 	
 	
@@ -312,7 +308,7 @@ class CatalogController extends \yii\web\Controller
         ]);
     }
 	
-	public function actionBrands($brand, $filter)
+	public function actionBrands($brands, $filter)
     {
         /** @var Category $category */
         //$category = null;
@@ -321,7 +317,7 @@ class CatalogController extends \yii\web\Controller
 				->where(['sub_category_name'=>$replace_route])
 				->One();
 				
-		$replace_routes = str_replace('_',' ',$brand);
+		$replace_routes = str_replace('_',' ',$brands);
 		$findIDb = Brand::find()
 				->where(['brand_name'=>$replace_routes])
 				->One();
@@ -347,7 +343,7 @@ class CatalogController extends \yii\web\Controller
             ],
         ]);
 
-        return $this->render('brands', [
+        return $this->render('brand', [
             'category' => $category,
 			'brandy' => $brandy,
             'BrandItems' => $this->getBrandItems($brands, isset($brandy->idbrand) ? $brandy->idbrand : null),
@@ -356,7 +352,7 @@ class CatalogController extends \yii\web\Controller
     }
 	
 
-	public function actionBrandd($brand, $filter)
+	public function actionBrandd($brandd, $filter)
     {
         /** @var Category $category */
         //$category = null;
@@ -365,7 +361,7 @@ class CatalogController extends \yii\web\Controller
 				->where(['detail_name'=>$replace_route])
 				->One();
 				
-		$replace_routes = str_replace('_',' ',$brand);
+		$replace_routes = str_replace('_',' ',$brandd);
 		$findIDb = Brand::find()
 				->where(['brand_name'=>$replace_routes])
 				->One();
@@ -391,7 +387,7 @@ class CatalogController extends \yii\web\Controller
             ],
         ]);
 
-        return $this->render('brandd', [
+        return $this->render('brand', [
             'category' => $category,
 			'brandy' => $brandy,
             'BrandItems' => $this->getBrandItems($brands, isset($brandy->idbrand) ? $brandy->idbrand : null),
@@ -429,4 +425,167 @@ class CatalogController extends \yii\web\Controller
     }
 	
 	// -------------------------------------------------------------------------------- END BRAND ------------------------------------------------//
+	
+	// -------------------------------------------------------------------------------- BEGIN PRICE ------------------------------------------------//
+	public function actionPrice(){
+		if(isset($_GET['p'])){
+			$min_price = $_GET['pr_min'];
+			$max_price = $_GET['pr_max'];
+			$main = $_GET['p'];
+			$main = str_replace('_',' ',ucwords($main));
+			
+			if($_GET['b'] != ""){
+				$filter=MainCategory::find()
+						->where (["main_category_name"=>ucwords($main)])
+						->One();	
+						
+				$brand = Brand::find()
+						->where (["brand_name"=>ucwords($_GET['b'])])
+						->One();	
+						
+				$productsQuery = Product::find()
+						->where(['between','final_price',$min_price,$max_price])
+						->AndWhere(['idbrand'=>$brand->idbrand])
+						->AndWhere(['idmain'=> $filter->idmain]);
+	
+				$productsDataProvider = new ActiveDataProvider([
+					'query' => $productsQuery,
+					'pagination' => [
+						'pageSize' => 10,
+					],
+				]);
+		
+				return $this->render('price', [
+					'productsDataProvider' => $productsDataProvider,
+				]);
+				
+			}else{
+				$filter=MainCategory::find()
+						->where (["main_category_name"=>ucwords($main)])
+						->One();	
+						
+				$productsQuery = Product::find()
+						->where(['between','final_price',$min_price,$max_price])
+						->AndWhere(['idmain'=> $filter->idmain]);
+	
+				$productsDataProvider = new ActiveDataProvider([
+					'query' => $productsQuery,
+					'pagination' => [
+						'pageSize' => 10,
+					],
+				]);
+		
+				return $this->render('price', [
+					'productsDataProvider' => $productsDataProvider,
+				]);
+			}
+		}
+		if(isset($_GET['q'])){
+			$min_price = $_GET['pr_min'];
+			$max_price = $_GET['pr_max'];
+			$sub = $_GET['q'];
+			$sub = str_replace('_',' ',ucwords($sub));
+			
+			if($_GET['b'] != ""){
+				$filter=SubCategory::find()
+						->where (["sub_category_name"=>ucwords($sub)])
+						->One();	
+						
+				$brand = Brand::find()
+						->where (["brand_name"=>ucwords($_GET['b'])])
+						->One();	
+						
+				$productsQuery = Product::find()
+						->where(['between','final_price',$min_price,$max_price])
+						->AndWhere(['idbrand'=>$brand->idbrand])
+						->AndWhere(['idsub'=> $filter->idsubcategory]);
+	
+				$productsDataProvider = new ActiveDataProvider([
+					'query' => $productsQuery,
+					'pagination' => [
+						'pageSize' => 10,
+					],
+				]);
+		
+				return $this->render('price', [
+					'productsDataProvider' => $productsDataProvider,
+				]);
+				
+			}else{
+				$filter=SubCategory::find()
+						->where (["sub_category_name"=>ucwords($sub)])
+						->One();	
+						
+				$productsQuery = Product::find()
+						->where(['between','final_price',$min_price,$max_price])
+						->AndWhere(['idsub'=> $filter->idsubcategory]);
+	
+				$productsDataProvider = new ActiveDataProvider([
+					'query' => $productsQuery,
+					'pagination' => [
+						'pageSize' => 10,
+					],
+				]);
+		
+				return $this->render('price', [
+					'productsDataProvider' => $productsDataProvider,
+				]);
+			}
+		}
+		if(isset($_GET['r'])){
+			$min_price = $_GET['pr_min'];
+			$max_price = $_GET['pr_max'];
+			$detail = $_GET['r'];
+			$detail = str_replace('_',' ',ucwords($detail));
+			
+			if($_GET['b'] != ""){
+				$filter=DetailCategory::find()
+						->where (["detail_name"=>ucwords($detail)])
+						->One();	
+						
+				$brand = Brand::find()
+						->where (["brand_name"=>ucwords($_GET['b'])])
+						->One();	
+						
+				$productsQuery = Product::find()
+						->where(['between','final_price',$min_price,$max_price])
+						->AndWhere(['idbrand'=>$brand->idbrand])
+						->AndWhere(['iddetail'=> $filter->iddetail]);
+	
+				$productsDataProvider = new ActiveDataProvider([
+					'query' => $productsQuery,
+					'pagination' => [
+						'pageSize' => 10,
+					],
+				]);
+		
+				return $this->render('price', [
+					'productsDataProvider' => $productsDataProvider,
+				]);
+				
+			}else{
+				$filter=DetailCategory::find()
+						->where (["detail_name"=>ucwords($detail)])
+						->One();	
+				
+				//var_dump($detail);
+				$productsQuery = Product::find()
+						->where(['between','final_price',$min_price,$max_price])
+						->AndWhere(['iddetail'=> $filter->iddetail]);
+	            
+				$productsDataProvider = new ActiveDataProvider([
+					'query' => $productsQuery,
+					'pagination' => [
+						'pageSize' => 10,
+					],
+				]);
+		        
+				return $this->render('price', [
+					'productsDataProvider' => $productsDataProvider,
+				]);
+			}
+		}
+				
+	}
 }
+
