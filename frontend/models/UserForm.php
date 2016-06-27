@@ -8,21 +8,28 @@ use Yii;
  * This is the model class for table "user".
  *
  * @property integer $id
- * @property integer $role
- * @property string $idcity
+ * @property integer $idrole
+ * @property integer $idcity
+ * @property integer $idprovince
+ * @property string $courier
+ * @property string $province
+ * @property string $city
  * @property string $firstname
  * @property string $lastname
- * @property string $username
+ * @property string $email
  * @property string $nama_toko
- * @property integer $jenis_toko
- * @property string $tipe_toko
- * @property integer $idrange
- * @property string $domain_name
+ * @property integer $paket
+ * @property string $domain
  * @property string $auth_key
  * @property string $password_hash
  * @property string $password_reset_token
- * @property string $email
  * @property double $balanced
+ * @property string $address
+ * @property string $phone
+ * @property string $mail
+ * @property string $work_hour
+ * @property string $description
+ * @property string $logo
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -43,13 +50,16 @@ class UserForm extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['role', 'idcity', 'firstname', 'lastname', 'username', 'tipe_toko', 'domain_name', 'auth_key', 'password_hash', 'email', 'created_at'], 'required'],
-            [['role', 'jenis_toko', 'idrange', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['idrole', 'idcity', 'idprovince', 'courier', 'province', 'city', 'firstname', 'lastname', 'email', 'paket', 'domain', 'auth_key', 'password_hash', 'description', 'status', 'created_at'], 'required'],
+            [['idrole', 'idcity', 'idprovince', 'paket', 'status', 'created_at', 'updated_at'], 'integer'],
             [['balanced'], 'number'],
-            [['idcity', 'firstname', 'lastname', 'username', 'nama_toko', 'domain_name', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
-            [['tipe_toko'], 'string', 'max' => 50],
+            [['description'], 'string'],
+            [['courier'], 'string', 'max' => 25],
+            [['province', 'city', 'firstname', 'lastname', 'email', 'nama_toko', 'mail', 'work_hour', 'logo'], 'string', 'max' => 50],
+            [['domain'], 'string', 'max' => 100],
             [['auth_key'], 'string', 'max' => 32],
-            [['username'], 'unique']
+            [['password_hash', 'password_reset_token', 'address'], 'string', 'max' => 255],
+            [['phone'], 'string', 'max' => 20]
         ];
     }
 
@@ -60,21 +70,28 @@ class UserForm extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'role' => 'Role',
+            'idrole' => 'Idrole',
             'idcity' => 'Idcity',
+            'idprovince' => 'Idprovince',
+            'courier' => 'Courier',
+            'province' => 'Province',
+            'city' => 'City',
             'firstname' => 'Firstname',
             'lastname' => 'Lastname',
-            'username' => 'Username',
+            'email' => 'Email',
             'nama_toko' => 'Nama Toko',
-            'jenis_toko' => 'Jenis Toko',
-            'tipe_toko' => 'Tipe Toko',
-            'idrange' => 'Idrange',
-            'domain_name' => 'Domain Name',
+            'paket' => 'Paket',
+            'domain' => 'Domain',
             'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
             'password_reset_token' => 'Password Reset Token',
-            'email' => 'Email',
             'balanced' => 'Balanced',
+            'address' => 'Address',
+            'phone' => 'Phone',
+            'mail' => 'Mail',
+            'work_hour' => 'Work Hour',
+            'description' => 'Description',
+            'logo' => 'Logo',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

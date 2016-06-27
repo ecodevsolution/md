@@ -14,6 +14,7 @@
 	use frontend\models\Author;
 	use frontend\models\Keyword;
 	use frontend\models\Logo;
+	use frontend\models\UserForm;
 	use yz\shoppingcart\ShoppingCart;
 	use yii\web\View;
 	
@@ -396,30 +397,28 @@
 								
 								<div class="row">
 									<div class="col-sm-3">
-										<div class="col-sm-3">
-											<div class="block">
-												<div class="block-title">
-													<strong>
-														<span>My Account</span>
-													</strong>
-												</div>
-												
-												<div class="block-content">
-													<ul class="links">
-														<li>
-															<i class="icon-right-dir theme-color"></i>
-															<a href="about-us" title="About us">About us</a>
-														</li>
-														<li>
-															<i class="icon-right-dir theme-color"></i>
-															<a href="contact-us" title="Contact us">Contact us</a>
-														</li>
-														<li>
-															<i class="icon-right-dir theme-color"></i>
-															<a href="order-tracking" title="Orders history">Order Tracking</a>
-														</li>
-													</ul>
-												</div>
+										<div class="block">
+											<div class="block-title">
+												<strong>
+													<span>My Account</span>
+												</strong>
+											</div>
+											
+											<div class="block-content">
+												<ul class="links">
+													<li>
+														<i class="icon-right-dir theme-color"></i>
+														<a href="about-us" title="About us">About us</a>
+													</li>
+													<li>
+														<i class="icon-right-dir theme-color"></i>
+														<a href="contact-us" title="Contact us">Contact us</a>
+													</li>
+													<li>
+														<i class="icon-right-dir theme-color"></i>
+														<a href="order-tracking" title="Orders history">Order Tracking</a>
+													</li>
+												</ul>
 											</div>
 										</div>
 									</div>
@@ -472,7 +471,7 @@
 										<div class="block">
 											<div class="block-title">
 												<strong>
-													<span>Main Features</span>
+													<span>Features</span>
 												</strong>
 											</div>
 											
@@ -480,23 +479,15 @@
 												<ul class="features">
 													<li>
 														<i class="icon-ok theme-color"></i>
-														<a href="#">Super Fast Magento Theme</a>
+														<a href="#">Money Back Guarantee</a>
 													</li>
 													<li>
 														<i class="icon-ok  theme-color"></i>
-														<a href="#">1st Fully working Ajax Theme</a>
+														<a href="#">Free Return</a>
 													</li>
 													<li>
 														<i class="icon-ok  theme-color"></i>
-														<a href="#">10 Unique Homepage Layouts</a>
-													</li>
-													<li>
-														<i class="icon-ok  theme-color"></i>
-														<a href="#">Powerful Admin Panel</a>
-													</li>
-													<li>
-														<i class="icon-ok  theme-color"></i>
-														<a href="#">Mobile &amp; Retina Optimized</a>
+														<a href="#">Online Support</a>
 													</li>
 												</ul>
 											</div>
@@ -507,11 +498,16 @@
 										<div class="block block-subscribe">
 											<div class="block-title">
 												<strong>
-													<span>Be the First to Know</span>
+													<span>About</span>
 												</strong>
 											</div>											
 											<div class="block-content">
-												<p>Get all the latest information on Events,<br/>Sales and Offers. Sign up for newsletter today.</p>
+												<?php 
+													$model = UserForm::find()
+														   ->where(['idrole'=>1])
+														   ->One();
+													echo $model->description;	   
+												?>
 												
 											</div>											
 										</div>

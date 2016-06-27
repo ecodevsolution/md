@@ -17,9 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				<h1>Login Form</h1>
 				<div>
 					<?= $form
-							->field($model, 'username')
+							->field($model, 'email')
 							->label(false)
-							->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
+							->textInput(['placeholder' => $model->getAttributeLabel('email')]) ?>
 					 
 				</div>
 				<div>

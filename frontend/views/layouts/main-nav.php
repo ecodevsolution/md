@@ -16,11 +16,17 @@
 	use frontend\models\Logo;
 	use yz\shoppingcart\ShoppingCart;
 	use yii\web\View;
+	use frontend\models\UserForm;
 	use frontend\models\MainCategory;
 	use frontend\models\SubCategory;
 	use frontend\models\DetailCategory;
 	
 	AppAsset::register($this);
+
+	$Information = UserForm::find()
+					->where(['idrole'=>1])
+					->One();											  
+
 ?>
 
 <?php $this->beginPage() ?>
@@ -226,16 +232,16 @@
 					
 					<div class="header container">
 						<h1 class="logo">
-							<strong>Maridagang</strong>
-							<a href="<?= Yii::$app->homeUrl; ?>" title="Maridagang" class="logo">
-								<img src="img/logo_white_plus.png" alt="Maridagang" />
+							<strong><?= $Information->nama_toko; ?></strong>
+							<a href="<?= Yii::$app->homeUrl; ?>" title="<?= $Information->nama_toko; ?>" class="logo">
+								<img src="img/logo/<?= $Information->logo; ?>" alt="<?= $Information->nama_toko; ?>" />
 							</a>
 						</h1>
 						
 						<div class="cart-area">
 							<div class="custom-block">
 								<i class="icon-phone" style="margin-right: 5px;"></i>
-								<span>(+62) 877-7668-7488</span>
+								<span><?= $Information->phone; ?></span>
 								<span class="split"></span>
 								<a href="contact-us">CONTACT US</a>
 							</div>
@@ -508,8 +514,7 @@
 												</ul>
 											</div>
 										</div>
-									</div>
-									
+									</div>								
 									<div class="col-sm-3">
 										<div class="block">
 											<div class="block-title">
@@ -524,14 +529,14 @@
 														<i class="icon-location">&nbsp;</i>
 														<p>
 															<b>Address:</b>
-															<br/>123 Street Name, City, England
+															<br/><?= $Information->address; ?>
 														</p>
 													</li>
 													<li>
 														<i class="icon-phone">&nbsp;</i>
 														<p>
 															<b>Phone:</b>
-															<br/>(123) 456-7890
+															<br/><?= $Information->phone; ?>
 														</p>
 													</li>
 													<li>
@@ -539,14 +544,14 @@
 														<p>
 															<b>Email:</b>
 															<br/>
-															<a href="mailto:mail@example.com">mail@example.com</a>
+															<a href="<?= $Information->email; ?>"><?= $Information->email; ?></a>
 														</p>
 													</li>
 													<li>
 														<i class="icon-clock">&nbsp;</i>
 														<p>
 															<b>Working Days/Hours:</b>
-															<br/>Mon - Sun / 9:00AM - 8:00PM
+															<br/><?= $Information->work_hour; ?>
 														</p>
 													</li>
 												</ul>
@@ -558,7 +563,7 @@
 										<div class="block">
 											<div class="block-title">
 												<strong>
-													<span>Main Features</span>
+													<span>Features</span>
 												</strong>
 											</div>
 											
@@ -566,23 +571,15 @@
 												<ul class="features">
 													<li>
 														<i class="icon-ok theme-color"></i>
-														<a href="#">Super Fast Magento Theme</a>
+														<a href="money-guarantee">Money Back Guarantee</a>
 													</li>
 													<li>
 														<i class="icon-ok  theme-color"></i>
-														<a href="#">1st Fully working Ajax Theme</a>
+														<a href="free-return">Free Return</a>
 													</li>
 													<li>
 														<i class="icon-ok  theme-color"></i>
-														<a href="#">10 Unique Homepage Layouts</a>
-													</li>
-													<li>
-														<i class="icon-ok  theme-color"></i>
-														<a href="#">Powerful Admin Panel</a>
-													</li>
-													<li>
-														<i class="icon-ok  theme-color"></i>
-														<a href="#">Mobile &amp; Retina Optimized</a>
+														<a href="online-support">Online Support</a>
 													</li>
 												</ul>
 											</div>
@@ -593,11 +590,13 @@
 										<div class="block block-subscribe">
 											<div class="block-title">
 												<strong>
-													<span>Be the First to Know</span>
+													<span>About</span>
 												</strong>
 											</div>											
 											<div class="block-content">
-												<p>Get all the latest information on Events,<br/>Sales and Offers. Sign up for newsletter today.</p>
+												<?php 
+													echo $Information->description;	   
+												?>
 												
 											</div>											
 										</div>

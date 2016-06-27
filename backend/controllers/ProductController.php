@@ -142,7 +142,7 @@ class ProductController extends Controller
 				$imageName = md5(uniqid($imgs->image_name));
 				
 			
-				$imgs->image_name->saveAs('../../image/cart/'.$imageName. '.'.$imgs->image_name->extension );
+				$imgs->image_name->saveAs('../../img/cart/'.$imageName. '.'.$imgs->image_name->extension );
 				
 				$imgs->image_name= $imageName. '.'.$imgs->image_name->extension;
 				$imgs->product_id = $model->idproduk;

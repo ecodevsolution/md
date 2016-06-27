@@ -18,44 +18,24 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-		'css/bootstrap.min.css',
-		'fonts/css/font-awesome.min.css',
-		'css/animate.min.css',
-		'css/custom.css',
-		'css/maps/jquery-jvectormap-2.0.1.css',
-		'js/step-form-wizard/css/step-form-wizard.min.css',
-		'css/icheck/flat/green.css',
-		'css/floatexamples.css',
+		'css/lib/lobipanel/lobipanel.min.css',
+		'css/lib/jqueryui/jquery-ui.min.css',
+		'css/lib/font-awesome/font-awesome.min.css',
+		'css/main.css',
 		
     ];
     public $js = [
-		'js/bootstrap.min.js',
-		'js/gauge/gauge.min.js',
-		'js/gauge/gauge_demo.js',
-		'js/chartjs/chart.min.js',
-		'js/custom.js',
-		'js/progressbar/bootstrap-progressbar.min.js',
-		'js/nicescroll/jquery.nicescroll.min.js',
-		'js/icheck/icheck.min.js',
-		'js/moment.min.js',
-		'js/datepicker/daterangepicker.js',
-		'js/flot/jquery.flot.js',
-		'js/flot/jquery.flot.pie.js',
-		'js/flot/jquery.flot.orderBars.js',
-		'js/flot/jquery.flot.time.min.js',
-		'js/flot/date.js',
-		'js/flot/jquery.flot.spline.js',
-		'js/flot/jquery.flot.stack.js',
-		'js/flot/curvedLines.js',
-		'js/flot/jquery.flot.resize.js',
-		'js/maps/jquery-jvectormap-2.0.1.min.js',
-		'js/maps/gdp-data.js',
-		'js/maps/jquery-jvectormap-world-mill-en.js',
-		'js/maps/jquery-jvectormap-us-aea-en.js',
-		
+		'js/lib/jquery/jquery.min.js',
+		'js/lib/tether/tether.min.js',
+		'js/lib/bootstrap/bootstrap.min.js',
+		'js/plugins.js',
+		'js/lib/jqueryui/jquery-ui.min.js',
+		'js/lib/lobipanel/lobipanel.min.js',
+		'js/loader.js',
+		'js/app.js',
     ];   
     public $depends = [
-       // 'yii\web\YiiAsset',
-       // 'yii\bootstrap\BootstrapAsset',
+        'yii\web\YiiAsset',
+        //'yii\bootstrap\BootstrapAsset',
     ];
 }

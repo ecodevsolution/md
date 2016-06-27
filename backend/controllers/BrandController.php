@@ -67,7 +67,7 @@ class BrandController extends Controller
 			
 			$model->brand_logo = Uploadedfile::getInstance($model,'brand_logo');
 			$namaimage = md5(uniqid($model->brand_logo));
-			$model->brand_logo->saveAs('../../image/brand/' .$namaimage . '.' .$model->brand_logo->extension);
+			$model->brand_logo->saveAs('../../img/brand/' .$namaimage . '.' .$model->brand_logo->extension);
 			$model->brand_logo= $namaimage. '.' .$model->brand_logo->extension;
 			
 			$model->save();
