@@ -20,6 +20,7 @@ class AppAsset extends AssetBundle
     public $css = [
 		'css/lib/lobipanel/lobipanel.min.css',
 		'css/lib/jqueryui/jquery-ui.min.css',
+		'css/lib/bootstrap-sweetalert/sweetalert.css',
 		'css/lib/font-awesome/font-awesome.min.css',
 		'css/main.css',
 		
@@ -32,6 +33,7 @@ class AppAsset extends AssetBundle
 		'js/lib/jqueryui/jquery-ui.min.js',
 		'js/lib/lobipanel/lobipanel.min.js',
 		'js/loader.js',
+		'js/lib/bootstrap-sweetalert/sweetalert.min.js',
 		'js/app.js',
     ];   
     public $depends = [

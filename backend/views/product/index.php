@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
-
+use yii\widgets\ListView;
+use common\models\Image;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -11,6 +12,7 @@ use yii\helpers\Url;
 $this->title = 'Products';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <section class="box-typical">
 	<header class="box-typical-header">
 		<div class="tbl-row">
@@ -27,147 +29,181 @@ $this->params['breadcrumbs'][] = $this->title;
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th class="table-check">
-							<div class="checkbox checkbox-only">
-								<input type="checkbox" id="table-check-head"/>
-								<label for="table-check-head"></label>
-							</div>
-						</th>
-						<th>Name</th>
+						<th>Image</th>
+						<th width="180px">Product Name</th>
 						<th>Description</th>
-						<th class="table-icon-cell">
-							<i class="font-icon font-icon-heart"></i>
-						</th>
-						<th class="table-icon-cell">
-							<i class="font-icon font-icon-comment"></i>
-						</th>
-						<th>Date Created</th>
-						<th></th>
+						<th>Status</th>
+						<th colspan="2">Action</th>
 					</tr>
 				</thead>
 				<tbody>
+					<?php 
+						foreach($model as $mod):
+						$models = Image::find()
+							->where(['product_id'=>$mod->idproduk])
+							->AndWhere(['is_cover'=>1])
+							->One();
+					?>
 					<tr>
-						<td class="table-check">
-							<div class="checkbox checkbox-only">
-								<input type="checkbox" id="table-check-1"/>
-								<label for="table-check-1"></label>
-							</div>
+						<td class="table-photo">
+							<img src="../../img/cart/<?= $models->image_name; ?>" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
 						</td>
 						<td>
-							Last quarter revene
-							<span class="hint-circle"
-								  data-toggle="tooltip"
-								  data-placement="top"
-								  title="Help">?</span>
+							<?= $mod->title; ?>
 						</td>
-						<td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-						<td class="table-icon-cell">
-							<i class="font-icon font-icon-heart"></i>
-							5
-						</td>
-						<td class="table-icon-cell">
-							<i class="font-icon font-icon-comment"></i>
-							24
-						</td>
-						<td class="table-date">6 minets ago <i class="font-icon font-icon-clock"></i></td>
-						<td class="table-photo">
-							<img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-						</td>
-					</tr>
-					<tr>
-						<td class="table-check">
-							<div class="checkbox checkbox-only">
-								<input type="checkbox" id="table-check-2"/>
-								<label for="table-check-2"></label>
-							</div>
-						</td>
-						<td>
-							Expenses in 2013
-							<span class="hint-circle red"
-								  data-toggle="tooltip"
-								  data-placement="top"
-								  title="Sample tips with long text into multiple lines. Sample tips with long text into multiple lines.">?</span>
-						</td>
-						<td class="color-blue-grey-lighter"></td>
-						<td class="table-icon-cell">
-							<i class="font-icon font-icon-heart"></i>
-							5
+						<td class="color-blue-grey-lighter"><?= $mod->short_description; ?></td>
+						<td class="table-date">
+							<?php
+								if($mod->status == 1){
+									echo"<div class='text-center '> <span style='color:#46c35f;' class='fa fa-check'></span></div>";
+								}else{
+									echo"<div class='text-center '> <span style='color:#c50009;' class='fa fa-times'></span></div>";
+								}
+							?> 
 						</td>
 						<td class="table-icon-cell">
-							<i class="font-icon font-icon-comment"></i>
-							24
-						</td>
-						<td class="table-date">2 hours ago <i class="font-icon font-icon-clock"></i></td>
-						<td class="table-photo">
-							<img src="img/photo-64-2.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Todd<br/>Fox">
-						</td>
-					</tr>
-					<tr>
-						<td class="table-check">
-							<div class="checkbox checkbox-only">
-								<input type="checkbox" id="table-check-3"/>
-								<label for="table-check-3"></label>
-							</div>
-						</td>
-						<td>
-							Accounting
-							<span class="hint-circle green"
-								  data-toggle="tooltip"
-								  data-placement="top"
-								  title="Help">?</span>
-						</td>
-						<td class="color-blue-grey-lighter">Lorem ipsum dolor sit amet</td>
-						<td class="table-icon-cell">
-							<i class="font-icon font-icon-heart"></i>
-							5
+							<?= Html::a('', ['update','id'=>$mod->idproduk], ['class' => 'fa fa-pencil']) ?>													
 						</td>
 						<td class="table-icon-cell">
-							<i class="font-icon font-icon-comment"></i>
-							24
-						</td>
-						<td class="table-date">5 hour ago <i class="font-icon font-icon-clock"></i></td>
-						<td class="table-photo">
-							<img src="img/photo-64-3.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Raina<br/>Cabrera">
-						</td>
-					</tr>
-					<tr>
-						<td class="table-check">
-							<div class="checkbox checkbox-only">
-								<input type="checkbox" id="table-check-4"/>
-								<label for="table-check-4"></label>
-							</div>
-						</td>
-						<td>
-							Srtarbucks orders
-							<span class="hint-circle blue"
-								  data-toggle="tooltip"
-								  data-placement="top"
-								  title="Help">?</span>
-							<span class="hint-circle orange"
-								  data-toggle="tooltip"
-								  data-placement="top"
-								  title="Help">?</span>
-							<span class="hint-circle purple"
-								  data-toggle="tooltip"
-								  data-placement="top"
-								  title="Help">?</span>
-						</td>
-						<td class="color-blue-grey-lighter">Ut euismod augue ut nulla aliquam? eu congue ipsum eusmod</td>
-						<td class="table-icon-cell">
-							<i class="font-icon font-icon-heart"></i>
-							5
-						</td>
-						<td class="table-icon-cell">
-							<i class="font-icon font-icon-comment"></i>
-							24
-						</td>
-						<td class="table-date">12 hours ago <i class="font-icon font-icon-clock"></i></td>
-						<td class="table-photo">
-							<img src="img/photo-64-4.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Lilian<br/>Leon">
-						</td>
-					</tr>
+							<?= Html::a('', ['delete','id'=>$mod->idproduk], ['class' => 'fa fa-trash swal-btn-warning']) ?>																										
+						</td>											
+					</tr>	
+					<?php endforeach; ?>
 				</tbody>
 			</table>
 		</div>
 	</div><!--.box-typical-body-->
 </section><!--.box-typical-->
+
+	<?php 
+		$this->registerJs("
+		$(document).ready(function() {
+			$('.swal-btn-basic').click(function(e){
+				e.preventDefault();
+				swal('Heres a message!');
+			});
+
+			$('.swal-btn-text').click(function(e){
+				e.preventDefault();
+				swal({
+					title: 'Heres a message!',
+					text: 'Its pretty, isnt it?'
+				});
+			});
+
+			$('.swal-btn-success').click(function(e){
+				e.preventDefault();
+				swal({
+					title: 'Good job!',
+					text: 'You clicked the button!',
+					type: 'success',
+					confirmButtonClass: 'btn-success',
+					confirmButtonText: 'Success'
+				});
+			});
+
+			$('.swal-btn-warning').click(function(e){
+				e.preventDefault();
+				var getLink = $(this).attr('href');
+                swal({
+                        title: 'Are you sure?',
+						text: 'You will not be able to recover this imaginary file!',
+						type: 'warning',
+						showCancelButton: true,
+						confirmButtonClass: 'btn-danger',
+						confirmButtonText: 'Yes, delete it!',
+						cancelButtonText: 'No, cancel!',
+						closeOnConfirm: false,
+						closeOnCancel: false
+						
+                        },function(isConfirm){
+							if (isConfirm) {
+								window.location.href = getLink
+							} else {
+								swal({
+									title: 'Cancelled',
+									text: 'Your file is safe :)',
+									type: 'error',
+									confirmButtonClass: 'btn-danger'
+								});
+							}                        
+                    });
+                return false;
+			});
+
+			$('.swal-btn-cancel').click(function(e){
+				e.preventDefault();
+				swal({
+							title: 'Are you sure?',
+							text: 'You will not be able to recover this imaginary file!',
+							type: 'warning',
+							showCancelButton: true,
+							confirmButtonClass: 'btn-danger',
+							confirmButtonText: 'Yes, delete it!',
+							cancelButtonText: 'No, cancel plx!',
+							closeOnConfirm: false,
+							closeOnCancel: false
+						},
+						function(isConfirm) {
+							if (isConfirm) {
+								swal({
+									title: 'Deleted!',
+									text: 'Your imaginary file has been deleted.',
+									type: 'success',
+									confirmButtonClass: 'btn-success'
+								});
+							} else {
+								swal({
+									title: 'Cancelled',
+									text: 'Your imaginary file is safe :)',
+									type: 'error',
+									confirmButtonClass: 'btn-danger'
+								});
+							}
+						});
+			});
+
+			$('.swal-btn-custom-img').click(function(e){
+				e.preventDefault();
+				swal({
+					title: 'Sweet!',
+					text: 'Heres a custom image.',
+					confirmButtonClass: 'btn-success',
+					imageUrl: 'img/smile.png'
+				});
+			});
+
+			$('.swal-btn-info').click(function(e){
+				e.preventDefault();
+				swal({
+					title: 'Are you sure?',
+					text: 'Your will not be able to recover this imaginary file!',
+					type: 'info',
+					showCancelButton: true,
+					cancelButtonClass: 'btn-default',
+					confirmButtonText: 'Info',
+					confirmButtonClass: 'btn-primary'
+				});
+			});
+
+			$('.swal-btn-input').click(function(e){
+				e.preventDefault();
+				swal({
+					title: 'An input!',
+					text: 'Write something interesting:',
+					type: 'input',
+					showCancelButton: true,
+					closeOnConfirm: false,
+					inputPlaceholder: 'Write something'
+				}, function (inputValue) {
+					if (inputValue === false) return false;
+					if (inputValue === '') {
+						swal.showInputError('You need to write something!');
+						return false
+					}
+					swal('Nice!', 'You wrote: ' + inputValue, 'success');
+				});
+			});
+		});
+		");
+	?>

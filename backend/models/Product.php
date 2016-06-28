@@ -94,7 +94,7 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getImages()
+    public function getImage()
     {
         return $this->hasMany(Image::className(), ['product_id' => 'idproduk']);
     }
@@ -110,7 +110,7 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdbrand0()
+    public function getBrand()
     {
         return $this->hasOne(Brand::className(), ['idbrand' => 'idbrand']);
     }
@@ -126,7 +126,7 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdmain0()
+    public function getMainCategory()
     {
         return $this->hasOne(MainCategory::className(), ['idmain' => 'idmain']);
     }

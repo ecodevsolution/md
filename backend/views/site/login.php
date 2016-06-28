@@ -1,50 +1,37 @@
 <?php
-use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
-
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+	use yii\helpers\Html;
+	use yii\bootstrap\ActiveForm;
+	
+	$this->title = 'Login';
+	$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div id="wrapper">
-	<div id="login" class="animate form">
-		<section class="login_content">
-			<?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-	
-				<h1>Login Form</h1>
-				<div>
-					<?= $form
-							->field($model, 'email')
-							->label(false)
-							->textInput(['placeholder' => $model->getAttributeLabel('email')]) ?>
-					 
-				</div>
-				<div>
-					 <?= $form
-							->field($model, 'password')
-							->label(false)
-							->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
-				</div>
-				<div>
-					 <?= Html::submitButton('Sign in', ['class' => 'btn btn-lg btn-dark btn-rounded ladda-button', 'name' => 'login-button']) ?>
-					 <?= Html::a(' Forgot Password',['site/password-reset'],['class'=>'fa fa-unlock']); ?>	
-				</div>
-				<div class="clearfix"></div>
-				<div class="separator">
-
-					<div class="clearfix"></div>
-					<br />
-					<div>
-						<h1><i class="fa fa-shopping-cart" style="font-size: 26px;"></i> Panel Maridagang</h1>
-	
-						<p>©<?= date("Y")?> All Rights Reserved. <a href="http://maridagang.com">Maridagang</a></br>Privacy and Terms</p>
-					</div>
-				</div>
-			<?php ActiveForm::end(); ?>
-		</section>
-		<!-- content -->
-	</div>
-</div>				
+<?php $form = ActiveForm::begin([
+		'options'=>[
+				'class'=>'sign-box'
+			]
+		]); ?>
+    <div class="sign-avatar">
+        <img src="img/avatar-sign.png" alt="">
+    </div>
+    <header class="sign-title">Sign In</header>
+    <div class="form-group">
+		<?= $form
+			->field($model, 'email')
+			->label(false)
+			->textInput(['placeholder' => $model->getAttributeLabel('email')]) 
+		?>      
+    </div>
+    <div class="form-group">
+       <?= $form
+			->field($model, 'password')
+			->label(false)
+			->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) 
+		?>
+    </div>
+    <div class="form-group">
+        <div class="float-right reset">
+             <?= Html::a(' Forgot Password',['site/password-reset'],['class'=>'fa fa-unlock']); ?>	
+        </div>
+    </div>
+    <button type="submit" class="btn btn-rounded">Sign in</button>    
+<?php ActiveForm::end(); ?>

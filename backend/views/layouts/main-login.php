@@ -7,6 +7,7 @@ use yii\helpers\Html;
 
 AppAsset::register($this);
 ?>
+
 <?php $this->beginPage() ?>
 	<!DOCTYPE html>
 	<html lang="<?= Yii::$app->language ?>">
@@ -17,17 +18,16 @@ AppAsset::register($this);
 			<title>Login</title>
 			<?php $this->head() ?>
 		</head>
-		
-		<body style="background:#F7F7F7;">
-    
-			<div class="">
-				<a class="hiddenanchor" id="toregister"></a>
-				<a class="hiddenanchor" id="tologin"></a>
-			
-				<?php $this->beginBody() ?>
-					<?= $content ?>
-				<?php $this->endBody() ?>
-				
+		<body>
+
+    <div class="page-center">
+        <div class="page-center-in">
+            <div class="container-fluid">		
+						<?php $this->beginBody() ?>
+							<?= $content ?>
+						<?php $this->endBody() ?>					
+					</div>
+				</div>
 			</div>
 		</body>
 	</html>

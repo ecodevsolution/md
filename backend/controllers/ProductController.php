@@ -15,6 +15,7 @@ use backend\models\SubCategory;
 use backend\models\DetailCategory;
 use common\models\Image;
 use common\models\Model;
+use yii\data\ActiveDataProvider;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -27,7 +28,7 @@ class ProductController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    
                 ],
             ],
         ];
@@ -39,12 +40,14 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        $model = Product::find()
+				->joinWith('mainCategory')
+				->joinWith('brand')
+				->joinWith('image')
+				->all();
+			
+		return $this->render('index', [                       
+            'model' => $model,					
         ]);
     }
 
@@ -190,8 +193,17 @@ class ProductController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+		$product = Product::findOne($id);					
+		$look = Image::find()
+			->where(['product_id'=>$id])
+			->all();
+		foreach($look as $looks):
+			$image ='../../img/cart/'.$looks->image_name;
+			unlink($image);
+			var_dump($image);
+		endforeach;
+		$model = $this->findModel($id)->delete();        
+        
         return $this->redirect(['index']);
     }
 

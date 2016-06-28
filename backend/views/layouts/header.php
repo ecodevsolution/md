@@ -178,7 +178,10 @@ use yii\bootstrap\NavBar;
                             <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
                             <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Change Password</a>                            
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+							
+							
+							
+                          <a class="dropdown-item" data-confirm="Are you Sure to Logout ?" href="?r=site/logout"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
                         </div>
                     </div>
 
