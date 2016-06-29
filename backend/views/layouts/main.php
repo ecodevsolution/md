@@ -23,7 +23,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<?= Html::csrfMetaTags() ?>
 		<title><?= Html::encode($this->title) ?></title>		
-		<?php $root = '@web';
+		<?php 
+			//$root = '@web';
+		    //
+			//	$this->registerJsFile($root."/js/lib/jquery/jquery.min.js",
+			//	['depends' => [\yii\web\JqueryAsset::className()],
+			//	'position' => View::POS_HEAD]);
+				
+
+
 			/*
 				$this->registerJsFile($root."/js/jquery.min.js",
 				['depends' => [\yii\web\JqueryAsset::className()],

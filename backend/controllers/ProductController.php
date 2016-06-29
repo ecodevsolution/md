@@ -38,6 +38,10 @@ class ProductController extends Controller
      * Lists all Product models.
      * @return mixed
      */
+	public function beforeAction($action) {
+		$this->enableCsrfValidation = false;
+		return parent::beforeAction($action);
+	}
     public function actionIndex()
     {
         $model = Product::find()
