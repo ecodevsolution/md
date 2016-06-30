@@ -51,7 +51,7 @@ class DetailCategory extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdsubcategory0()
+    public function getSubCategory()
     {
         return $this->hasOne(SubCategory::className(), ['idsubcategory' => 'idsubcategory']);
     }

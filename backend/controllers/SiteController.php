@@ -2,10 +2,10 @@
 namespace backend\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
 use yii\web\Controller;
-use common\models\LoginForm;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use common\models\LoginForm;
 
 /**
  * Site controller
@@ -26,19 +26,18 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout','index'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
             ],
-			'verbs' => [
+            'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    
+                    'logout' => ['post'],
                 ],
             ],
-           
         ];
     }
 
@@ -53,20 +52,15 @@ class SiteController extends Controller
             ],
         ];
     }
-	
-	public function actionIndex()
+
+    public function actionIndex()
     {
         return $this->render('index');
     }
-	public function actionTheme()
-    {
-        return $this->render('theme');
-    }
-
 
     public function actionLogin()
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 

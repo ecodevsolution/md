@@ -32,12 +32,11 @@ class MainCategoryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MainCategorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = MainCategory::find()
+				->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+			'model'=>$model,
         ]);
     }
 
@@ -64,7 +63,7 @@ class MainCategoryController extends Controller
 
         if ($model->load(Yii::$app->request->post())){
 			
-			$model->username = Yii::$app->user->identity->username;
+			//$model->username = Yii::$app->user->identity->username;
 			$model->save();
             return $this->redirect(['view', 'id' => $model->idmain]);
         } else {

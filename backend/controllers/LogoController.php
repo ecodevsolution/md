@@ -33,12 +33,11 @@ class LogoController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new LogoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = Logo::find()
+				->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'model'=>$model,            
         ]);
     }
 
@@ -67,9 +66,8 @@ class LogoController extends Controller
         if ($model->load(Yii::$app->request->post())){ 
 			$model->logo = Uploadedfile::getInstance($model,'logo');
 			$namaimage = md5(uniqid($model->logo));
-			$model->logo->saveAs('../../image/logo/' .$namaimage . '.' .$model->logo->extension);
-			$model->logo= $namaimage. '.' .$model->logo->extension;
-			$model->username = Yii::$app->user->identity->username;
+			$model->logo->saveAs('../../img/logo/' .$namaimage . '.' .$model->logo->extension);
+			$model->logo= $namaimage. '.' .$model->logo->extension;		
 			$model->save();
             return $this->redirect(['view', 'id' => $model->idlogo]);
         } else {
@@ -93,9 +91,8 @@ class LogoController extends Controller
 			if ($model->load(Yii::$app->request->post())){ 
 			$model->logo = Uploadedfile::getInstance($model,'logo');
 			$namaimage = md5(uniqid($model->logo));
-			$model->logo->saveAs('../../image/logo/' .$namaimage . '.' .$model->logo->extension);
-			$model->logo= $namaimage. '.' .$model->logo->extension;
-			$model->username = Yii::$app->user->identity->username;
+			$model->logo->saveAs('../../img/logo/' .$namaimage . '.' .$model->logo->extension);
+			$model->logo= $namaimage. '.' .$model->logo->extension;			
 			$model->save();
             return $this->redirect(['view', 'id' => $model->idlogo]);
         } else {

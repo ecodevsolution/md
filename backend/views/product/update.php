@@ -5,13 +5,13 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Product */
 
-$this->title = 'Update Product: ' . ' ' . $model->title;
+$this->title = 'Update Product: ' . $model->idproduct;
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->idproduk]];
+$this->params['breadcrumbs'][] = ['label' => $model->idproduct, 'url' => ['view', 'id' => $model->idproduct]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 
     <?= $this->render('_form', [
         'model' => $model,
-        'categories' => $categories,
+		'modelsImage' => (empty($modelsImage)) ? [new Image] : $modelsImage,
     ]) ?>

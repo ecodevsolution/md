@@ -32,12 +32,13 @@ class DetailCategoryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new DetailCategorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = DetailCategory::find()
+				->joinWith(['subCategory'])
+				->orderBy(['idsubcategory'=>SORT_DESC])
+				->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'model'=>$model,
         ]);
     }
 

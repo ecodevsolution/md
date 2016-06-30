@@ -19,7 +19,7 @@ class SliderSearch extends Slider
     {
         return [
             [['idslider'], 'integer'],
-            [['category', 'slider_img', 'tag', 'tag_highligt', 'tag_end', 'short_description', 'more_description'], 'safe'],
+            [['category', 'slider_img', 'tag', 'tag_highligt'], 'safe'],
         ];
     }
 
@@ -62,10 +62,7 @@ class SliderSearch extends Slider
         $query->andFilterWhere(['like', 'category', $this->category])
             ->andFilterWhere(['like', 'slider_img', $this->slider_img])
             ->andFilterWhere(['like', 'tag', $this->tag])
-            ->andFilterWhere(['like', 'tag_highligt', $this->tag_highligt])
-            ->andFilterWhere(['like', 'tag_end', $this->tag_end])
-            ->andFilterWhere(['like', 'short_description', $this->short_description])
-            ->andFilterWhere(['like', 'more_description', $this->more_description]);
+            ->andFilterWhere(['like', 'tag_highligt', $this->tag_highligt]);
 
         return $dataProvider;
     }

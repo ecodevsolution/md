@@ -21,7 +21,7 @@ class BrandController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    
                 ],
             ],
         ];
@@ -33,12 +33,11 @@ class BrandController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new BrandSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = Brand::find()
+				->all();
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        return $this->render('index', [            
+            'model' => $model,
         ]);
     }
 
@@ -106,8 +105,12 @@ class BrandController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $look = Brand::findOne($id);
+		$image ='../../img/brand/'.$look->brand_logo;
+		//var_dump($image);
+		if (unlink($image)) {
+			$model = $this->findModel($id)->delete();
+		}
         return $this->redirect(['index']);
     }
 

@@ -33,12 +33,11 @@ class BannerAdsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new BannerAdsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = BannerAds::find()
+				->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'model' => $model,            
         ]);
     }
 
@@ -67,7 +66,7 @@ class BannerAdsController extends Controller
 			
 			$model->banner = Uploadedfile::getInstance($model,'banner');
 			$namaimage = md5(uniqid($model->banner));
-			$model->banner->saveAs('../../image/banner/' .$namaimage . '.' .$model->banner->extension);
+			$model->banner->saveAs('../../img/banner/' .$namaimage . '.' .$model->banner->extension);
 			$model->banner= $namaimage. '.' .$model->banner->extension;
 			$model->save();
 				
@@ -100,7 +99,7 @@ class BannerAdsController extends Controller
 				$model->banner = $look->banner;
 				$model->save();
 			}else if(isset($model->banner)){
-				$model->banner->saveAs('../../image/banner/'.$imageName. '.'.$model->banner->extension );
+				$model->banner->saveAs('../../img/banner/'.$imageName. '.'.$model->banner->extension );
 				$model->banner= $imageName. '.'.$model->banner->extension;
 
 				$model->save();

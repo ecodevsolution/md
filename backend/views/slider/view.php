@@ -33,9 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'slider_img',
             'tag',
             'tag_highligt',
-            'tag_end',
-            'short_description',
-            'more_description',
         ],
     ]) ?>
 

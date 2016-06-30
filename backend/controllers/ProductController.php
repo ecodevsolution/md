@@ -13,22 +13,25 @@ use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
 use backend\models\SubCategory;
 use backend\models\DetailCategory;
-use common\models\Image;
+use backend\models\Image;
 use common\models\Model;
-use yii\data\ActiveDataProvider;
+
 
 /**
  * ProductController implements the CRUD actions for Product model.
  */
 class ProductController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    
+                   // 'delete' => ['POST'],
                 ],
             ],
         ];
@@ -42,38 +45,7 @@ class ProductController extends Controller
 		$this->enableCsrfValidation = false;
 		return parent::beforeAction($action);
 	}
-    public function actionIndex()
-    {
-        $model = Product::find()
-				->joinWith('mainCategory')
-				->joinWith('brand')
-				->joinWith('image')
-				->all();
-			
-		return $this->render('index', [                       
-            'model' => $model,					
-        ]);
-    }
-
-    /**
-     * Displays a single Product model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Product model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-	
-	public function actionLists($id)
+		public function actionLists($id)
 	{
 		 $countSubmain = SubCategory::find()
 		 ->where(['idmaincategory' => $id])
@@ -114,13 +86,43 @@ class ProductController extends Controller
 			echo "<option>-</option>";
 		}
 	}
+    public function actionIndex()
+    {
+         $model = Product::find()
+				->joinWith('mainCategory')
+				->joinWith('brand')
+				->joinWith('image')
+				->all();
+			
+		return $this->render('index', [                       
+            'model' => $model,					
+        ]);
+    }
+
+    /**
+     * Displays a single Product model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new Product model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
-		
         $model = new Product();
-		$img =  [new Image];
-		
+		$modelsImage = [new Image];
+		 
         if ($model->load(Yii::$app->request->post())){
+			
 			
 			if ($model->price < 100000){
 				$price = $model->price + 1000;
@@ -139,32 +141,31 @@ class ProductController extends Controller
 			$model->final_price = $finalprice;
 			$model->save();
 			
-			$img = Model::createMultiple(Image::classname());
-			Model::loadMultiple($img, Yii::$app->request->post());
 			
-			foreach ($img as $key => $imgs) {
+			$modelsImage = Model::createMultiple(Image::classname());
+			Model::loadMultiple($modelsImage, Yii::$app->request->post());
+			
+			foreach ($modelsImage as $key => $modelImage) {
 				
 				
-				$imgs->image_name=UploadedFile::getInstance($imgs,'['.$key.']image_name');
-				$imageName = md5(uniqid($imgs->image_name));
+				$modelImage->image_name=UploadedFile::getInstance($modelImage,'['.$key.']image_name');
+				$imageName = md5(uniqid($modelImage->image_name));
 				
 			
-				$imgs->image_name->saveAs('../../img/cart/'.$imageName. '.'.$imgs->image_name->extension );
+				$modelImage->image_name->saveAs('../../img/cart/'.$imageName. '.'.$modelImage->image_name->extension );
 				
-				$imgs->image_name= $imageName. '.'.$imgs->image_name->extension;
-				$imgs->product_id = $model->idproduk;
+				$modelImage->image_name= $imageName. '.'.$modelImage->image_name->extension;
+				$modelImage->product_id = $model->idproduk;
 					
-				$imgs->save(); 
-			
-				
+				$modelImage->save();
+				//var_dump($modelImage);
             }
-			
-            return $this->redirect(['view', 'id' => $model->idproduk]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                'img' => (empty($img)) ? [new Image] : $img
-            ]);
+			 return $this->redirect(['view', 'id' => $model->idproduk]);
+        }else {
+			return $this->render('create', [
+				'model' => $model,
+				'modelsImage' => (empty($modelsImage)) ? [new Image] : $modelsImage
+			]);
         }
     }
 
@@ -176,15 +177,13 @@ class ProductController extends Controller
      */
     public function actionUpdate($id)
     {
-        $categories = Category::find()->all();
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->idproduct]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'categories' => $categories,
             ]);
         }
     }
@@ -197,7 +196,7 @@ class ProductController extends Controller
      */
     public function actionDelete($id)
     {
-		$product = Product::findOne($id);					
+       $product = Product::findOne($id);					
 		$look = Image::find()
 			->where(['product_id'=>$id])
 			->all();

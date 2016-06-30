@@ -1,37 +1,35 @@
 <?php
-	use yii\helpers\Html;
-	use yii\bootstrap\ActiveForm;
-	
-	$this->title = 'Login';
-	$this->params['breadcrumbs'][] = $this->title;
+
+/* @var $this yii\web\View */
+/* @var $form yii\bootstrap\ActiveForm */
+/* @var $model \common\models\LoginForm */
+
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+
+$this->title = 'Login';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php $form = ActiveForm::begin([
-		'options'=>[
-				'class'=>'sign-box'
-			]
-		]); ?>
-    <div class="sign-avatar">
-        <img src="img/avatar-sign.png" alt="">
-    </div>
-    <header class="sign-title">Sign In</header>
-    <div class="form-group">
-		<?= $form
-			->field($model, 'email')
-			->label(false)
-			->textInput(['placeholder' => $model->getAttributeLabel('email')]) 
-		?>      
-    </div>
-    <div class="form-group">
-       <?= $form
-			->field($model, 'password')
-			->label(false)
-			->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) 
-		?>
-    </div>
-    <div class="form-group">
-        <div class="float-right reset">
-             <?= Html::a(' Forgot Password',['site/password-reset'],['class'=>'fa fa-unlock']); ?>	
+<div class="site-login">
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>Please fill out the following fields to login:</p>
+
+    <div class="row">
+        <div class="col-lg-5">
+            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+
+                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+
+                <?= $form->field($model, 'password')->passwordInput() ?>
+
+                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+
+                <div class="form-group">
+                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                </div>
+
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
-    <button type="submit" class="btn btn-rounded">Sign in</button>    
-<?php ActiveForm::end(); ?>
+</div>

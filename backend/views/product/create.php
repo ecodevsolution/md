@@ -11,10 +11,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-   
 
-     <?= $this->render('_form', [
+    <?= $this->render('_form', [
         'model' => $model,
-        'img' => (empty($img)) ? [new Image] : $img,
+		'modelsImage' => (empty($modelsImage)) ? [new Image] : $modelsImage
     ]) ?>
-

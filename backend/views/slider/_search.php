@@ -25,12 +25,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tag_highligt') ?>
 
-    <?php // echo $form->field($model, 'tag_end') ?>
-
-    <?php // echo $form->field($model, 'short_description') ?>
-
-    <?php // echo $form->field($model, 'more_description') ?>
-
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>

@@ -33,12 +33,11 @@ class BannerSaleController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new BannerSaleSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+       $model = BannerSale::find()
+			->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'model'=>$model,
         ]);
     }
 
@@ -67,7 +66,7 @@ class BannerSaleController extends Controller
 			
 			$model->sale_slider = Uploadedfile::getInstance($model,'sale_slider');
 			$namaimage = md5(uniqid($model->sale_slider));
-			$model->sale_slider->saveAs('../../image/banner/' .$namaimage . '.' .$model->sale_slider->extension);
+			$model->sale_slider->saveAs('../../img/sale/' .$namaimage . '.' .$model->sale_slider->extension);
 			$model->sale_slider= $namaimage. '.' .$model->sale_slider->extension;
 			
 			
@@ -102,7 +101,7 @@ class BannerSaleController extends Controller
 				$model->sale_slider = $look->sale_slider;
 				$model->save();
 			}else if(isset($model->sale_slider)){
-				$model->sale_slider->saveAs('../../image/banner/'.$imageName. '.'.$model->sale_slider->extension );
+				$model->sale_slider->saveAs('../../img/sale/'.$imageName. '.'.$model->sale_slider->extension );
 				$model->sale_slider= $imageName. '.'.$model->sale_slider->extension;
 
 				$model->save();

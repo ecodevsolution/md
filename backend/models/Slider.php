@@ -12,9 +12,6 @@ use Yii;
  * @property string $slider_img
  * @property string $tag
  * @property string $tag_highligt
- * @property string $tag_end
- * @property string $short_description
- * @property string $more_description
  */
 class Slider extends \yii\db\ActiveRecord
 {
@@ -32,7 +29,7 @@ class Slider extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category', 'slider_img', 'tag', 'tag_highligt', 'tag_end', 'short_description', 'more_description'], 'string', 'max' => 50]
+            [['category', 'slider_img', 'tag', 'tag_highligt'], 'string', 'max' => 50]
         ];
     }
 
@@ -47,9 +44,10 @@ class Slider extends \yii\db\ActiveRecord
             'slider_img' => 'Slider Img',
             'tag' => 'Tag',
             'tag_highligt' => 'Tag Highligt',
-            'tag_end' => 'Tag End',
-            'short_description' => 'Short Description',
-            'more_description' => 'More Description',
         ];
+    }
+	 public function getMainCategory()
+    {
+        return $this->hasOne(MainCategory::className(), ['idmain' => 'category']);
     }
 }

@@ -32,12 +32,13 @@ class SubCategoryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SubCategorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$model = SubCategory::find()
+				->joinWith(['mainCategory'])
+				->orderBy(['idmain'=>SORT_ASC])
+				->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+			'model'=>$model,
         ]);
     }
 

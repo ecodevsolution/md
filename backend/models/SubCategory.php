@@ -60,7 +60,7 @@ class SubCategory extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdmaincategory0()
+    public function getMainCategory()
     {
         return $this->hasOne(MainCategory::className(), ['idmain' => 'idmaincategory']);
     }

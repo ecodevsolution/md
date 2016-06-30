@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Uploadedfile;
+
 /**
  * SliderController implements the CRUD actions for Slider model.
  */
@@ -32,12 +33,12 @@ class SliderController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SliderSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = Slider::find()
+				->joinWith(['mainCategory'])
+				->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'model' => $model,           
         ]);
     }
 
@@ -64,13 +65,13 @@ class SliderController extends Controller
 
         if ($model->load(Yii::$app->request->post())){
 			
-			
 			$model->slider_img = Uploadedfile::getInstance($model,'slider_img');
 			$namaimage = md5(uniqid($model->slider_img));
-			$model->slider_img->saveAs('../../image/slider/' .$namaimage . '.' .$model->slider_img->extension);
+			$model->slider_img->saveAs('../../img/slider/' .$namaimage . '.' .$model->slider_img->extension);
 			$model->slider_img= $namaimage. '.' .$model->slider_img->extension;
-
+			
 			$model->save();
+			
             return $this->redirect(['view', 'id' => $model->idslider]);
         } else {
             return $this->render('create', [
@@ -88,22 +89,8 @@ class SliderController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-		$look = Slider::findOne($id);
-		
-        if ($model->load(Yii::$app->request->post())){
-			$model->slider_img=UploadedFile::getInstance($model,'slider_img');
-			$imageName = md5(uniqid($model->slider_img));
-			//
-			if(empty($model->slider_img)){
-				
-				$model->slider_img = $look->slider_img;
-				$model->save();
-			}else if(isset($model->slider_img)){
-				$model->slider_img->saveAs('../../image/slider/'.$imageName. '.'.$model->slider_img->extension );
-				$model->slider_img= $imageName. '.'.$model->slider_img->extension;
 
-				$model->save();
-			}
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idslider]);
         } else {
             return $this->render('update', [
@@ -120,8 +107,12 @@ class SliderController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $look = Slider::findOne($id);
+		$image ='../../img/slider/'.$look->slider_img;
+		//var_dump($image);
+		if (unlink($image)) {
+			$model = $this->findModel($id)->delete();
+		}
         return $this->redirect(['index']);
     }
 
