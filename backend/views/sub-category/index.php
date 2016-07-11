@@ -21,13 +21,13 @@ $this->params['breadcrumbs'][] = $this->title;
 		
 			</div>
 			<div class="tbl-cell tbl-cell-action-bordered">
-				 <?= Html::a('', ['main-category/index'], ['class' => 'font-icon font-icon-pencil']) ?>				
+				 <?= Html::a('', ['main-category/index'], ['class' => 'font-icon font-icon-widget','title'=>'Main Category']) ?>				
 			</div>
 			<div class="tbl-cell tbl-cell-action-bordered">
-				 <?= Html::a('', ['sub-category/index'], ['class' => 'font-icon font-icon-pencil']) ?>
+				 <?= Html::a('', ['sub-category/index'], ['class' => 'font-icon font-icon-list-square','title'=>'Sub Category']) ?>
 			</div>
 			<div class="tbl-cell tbl-cell-action-bordered">
-				 <?= Html::a('', ['detail-category/index'], ['class' => 'font-icon font-icon-pencil']) ?>
+				 <?= Html::a('', ['detail-category/index'], ['class' => 'font-icon font-icon-post','title'=>'Detail Category']) ?>
 			</div>
 		</div>
 	</header>

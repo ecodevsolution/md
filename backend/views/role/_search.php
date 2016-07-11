@@ -4,24 +4,20 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\LogoSearch */
+/* @var $model common\models\RoleSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="logo-search">
+<div class="role-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'idlogo') ?>
+    <?= $form->field($model, 'idrole') ?>
 
-    <?= $form->field($model, 'title') ?>
-
-    <?= $form->field($model, 'username') ?>
-
-    <?= $form->field($model, 'logo') ?>
+    <?= $form->field($model, 'rolename') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

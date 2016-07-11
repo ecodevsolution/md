@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\LogoSearch */
+/* @var $searchModel common\models\RoleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Logos';
+$this->title = 'Roles';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <section class="box-typical">
@@ -25,29 +25,26 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
-					<tr>
-						<th>Image</th>						
-						<th width="90%">title</th>						
+					<tr>						
+						<th width="90%">Role Name</th>						
 						<th colspan="2">Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php 
-						foreach($model as $models):
+						foreach($model as $models):			
 					?>
 					<tr>
-						<td class="table-photo">
-							<img src="../../img/logo/<?= $models->logo; ?>" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-						</td>
-						<td width="90%">
-							<?= $models->title; ?>
+						<td>
+							<?= $models->rolename; ?>
 						</td>
 						<td class="table-icon-cell">
-							<?= Html::a('', ['update','id'=>$models->idlogo], ['class' => 'fa fa-pencil']) ?>													
+							<?= Html::a('', ['update','id'=>$models->idrole], ['class' => 'fa fa-pencil']) ?>													
 						</td>
 						<td class="table-icon-cell">
-							<?= Html::a('', ['delete','id'=>$models->idlogo], ['class' => 'fa fa-trash swal-btn-warning']) ?>																										
-						</td>											
+							<?= Html::a('', ['delete','id'=>$models->idrole], ['class' => 'fa fa-trash swal-btn-warning']) ?>	
+																									
+						</td>													
 					</tr>	
 					<?php endforeach; ?>
 				</tbody>
@@ -56,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div><!--.box-typical-body-->
 </section><!--.box-typical-->
 
-	<?php 
+		<?php 
 		$this->registerJs("
 		$(document).ready(function() {
 			$('.swal-btn-basic').click(function(e){

@@ -13,7 +13,6 @@ use frontend\models\FontTitle;
 use frontend\models\Footer;
 use frontend\models\Header;
 use frontend\models\Navbar;
-use frontend\models\Theme;
 use frontend\models\Slider;
 use frontend\models\Product;
 use frontend\models\Customer;
@@ -91,60 +90,44 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-		$models = Theme::find()
-			->where(['user_name'=>'junot'])
-			->one();
 
-		if ($models->width == '-fluid'){
-			$sale = BannerSale::find()
-					->all();
-			
-			$adsleft = BannerAds::find()
-					->where(['flag'=>1])
-					->all();
-					
-			$adsright = BannerRight::find()
-					->where(['flag'=>1])
-					->all();
-			
-			$bottom = BannerBottom::find()
-					->where(['flag'=>1])
-					->all();
-			
-			$brand = Product::find()
-					->joinWith('brand')
-					->select('brand.idbrand')
-					->distinct()
-					->all();
-			
-			$icon = InfoBox::find()
-					->all();
-			
-			$slider = Slider::find()
-					->all();
-			
-			$tag = Product::find()
-				  ->JoinWith('mainCategory')
-				  ->select('main_category.idmain')
-				  ->distinct()
-				  ->all();
-				  
+		$sale = BannerSale::find()
+				->all();
+		
+		$adsleft = BannerAds::find()
+				->where(['flag'=>1])
+				->all();
+				
+		
+		$brand = Product::find()
+				->joinWith('brand')
+				->select('brand.idbrand')
+				->distinct()
+				->all();
+		
+		$icon = InfoBox::find()
+				->all();
+		
+		$slider = Slider::find()
+				->all();
+		
+		$tag = Product::find()
+			  ->JoinWith('mainCategory')
+			  ->select('main_category.idmain')
+			  ->distinct()
+			  ->all();
+			  
 			
 					
         return $this->render('homepage',[
 			'sale'=>$sale,
 			'adsleft'=>$adsleft,
-			'adsright'=>$adsright,
-			'bottom'=>$bottom,
 			'brand'=>$brand,
 			'icon'=>$icon,
 			'slider'=>$slider,
 			'tag'=>$tag,
 				
 		]);
-		}else{
-			return $this->render('homepage2');
-		}
     }
 
     public function actionLogin()

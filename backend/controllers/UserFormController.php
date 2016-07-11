@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Seo;
-use backend\models\SeoSearch;
+use backend\models\UserForm;
+use backend\models\UserFormSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * SeoController implements the CRUD actions for Seo model.
+ * UserFormController implements the CRUD actions for UserForm model.
  */
-class SeoController extends Controller
+class UserFormController extends Controller
 {
     public function behaviors()
     {
@@ -27,12 +27,12 @@ class SeoController extends Controller
     }
 
     /**
-     * Lists all Seo models.
+     * Lists all UserForm models.
      * @return mixed
      */
     public function actionIndex()
     {
-		 $searchModel = new SeoSearch();
+        $searchModel = new UserFormSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -42,7 +42,7 @@ class SeoController extends Controller
     }
 
     /**
-     * Displays a single Seo model.
+     * Displays a single UserForm model.
      * @param integer $id
      * @return mixed
      */
@@ -54,47 +54,16 @@ class SeoController extends Controller
     }
 
     /**
-     * Creates a new Seo model.
+     * Creates a new UserForm model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-	 
-	public function actionSeo($id){
-			$models = Seo::find()
-					->count();
-					
-			if($models >=  1){
-				$model = Seo::find()
-					->one();
-			}else{
-				$model = new Seo();
-				
-			}		
-        if ($model->load(Yii::$app->request->post())){
-			if($models == 0){
-				
-				$model->save(false);
-			}else{
-				$model->save();
-			}
-			
-			//var_dump($model);
-			return $this->redirect(['seo','id'=>$id]);			
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-				'models' => $models,
-            ]);
-        }
-    }
-	
     public function actionCreate()
-    {        
-		$model = new Seo();
-        if ($model->load(Yii::$app->request->post())){
-			
-			$model->save();
-            return $this->redirect(['view', 'id' => $model->idseo]);
+    {
+        $model = new UserForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -103,7 +72,7 @@ class SeoController extends Controller
     }
 
     /**
-     * Updates an existing Seo model.
+     * Updates an existing UserForm model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -113,7 +82,7 @@ class SeoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idseo]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -122,7 +91,7 @@ class SeoController extends Controller
     }
 
     /**
-     * Deletes an existing Seo model.
+     * Deletes an existing UserForm model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -135,15 +104,15 @@ class SeoController extends Controller
     }
 
     /**
-     * Finds the Seo model based on its primary key value.
+     * Finds the UserForm model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Seo the loaded model
+     * @return UserForm the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Seo::findOne($id)) !== null) {
+        if (($model = UserForm::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

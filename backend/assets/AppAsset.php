@@ -28,6 +28,7 @@ class AppAsset extends AssetBundle
 		'js/loader.js',
 		'js/lib/bootstrap-sweetalert/sweetalert.min.js',
 		'js/app.js',
+		'js/lib/jquery-tag-editor/jquery.tag-editor.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

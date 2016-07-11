@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Logo;
+use backend\models\Role;
 
 /**
- * LogoSearch represents the model behind the search form about `backend\models\Logo`.
+ * RoleSearch represents the model behind the search form about `common\models\Role`.
  */
-class LogoSearch extends Logo
+class RoleSearch extends Role
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class LogoSearch extends Logo
     public function rules()
     {
         return [
-            [['idlogo'], 'integer'],
-            [['title', 'username', 'logo'], 'safe'],
+            [['idrole'], 'integer'],
+            [['rolename'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class LogoSearch extends Logo
      */
     public function search($params)
     {
-        $query = Logo::find();
+        $query = Role::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -50,18 +50,16 @@ class LogoSearch extends Logo
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to any records when validation fails
+            // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
 
         $query->andFilterWhere([
-            'idlogo' => $this->idlogo,
+            'idrole' => $this->idrole,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'logo', $this->logo]);
+        $query->andFilterWhere(['like', 'rolename', $this->rolename]);
 
         return $dataProvider;
     }

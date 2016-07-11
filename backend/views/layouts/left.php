@@ -41,12 +41,8 @@
                 <i class="glyphicon glyphicon-home"></i>
                 <span class="lbl">Store Setup</span>
             </span>
-            <ul>               
-				<li><a href="?r=setting/store"><span class="lbl">Close/Open Store</span></a></li>
-				<li><a href="?r=logo/index"><span class="lbl">Logo</span></a></li>
-				<li><a href="?r=seo/index"><span class="lbl">SEO</span></a></li>
-				<li><a href="?r=about-us/index"><span class="lbl">About</span></a></li>
-				<li><a href="?r=contact-us/index"><span class="lbl">Contact</span></a></li>
+            <ul>               							
+				<li><a href="?r=seo/seo&id=1"><span class="lbl">SEO</span></a></li>				
             </ul>
         </li>
 		
@@ -57,7 +53,7 @@
             </span>
             <ul>               
 				<li><a href="?r=role/index"><span class="lbl">Role</span></a></li>
-				<li><a href="?r=privillage/index"><span class="lbl">Privillage User</span></a></li>
+				<li><a href="?r=privillage-user/index"><span class="lbl">Privillage User</span></a></li>
 				<li><a href="?r=user-form/index"><span class="lbl">User</span></a></li>
             </ul>
         </li>

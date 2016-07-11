@@ -3,17 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Logo;
-use backend\models\LogoSearch;
+use backend\models\Role;
+use backend\models\RoleSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\Uploadedfile;
 
 /**
- * LogoController implements the CRUD actions for Logo model.
+ * RoleController implements the CRUD actions for Role model.
  */
-class LogoController extends Controller
+class RoleController extends Controller
 {
     public function behaviors()
     {
@@ -28,21 +27,21 @@ class LogoController extends Controller
     }
 
     /**
-     * Lists all Logo models.
+     * Lists all Role models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $model = Logo::find()
+        $model = Role::find()
 				->all();
 
         return $this->render('index', [
-            'model'=>$model,            
+            'model' => $model,            
         ]);
     }
 
     /**
-     * Displays a single Logo model.
+     * Displays a single Role model.
      * @param integer $id
      * @return mixed
      */
@@ -54,47 +53,35 @@ class LogoController extends Controller
     }
 
     /**
-     * Creates a new Logo model.
+     * Creates a new Role model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Logo();
-       
+        $model = new Role();
 
-        if ($model->load(Yii::$app->request->post())){ 
-			$model->logo = Uploadedfile::getInstance($model,'logo');
-			$namaimage = md5(uniqid($model->logo));
-			$model->logo->saveAs('../../img/logo/' .$namaimage . '.' .$model->logo->extension);
-			$model->logo= $namaimage. '.' .$model->logo->extension;		
-			$model->save();
-            return $this->redirect(['view', 'id' => $model->idlogo]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->idrole]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-				
             ]);
         }
     }
 
     /**
-     * Updates an existing Logo model.
+     * Updates an existing Role model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
-			$model = Logo::findOne($id);
-        
-			if ($model->load(Yii::$app->request->post())){ 
-			$model->logo = Uploadedfile::getInstance($model,'logo');
-			$namaimage = md5(uniqid($model->logo));
-			$model->logo->saveAs('../../img/logo/' .$namaimage . '.' .$model->logo->extension);
-			$model->logo= $namaimage. '.' .$model->logo->extension;			
-			$model->save();
-            return $this->redirect(['view', 'id' => $model->idlogo]);
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->idrole]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -103,7 +90,7 @@ class LogoController extends Controller
     }
 
     /**
-     * Deletes an existing Logo model.
+     * Deletes an existing Role model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -116,15 +103,15 @@ class LogoController extends Controller
     }
 
     /**
-     * Finds the Logo model based on its primary key value.
+     * Finds the Role model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Logo the loaded model
+     * @return Role the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Logo::findOne($id)) !== null) {
+        if (($model = Role::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

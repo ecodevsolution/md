@@ -8,11 +8,7 @@
 	use yii\bootstrap\NavBar;
 	use yii\widgets\Breadcrumbs;
 	use frontend\assets\AppAsset;
-	use common\widgets\Alert;
-	use frontend\models\Metadescription;
-	use frontend\models\Metatitle;
-	use frontend\models\Author;
-	use frontend\models\Keyword;
+	use common\widgets\Alert;	
 	use frontend\models\Logo;
 	use yz\shoppingcart\ShoppingCart;
 	use yii\web\View;
@@ -34,31 +30,13 @@
 <html lang="<?= Yii::$app->language ?>">
 	<head>
 		<?php
-			$meta_desc = Metadescription::find()
-						->orderBy(['idmetadesc'=>SORT_DESC])
-						->limit(1)
-						->One();
-						
-			$meta_title = Metatitle::find()
-						->orderBy(['idtitle'=>SORT_DESC])
-						->limit(1)
-						->One();
-			
-			$meta_keyword = Keyword::find()
-						->orderBy(['idkeyword'=>SORT_DESC])
-						->limit(1)
-						->One();
-						
-			$meta_author = Author::find()
-						->orderBy(['idauthor'=>SORT_DESC])
-						->limit(1)
-						->One();
+
 		?>
 			<meta charset="<?= Yii::$app->charset ?>">
 			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<meta name='keywords' content='<?= $meta_keyword->keyword; ?>' />
-			<meta name='author' content='<?= $meta_author->author; ?>' />
-			<meta name='description' content='<?= $meta_desc->description; ?>' />
+			<meta name='keywords' content='' />
+			<meta name='author' content='' />
+			<meta name='description' content='' />
 			<?= Html::csrfMetaTags() ?>
 			<title><?= Html::encode($this->title) ?></title>
 		<?php $this->head() ?>
