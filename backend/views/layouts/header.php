@@ -4,6 +4,14 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 /* @var $this \yii\web\View */
 /* @var $content string */
+
+$this->registerCss("
+	.help-block{
+		color:#f10000;
+		font-size:12px;
+		font-familly:verdana;
+	}
+");
 ?>
 
 <header class="site-header">

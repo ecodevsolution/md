@@ -32,12 +32,10 @@ class UserFormController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UserFormSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+		$model = UserForm::find()
+				->all();
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'model' => $model,            
         ]);
     }
 
@@ -62,8 +60,19 @@ class UserFormController extends Controller
     {
         $model = new UserForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())){
+			
+			if ($model->validate()) {
+				$model->created_at = date('Ymd');
+				$model->password_hash = Yii::$app->security->generatePasswordHash($model->password_hash);
+				$model->generateAuthKey();
+				$model->save();
+				return $this->redirect(['view', 'id' => $model->id]);
+			} else {				
+				return $this->render('create', [
+					'model' => $model,
+				]);
+			}						
         } else {
             return $this->render('create', [
                 'model' => $model,

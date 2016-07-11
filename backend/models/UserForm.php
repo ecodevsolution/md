@@ -49,13 +49,16 @@ class UserForm extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idrole', 'idcity', 'idprovince', 'courier', 'province', 'city', 'firstname', 'lastname', 'email', 'paket', 'domain', 'auth_key', 'password_hash', 'description', 'status', 'created_at'], 'required'],
+            [['idrole', 'firstname', 'lastname', 'email', 'password_hash', 'status'], 'required'],
             [['idrole', 'idcity', 'idprovince', 'paket', 'status', 'created_at', 'updated_at'], 'integer'],
             [['balanced'], 'number'],
             [['description'], 'string'],
             [['courier'], 'string', 'max' => 25],
             [['province', 'city', 'firstname', 'lastname', 'email', 'nama_toko', 'work_hour', 'logo'], 'string', 'max' => 50],
+			[['email'],'email'],
             [['domain'], 'string', 'max' => 100],
+			[['password_hash'],'string', 'min'=>6],
+			['email', 'unique', 'targetAttribute' => ['email'], 'message' => 'Email must be unique.'],
             [['auth_key'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token', 'address'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 20]
@@ -65,6 +68,10 @@ class UserForm extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+	public function generateAuthKey()
+    {
+        $this->auth_key = Yii::$app->security->generateRandomString();
+    }
     public function attributeLabels()
     {
         return [
