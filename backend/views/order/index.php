@@ -4,20 +4,18 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\CustomerSearch */
+/* @var $searchModel backend\models\OrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Customers';
+$this->title = 'Orders';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <section class="box-typical">
 	<header class="box-typical-header">
 		<div class="tbl-row">
 			<div class="tbl-cell tbl-cell-title">
 				<h3><?= Html::encode($this->title) ?></h3>
-			</div>
-			<div class="tbl-cell tbl-cell-action-bordered">
-				 <?= Html::a('', ['create'], ['class' => 'font-icon font-icon-pencil']) ?>
 			</div>
 		</div>
 	</header>
@@ -26,57 +24,46 @@ $this->params['breadcrumbs'][] = $this->title;
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Is Guest</th>
-						<th>Titles</th>
-						<th>Firstname</th>
-						<th>Lastname</th>
-						<th>Birthday</th>
-						<th>Email</th>
-						<th>Status</th>
-						<th colspan="2">Action</th>
+						<th>Order ID #</th>
+						<th width="180px">Customer Name</th>
+						<th>Courier</th>						
+						<th>Payment</th>
+						<th>Bank</th>
+						<th>Total Amount</th>
+						<th>Date</th>
+						<th>Order Status</th>
+						<th>Action</th>
 					</tr>
 				</thead>
-				<tbody>	
-					<?php
+				<tbody>
+					<?php 
 						foreach($model as $models):
 					?>
 					<tr>
 						
-						<td>
-							<?php
-								if($models->is_guest == 1){
-									echo"<div class='text-center '> <span style='color:#46c35f;' class='fa fa-check'></span></div>";
-								}else{
-									echo"<div class='text-center '> <span style='color:#c50009;' class='fa fa-times'></span></div>";
-								}
-							?>
-						</td>
-						<td> <?php
-								if($models->titles == 1){
-									echo"<div class='text-center '> <span style='color:#46c35f;'>Male</span></div>";
-								}else{
-									echo"<div class='text-center '> <span style='color:#c50009;'>Female</span></div>";
-								}
-							?></td>
-						<td> <?= $models->firstname; ?></td>
-						<td> <?= $models->lastname; ?></td>
-						<td> <?= $models->bod; ?></td>
-						<td> <?= $models->email; ?></td>
+						<td><?= $models['idorder']; ?></td>
+						<td><?= ucwords(strtolower($models['firstname'])).' '.ucwords(strtolower($models['lastname']))?></td>
+						<td><?= strtoupper($models['idshipping']) ?></td>										
+						<td>Transfer</td>
+						<td><?= $models['bank']?></td>
+						<td><?= $models['grandtotal']?></td>
+						<td><?= $models['date']?></td>
 						<td class="table-date">
 							<?php
-								if($models->status == 10){
-									echo"<div class='text-center '> <span style='color:#46c35f;' class='fa fa-check'></span></div>";
-								}else{
-									echo"<div class='text-center '> <span style='color:#c50009;' class='fa fa-times'></span></div>";
+								if($models['st'] == 1){
+									echo"<div class='text-center '><span class='label label-warning'>Awaiting Payment</span></div>";
+								}else if($models['st'] == 3){
+									echo"<div class='text-center '><span class='label label-success'>Success</span></div>";
+								}else if($models['st'] == 4){
+									echo"<div class='text-center '><a href='?r=order/payment-confirmation&id=".$models['idorder']."' class='label label-primary'>Payment Confirmation</a></div>";
+								}else if($models['st'] == 5){
+									echo"<div class='text-center '><span class='label label-primary'>Sent</span></div>";
 								}
 							?> 
 						</td>
 						<td class="table-icon-cell">
-							<?= Html::a('', ['update','id'=>$models->idcustomer], ['class' => 'fa fa-pencil']) ?>													
-						</td>
-						<td class="table-icon-cell">
-							<?= Html::a('', ['delete','id'=>$models->idcustomer], ['class' => 'fa fa-trash swal-btn-warning']) ?>																										
-						</td>											
+							<?= Html::a('', ['update','id'=>$models['idorder']], ['class' => 'font-icon font-icon-arrow-right']) ?>													
+						</td>										
 					</tr>	
 					<?php endforeach; ?>
 				</tbody>

@@ -58,7 +58,7 @@ class UserForm extends \yii\db\ActiveRecord
 			[['email'],'email'],
             [['domain'], 'string', 'max' => 100],
 			[['password_hash'],'string', 'min'=>6],
-			['email', 'unique', 'targetAttribute' => ['email'], 'message' => 'Email must be unique.'],
+			['email', 'unique', 'targetAttribute' => ['email'], 'message' => 'Your Email Already Exist !.'],
             [['auth_key'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token', 'address'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 20]

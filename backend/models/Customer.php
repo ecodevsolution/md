@@ -74,8 +74,8 @@ class Customer extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCustomerAddresses()
+    public function getCustomerAddress()
     {
-        return $this->hasMany(CustomerAddress::className(), ['idcustomer' => 'idcustomer']);
+        return $this->hasOne(CustomerAddress::className(), ['idcustomer' => 'idcustomer']);
     }
 }

@@ -71,8 +71,8 @@
                 <span class="lbl">Orders</span>
             </span>
             <ul>
-                <li><a href="?r=logo/index"><span class="lbl">Orders</span></a></li>
-				<li><a href="?r=slider/index"><span class="lbl">Orders History</span></a></li>
+                <li><a href="?r=order/index"><span class="lbl">Orders</span></a></li>
+				<li><a href="?r=order-history/index"><span class="lbl">Orders History</span></a></li>
             </ul>
         </li>
     </ul>
