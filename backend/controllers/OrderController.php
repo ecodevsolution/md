@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\OrderStatus;
+use backend\models\OrderItem;
 
 
 /**
@@ -93,6 +94,22 @@ class OrderController extends Controller
 				->orderBy(['idstatus'=>SORT_DESC])
 				->Limit(3)
 				->all();
+		$item = OrderItem::find()				
+				->joinWith('product')
+				->where(['order_id'=>$id])
+				->all();
+		$customer = Order::find()
+				->joinWith('customer')
+				->where(['idorder'=>$id])
+				->all();
+				
+		$connection = \Yii::$app->db;
+		$sql = $connection->createCommand("select month(date) as date, count(*) as jml 
+										   from `order` where idcustomer = '".$model->idcustomer."' 
+										   and year(date) = year(now()) group by month(date)");
+									
+		$graph = $sql->queryAll();
+		
 		if(isset($_POST['status'])){
 			$add = new OrderStatus();
 			$add->idorder = $id;
@@ -118,6 +135,9 @@ class OrderController extends Controller
             return $this->render('update', [
                 'model' => $model,
 				'status' => $status,
+				'item'=>$item,
+				'customer'=>$customer,
+				'graph' => $graph,
             ]);
         }
     }
