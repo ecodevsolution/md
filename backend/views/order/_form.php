@@ -241,7 +241,7 @@ use yii\widgets\ActiveForm;
 															<?php }else if($graphs['date'] == 5){ ?>
 																<rect x="181" y="144" width="23" height="40" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 6){ ?>
-																<rect x="217" y="82.4" width="23" height="128.8" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
+																<rect x="217" y="162" width="23" height="23" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 7){ ?>
 																<rect x="253" y="171" width="23" height="13" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 8){ ?>
@@ -341,16 +341,16 @@ use yii\widgets\ActiveForm;
                                                         <text text-anchor="end" x="23.5" y="130.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">5</text>
                                                     </g>
                                                     <g>
-                                                        <text text-anchor="end" x="23.5" y="101.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">15</text>
+                                                        <text text-anchor="end" x="23.5" y="101.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">10</text>
                                                     </g>
 													<g>
-                                                        <text text-anchor="end" x="23.5" y="72.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">25</text>
+                                                        <text text-anchor="end" x="23.5" y="72.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">15</text>
                                                     </g>
 													<g>
-                                                        <text text-anchor="end" x="23.5" y="43.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">35</text>
+                                                        <text text-anchor="end" x="23.5" y="43.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">20</text>
                                                     </g>
 													<g>
-                                                        <text text-anchor="end" x="23.5" y="14.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">45</text>
+                                                        <text text-anchor="end" x="23.5" y="14.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">> 25</text>
                                                     </g>
                                                 </g>
                                                 <!-- END Huruf A-K -->
