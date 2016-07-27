@@ -7,8 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Unirest' => array($vendorDir . '/mashape/unirest-php/lib'),
+    'Imagine' => array($vendorDir . '/imagine/imagine/lib'),
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
-    'Faker\\PHPUnit' => array($vendorDir . '/fzaninotto/faker/test'),
-    'Faker' => array($vendorDir . '/fzaninotto/faker/src'),
     'Diff' => array($vendorDir . '/phpspec/php-diff/lib'),
 );

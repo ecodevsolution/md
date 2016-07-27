@@ -21,7 +21,8 @@
         "omnilight/yii2-shopping-cart": "~1.0",
         "2amigos/yii2-tinymce-widget": "~1.1",
         "wbraganca/yii2-dynamicform": "*",
-        "hok00age/rajaongkir": "^1.0"
+        "hok00age/rajaongkir": "^1.0",
+        "yiisoft/yii2-imagine": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

@@ -28,7 +28,10 @@ class Brand extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['brand_name','brand_name'], 'string', 'max' => 50]
+            [['brand_name','brand_logo'], 'string', 'max' => 50],
+			['brand_logo', 'image', 'extensions' => ['png', 'jpg'], 
+				'minWidth' => 140, 'minHeight' => 29,
+			],
         ];
     }
 
@@ -39,7 +42,7 @@ class Brand extends \yii\db\ActiveRecord
     {
         return [
             'idbrand' => 'Idbrand',
-			'brand_name' => 'Brand Logo',
+			'brand_logo' => 'Brand Logo',
             'brand_name' => 'Brand Name',
         ];
     }

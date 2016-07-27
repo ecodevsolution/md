@@ -3,12 +3,13 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\models\Brand;
-use backend\models\Image;
+use backend\models\Images;
 use backend\models\MainCategory;
 use backend\models\SubCategory;
 use yii\helpers\ArrayHelper;
 use wbraganca\dynamicform\DynamicFormWidget;
 use dosamigos\tinymce\TinyMce;
+
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Product */
@@ -227,26 +228,25 @@ use dosamigos\tinymce\TinyMce;
 		
 		if(isset($_GET['id'])){
 			$id = $_GET['id'];
-			$prod = Image::find()
+			$prod = Images::find()
 				  ->where(['product_id' => $id])
 				  ->all();
 		
 		foreach($prod as $prods):
 	?>
 	<div class="item panel panel-default"><!-- widgetBody -->
-        <div class="panel-heading">
-            <h3 class="panel-title pull-left">Current Image</h3>
+        <div class="panel-heading">            
 			<div class="pull-right">
-               <?= Html::a('', ['del', 'id' => $prods->id_images], ['class' => 'glyphicon glyphicon-minus']) ?>
+               <?= Html::a('', ['del', 'id' => $prods->idimage], ['class' => 'fa fa-trash swal-btn-warning']) ?>
             </div>
-            <div class="clearfix"></div>
+            <div class="clearfix"></div>			
         </div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-12">
 					<?php 
-						if(isset($prods->image)){
-							echo Html::img('../../images/cart/'.$prods->image_name,['width'=>93]); 
+						if(isset($prods->image_name)){
+							echo Html::img('../../img/cart/300x/'.$prods->image_name,['width'=>93]); 
 							
 						}
 					?>	
@@ -255,7 +255,7 @@ use dosamigos\tinymce\TinyMce;
                 	<?= $form->field($prods, 'title')->textInput(['readonly' => true]) ?>
 				</div>
 				<div class="col-sm-12">
-					<?= $form->field($prods, 'is_cover')->dropDownList(array('0' => 'Yes', '1' => 'No'),['readonly' => true]) ?>				
+					<?= $form->field($prods, 'is_cover')->dropDownList(array('1' => 'Yes', '0' => 'No'),['readonly' => true]) ?>				
 				</div>
             </div><!-- .row -->
         </div>
@@ -300,7 +300,7 @@ use dosamigos\tinymce\TinyMce;
                                 <?= $form->field($modelImage, "[{$i}]title")->textInput(['maxlength' => 50]) ?>
                             </div>
 							<div class="col-sm-12">
-								<?= $form->field($modelImage, "[{$i}]is_cover")->dropDownList(array('0' => 'Yes', '1' => 'No'),['prompt'=>'- Choose -']) ?>
+								<?= $form->field($modelImage, "[{$i}]is_cover")->dropDownList(array('1' => 'Yes', '0' => 'No'),['prompt'=>'- Choose -']) ?>
                             </div>
                         </div><!-- .row -->
                     </div>
@@ -317,3 +317,136 @@ use dosamigos\tinymce\TinyMce;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+	<?php 
+		$this->registerJs("
+		$(document).ready(function() {
+			$('.swal-btn-basic').click(function(e){
+				e.preventDefault();
+				swal('Heres a message!');
+			});
+
+			$('.swal-btn-text').click(function(e){
+				e.preventDefault();
+				swal({
+					title: 'Heres a message!',
+					text: 'Its pretty, isnt it?'
+				});
+			});
+
+			$('.swal-btn-success').click(function(e){
+				e.preventDefault();
+				swal({
+					title: 'Good job!',
+					text: 'You clicked the button!',
+					type: 'success',
+					confirmButtonClass: 'btn-success',
+					confirmButtonText: 'Success'
+				});
+			});
+
+			$('.swal-btn-warning').click(function(e){
+				e.preventDefault();
+				var getLink = $(this).attr('href');
+                swal({
+                        title: 'Are you sure?',
+						text: 'You will not be able to recover this imaginary file!',
+						type: 'warning',
+						showCancelButton: true,
+						confirmButtonClass: 'btn-danger',
+						confirmButtonText: 'Yes, delete it!',
+						cancelButtonText: 'No, cancel!',
+						closeOnConfirm: false,
+						closeOnCancel: false
+						
+                        },function(isConfirm){
+							if (isConfirm) {
+								window.location.href = getLink
+							} else {
+								swal({
+									title: 'Cancelled',
+									text: 'Your file is safe :)',
+									type: 'error',
+									confirmButtonClass: 'btn-danger'
+								});
+							}                        
+                    });
+                return false;
+			});
+
+			$('.swal-btn-cancel').click(function(e){
+				e.preventDefault();
+				swal({
+							title: 'Are you sure?',
+							text: 'You will not be able to recover this imaginary file!',
+							type: 'warning',
+							showCancelButton: true,
+							confirmButtonClass: 'btn-danger',
+							confirmButtonText: 'Yes, delete it!',
+							cancelButtonText: 'No, cancel plx!',
+							closeOnConfirm: false,
+							closeOnCancel: false
+						},
+						function(isConfirm) {
+							if (isConfirm) {
+								swal({
+									title: 'Deleted!',
+									text: 'Your imaginary file has been deleted.',
+									type: 'success',
+									confirmButtonClass: 'btn-success'
+								});
+							} else {
+								swal({
+									title: 'Cancelled',
+									text: 'Your imaginary file is safe :)',
+									type: 'error',
+									confirmButtonClass: 'btn-danger'
+								});
+							}
+						});
+			});
+
+			$('.swal-btn-custom-img').click(function(e){
+				e.preventDefault();
+				swal({
+					title: 'Sweet!',
+					text: 'Heres a custom image.',
+					confirmButtonClass: 'btn-success',
+					imageUrl: 'img/smile.png'
+				});
+			});
+
+			$('.swal-btn-info').click(function(e){
+				e.preventDefault();
+				swal({
+					title: 'Are you sure?',
+					text: 'Your will not be able to recover this imaginary file!',
+					type: 'info',
+					showCancelButton: true,
+					cancelButtonClass: 'btn-default',
+					confirmButtonText: 'Info',
+					confirmButtonClass: 'btn-primary'
+				});
+			});
+
+			$('.swal-btn-input').click(function(e){
+				e.preventDefault();
+				swal({
+					title: 'An input!',
+					text: 'Write something interesting:',
+					type: 'input',
+					showCancelButton: true,
+					closeOnConfirm: false,
+					inputPlaceholder: 'Write something'
+				}, function (inputValue) {
+					if (inputValue === false) return false;
+					if (inputValue === '') {
+						swal.showInputError('You need to write something!');
+						return false
+					}
+					swal('Nice!', 'You wrote: ' + inputValue, 'success');
+				});
+			});
+		});
+		");
+	?>

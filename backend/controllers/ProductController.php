@@ -13,8 +13,12 @@ use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
 use backend\models\SubCategory;
 use backend\models\DetailCategory;
-use backend\models\Image;
+use backend\models\Images;
 use common\models\Model;
+use yii\imagine\Image;
+use Imagine\Gd;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
 
 
 /**
@@ -91,7 +95,7 @@ class ProductController extends Controller
          $model = Product::find()
 				->joinWith('mainCategory')
 				->joinWith('brand')
-				->joinWith('image')
+				->joinWith('images')
 				->all();
 			
 		return $this->render('index', [                       
@@ -119,7 +123,7 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
-		$modelsImage = [new Image];
+		$modelsImage = [new Images];
 		 
         if ($model->load(Yii::$app->request->post())){
 			
@@ -142,7 +146,7 @@ class ProductController extends Controller
 			$model->save();
 			
 			
-			$modelsImage = Model::createMultiple(Image::classname());
+			$modelsImage = Model::createMultiple(Images::classname());
 			Model::loadMultiple($modelsImage, Yii::$app->request->post());
 			
 			foreach ($modelsImage as $key => $modelImage) {
@@ -156,6 +160,18 @@ class ProductController extends Controller
 				
 				$modelImage->image_name= $imageName. '.'.$modelImage->image_name->extension;
 				$modelImage->product_id = $model->idproduk;
+				
+				Image::frame('../../img/cart/'.$modelImage->image_name.'', 0, '225', 0)
+						->rotate(0)
+						->resize(new Box(300,400))
+						->save('../../img/cart/300x/'.$modelImage->image_name.'', ['quality' => 100]);
+				
+				Image::frame('../../img/cart/'.$modelImage->image_name.'', 0, '225', 0)
+						->rotate(0)
+						->resize(new Box(600,800))
+						->save('../../img/cart/600x/'.$modelImage->image_name.'', ['quality' => 100]);
+						
+				unlink('../../img/cart/' . $modelImage->image_name);
 					
 				$modelImage->save();
 				//var_dump($modelImage);
@@ -175,15 +191,67 @@ class ProductController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+   public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idproduct]);
+        $model = $this->findModel($id);		
+		$modelsImage = [new Images];
+		
+        if ($model->load(Yii::$app->request->post())){
+			
+			if ($model->price < 100000){
+				$price = $model->price + 1000;
+				$model->service = 1000;
+			}else{
+				$priceservice = ($model->price / 100);
+				$model->service = $priceservice;
+				$price = $model->price + $priceservice;
+			}
+			$discount = $model->discount;
+			$discount_price = $price * ($discount / 100);
+			$finalprice = $price - $discount_price;
+			
+			$model->final_price = $finalprice;
+			$model->save();
+			
+			
+			$modelsImage = Model::createMultiple(Images::classname());
+			Model::loadMultiple($modelsImage, Yii::$app->request->post());				
+			
+            foreach ($modelsImage as $key => $modelImage) {						
+				
+				$modelImage->image_name=UploadedFile::getInstance($modelImage,'['.$key.']image_name');
+				$imageName = md5(uniqid($modelImage->image_name));
+				
+				if(empty($modelImage->image_name)){
+					$model->save();
+					return $this->redirect(['view', 'id' => $id]);					
+				}else{					
+					$modelImage->image_name->saveAs('../../img/cart/'.$imageName. '.'.$modelImage->image_name->extension );
+					
+					$modelImage->image_name= $imageName. '.'.$modelImage->image_name->extension;
+					$modelImage->product_id = $id;
+					
+					Image::frame('../../img/cart/'.$modelImage->image_name.'', 0, '225', 0)
+						->rotate(0)
+						->resize(new Box(300,400))
+						->save('../../img/cart/300x/'.$modelImage->image_name.'', ['quality' => 100]);
+				
+					Image::frame('../../img/cart/'.$modelImage->image_name.'', 0, '225', 0)
+						->rotate(0)
+						->resize(new Box(600,800))
+						->save('../../img/cart/600x/'.$modelImage->image_name.'', ['quality' => 100]);
+						
+		
+					unlink('../../img/cart/' . $modelImage->image_name);
+				
+					$modelImage->save(); 																	
+				}				
+            }
+			return Yii::$app->getResponse()->redirect(Yii::$app->homeUrl.'?r=product/update&id='.$model->idproduct);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'model' => $model,				
+				'modelsImage' => (empty($modelsImage)) ? [new Image] : $modelsImage
             ]);
         }
     }
@@ -194,16 +262,27 @@ class ProductController extends Controller
      * @param integer $id
      * @return mixed
      */
+	public function actionDel($id){				
+		$look = Images::findOne($id);
+		$image ='../../img/cart/300x/'.$look->image_name;		
+		$images ='../../img/cart/600x/'.$look->image_name;		
+		if (unlink($image) && unlink($images)) {
+			$look->delete();
+		}
+		return Yii::$app->getResponse()->redirect(Yii::$app->homeUrl.'?r=product/update&id='.$look->product_id);
+	}
     public function actionDelete($id)
     {
        $product = Product::findOne($id);					
-		$look = Image::find()
+		$look = Images::find()
 			->where(['product_id'=>$id])
 			->all();
 		foreach($look as $looks):
-			$image ='../../img/cart/'.$looks->image_name;
-			unlink($image);
-			var_dump($image);
+			$image ='../../img/cart/300x/'.$looks->image_name;
+			$images ='../../img/cart/600x/'.$looks->image_name;
+			unlink($image);			
+			unlink($images);	
+			$looks->delete();
 		endforeach;
 		$model = $this->findModel($id)->delete();        
         

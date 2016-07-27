@@ -151,107 +151,126 @@ use yii\widgets\ActiveForm;
                                                     <g>
 														<?php
 															foreach($graph as $graphs):
-															if($graphs['jml'] == 1){
-																$y = 179;
-																$h = 5.6;
+															
+															if($graphs['jml'] == 0){
+																$y = 184;
+																$h = 0;
+															}else if($graphs['jml'] == 1){
+																$y = 180;
+																$h = 5;
 															}else if($graphs['jml'] == 2){
-																$y = 174.4;
-																$h = 11.2;
+																$y = 174;
+																$h = 11;
 															}else if($graphs['jml'] == 3){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 168;
+																$h = 17;
 															}else if($graphs['jml'] == 4){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 162;
+																$h = 23;
 															}else if($graphs['jml'] == 5){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 156;
+																$h = 29;
 															}else if($graphs['jml'] == 6){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 150;
+																$h = 35;
 															}else if($graphs['jml'] == 7){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 144;
+																$h = 41;
 															}else if($graphs['jml'] == 8){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 138;
+																$h = 47;
 															}else if($graphs['jml'] == 9){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 132;
+																$h = 53;
 															}else if($graphs['jml'] == 10){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 126;
+																$h = 59;
 															}else if($graphs['jml'] == 11){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 122;
+																$h = 63;
 															}else if($graphs['jml'] == 12){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 116;
+																$h = 69;
 															}else if($graphs['jml'] == 13){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 110;
+																$h = 75;
 															}else if($graphs['jml'] == 14){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 104;
+																$h = 81;
 															}else if($graphs['jml'] == 15){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 98;
+																$h = 87;
 															}else if($graphs['jml'] == 16){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 92;
+																$h = 93;
 															}else if($graphs['jml'] == 17){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 86;
+																$h = 99;
 															}else if($graphs['jml'] == 18){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 80;
+																$h = 105;
 															}else if($graphs['jml'] == 19){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 74;
+																$h = 111;
 															}else if($graphs['jml'] == 20){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 68;
+																$h = 117;
 															}else if($graphs['jml'] == 21){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 64;
+																$h = 121;
 															}else if($graphs['jml'] == 22){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 58;
+																$h = 127;
 															}else if($graphs['jml'] == 23){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 52;
+																$h = 133;
 															}else if($graphs['jml'] == 24){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 46;
+																$h = 139;
 															}else if($graphs['jml'] == 25){
-																$y = 169.8;
-																$h = 16.8;
+																$y = 40;
+																$h = 145;
+															}else if($graphs['jml'] == 26){
+																$y = 34;
+																$h = 151;
+															}else if($graphs['jml'] == 27){
+																$y = 28;
+																$h = 157;
+															}else if($graphs['jml'] == 28){
+																$y = 22;
+																$h = 163;
+															}else if($graphs['jml'] == 29){
+																$y = 16;
+																$h = 169;
+															}else if($graphs['jml'] <= 30){
+																$y = 10;
+																$h = 175;
 															}
 															
 															
 															if($graphs['date'] == 1){
 														?>
-																<rect x="37" y="156" width="23" height="28" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
+																<rect x="37" y="<?= $y; ?>" width="23" height="<?= $h; ?>" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 2){ ?>
-																<rect x="73" y="156" width="23" height="28" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
+																<rect x="73" y="<?= $y; ?>" width="23" height="<?= $h; ?>" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 3){ ?>
-																<rect x="109" y="171" width="23" height="13" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
+																<rect x="109" y="<?= $y; ?>" width="23" height="<?= $h; ?>" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 4){ ?>
-																<rect x="145" y="181.716" width="23" height="2.783999999999992" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
+																<rect x="145" y="<?= $y; ?>" width="23" height="<?= $h; ?>" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 5){ ?>
-																<rect x="181" y="144" width="23" height="40" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
+																<rect x="181" y="<?= $y; ?>" width="23" height="<?= $h; ?>" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 6){ ?>
-																<rect x="217" y="162" width="23" height="23" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
+																<rect x="217" y="<?= $y; ?>" width="23" height="<?= $h; ?>" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 7){ ?>
-																<rect x="253" y="171" width="23" height="13" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
+																<rect x="253" y="<?= $y; ?>" width="23" height="<?= $h; ?>" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 8){ ?>
-																<rect x="289" y="179" width="23" height="5" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
+																<rect x="289" y="<?= $y; ?>" width="23" height="<?= $h; ?>" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 9){ ?>
-																<rect x="325" y="164" width="23" height="20" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
+																<rect x="325" y="<?= $y; ?>" width="23" height="<?= $h; ?>" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 10){ ?>
-																<rect x="361" y="139" width="23" height="45" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
+																<rect x="361" y="<?= $y; ?>" width="23" height="<?= $h; ?>" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }else if($graphs['date'] == 11){ ?>
-																<rect x="397" y="127" width="23" height="57" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
+																<rect x="397" y="<?= $y; ?>" width="23" height="<?= $h; ?>" stroke="none" stroke-width="0" fill="#ac6bec"></rect>
 															<?php }?>
 														<?php endforeach; ?>
                                                     </g>
@@ -261,41 +280,10 @@ use yii\widgets\ActiveForm;
                                                         <rect x="30" y="184" width="400" height="1" stroke="none" stroke-width="0" fill="#eff1f2"></rect>
                                                     </g>
 													
-                                                    <!-- BEGIN GRAPHIC GARIS -->
-                                                    <g>
-                                                        <path d="M48.5,
-                                                            126.5L84.5,
-                                                            120.7L120.5,
-                                                            126.5L156.5,
-                                                            85.9L192.5,
-                                                            80.10000000000001L228.5,
-                                                            70.82000000000001L264.5,
-                                                            103.30000000000001L300.5,
-                                                            91.7L336.5,
-                                                            56.900000000000006L372.5,
-                                                            36.02000000000001L408.5,
-                                                            45.30000000000001L444.5" 															 
-                                                            stroke="#00a8ff" stroke-width="2" fill-opacity="1" fill="none">
-                                                        </path>
-                                                    </g>
-                                                    <!-- END GRAPHIC GARIS -->
+                                                    
 													
                                                 </g>
-                                                <!-- Bullets Graphic -->
-                                                <g>
-                                                    <circle cx="48.5" cy="126.5" r="3" stroke="none" stroke-width="0" fill="#00a8ff"></circle>
-                                                    <circle cx="84.5" cy="120.7" r="3" stroke="none" stroke-width="0" fill="#00a8ff"></circle>
-                                                    <circle cx="120.5" cy="126.5" r="3" stroke="none" stroke-width="0" fill="#00a8ff"></circle>
-                                                    <circle cx="156.5" cy="85.9" r="3" stroke="none" stroke-width="0" fill="#00a8ff"></circle>
-                                                    <circle cx="192.5" cy="80.10000000000001" r="3" stroke="none" stroke-width="0" fill="#00a8ff"></circle>
-                                                    <circle cx="228.5" cy="70.82000000000001" r="3" stroke="none" stroke-width="0" fill="#00a8ff"></circle>
-                                                    <circle cx="264.5" cy="103.30000000000001" r="3" stroke="none" stroke-width="0" fill="#00a8ff"></circle>
-                                                    <circle cx="300.5" cy="91.7" r="3" stroke="none" stroke-width="0" fill="#00a8ff"></circle>
-                                                    <circle cx="336.5" cy="56.900000000000006" r="3" stroke="none" stroke-width="0" fill="#00a8ff"></circle>
-                                                    <circle cx="372.5" cy="36.02000000000001" r="3" stroke="none" stroke-width="0" fill="#00a8ff"></circle>
-                                                    <circle cx="408.5" cy="56" r="3" stroke="none" stroke-width="0" fill="#00a8ff"></circle>
-                                                </g>
-                                                <!-- END BULLETS GRAPHIC-->
+                                                
                                                 <!-- BEGIN Huruf A-K -->
                                                 <g>
                                                     <g>
@@ -332,25 +320,25 @@ use yii\widgets\ActiveForm;
                                                         <text text-anchor="middle" x="408.5" y="201.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">Nov</text>
                                                     </g>
                                                     <g>
-                                                        <text text-anchor="end" x="23.5" y="188.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9"></text>
+                                                        <text text-anchor="end" x="23.5" y="188.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">0</text>
                                                     </g>
                                                     <g>
-                                                        <text text-anchor="end" x="23.5" y="159.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">0</text>
+                                                        <text text-anchor="end" x="23.5" y="159.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">5</text>
                                                     </g>
                                                     <g>
-                                                        <text text-anchor="end" x="23.5" y="130.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">5</text>
+                                                        <text text-anchor="end" x="23.5" y="130.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">10</text>
                                                     </g>
                                                     <g>
-                                                        <text text-anchor="end" x="23.5" y="101.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">10</text>
+                                                        <text text-anchor="end" x="23.5" y="101.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">15</text>
                                                     </g>
 													<g>
-                                                        <text text-anchor="end" x="23.5" y="72.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">15</text>
+                                                        <text text-anchor="end" x="23.5" y="72.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">20</text>
                                                     </g>
 													<g>
-                                                        <text text-anchor="end" x="23.5" y="43.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">20</text>
+                                                        <text text-anchor="end" x="23.5" y="43.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">25</text>
                                                     </g>
 													<g>
-                                                        <text text-anchor="end" x="23.5" y="14.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">> 25</text>
+                                                        <text text-anchor="end" x="23.5" y="14.35" font-family="Proxima Nova" font-size="11" stroke="none" stroke-width="0" fill="#919fa9">> 30</text>
                                                     </g>
                                                 </g>
                                                 <!-- END Huruf A-K -->
@@ -427,14 +415,7 @@ use yii\widgets\ActiveForm;
                             </div>
                         </div>
                         <ul class="chart-legend-list">
-                            <li>
-                                <div class="dot purple"></div>
-                                Success
-                            </li>
-                            <li>
-                                <div class="dot blue"></div>
-                                Failed
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>

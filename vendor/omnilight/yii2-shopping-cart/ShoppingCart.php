@@ -101,11 +101,13 @@ class ShoppingCart extends Component
             $position->setQuantity($quantity);
             $this->_positions[$position->getId()] = $position;
         }
-        $this->trigger(self::EVENT_POSITION_PUT, new Event([
-            'data' => $this->_positions[$position->getId()],
+        $this->trigger(self::EVENT_POSITION_PUT, new CartActionEvent([
+            'action' => CartActionEvent::ACTION_POSITION_PUT,
+            'position' => $this->_positions[$position->getId()],
         ]));
-        $this->trigger(self::EVENT_CART_CHANGE, new Event([
-            'data' => ['action' => 'put', 'position' => $this->_positions[$position->getId()]],
+        $this->trigger(self::EVENT_CART_CHANGE, new CartActionEvent([
+            'action' => CartActionEvent::ACTION_POSITION_PUT,
+            'position' => $this->_positions[$position->getId()],
         ]));
         if ($this->storeInSession)
             $this->saveToSession();
@@ -137,11 +139,13 @@ class ShoppingCart extends Component
             $position->setQuantity($quantity);
             $this->_positions[$position->getId()] = $position;
         }
-        $this->trigger(self::EVENT_POSITION_UPDATE, new Event([
-            'data' => $this->_positions[$position->getId()],
+        $this->trigger(self::EVENT_POSITION_UPDATE, new CartActionEvent([
+            'action' => CartActionEvent::ACTION_UPDATE,
+            'position' => $this->_positions[$position->getId()],
         ]));
-        $this->trigger(self::EVENT_CART_CHANGE, new Event([
-            'data' => ['action' => 'update', 'position' => $this->_positions[$position->getId()]],
+        $this->trigger(self::EVENT_CART_CHANGE, new CartActionEvent([
+            'action' => CartActionEvent::ACTION_UPDATE,
+            'position' => $this->_positions[$position->getId()],
         ]));
         if ($this->storeInSession)
             $this->saveToSession();
@@ -153,13 +157,24 @@ class ShoppingCart extends Component
      */
     public function remove($position)
     {
-        $this->trigger(self::EVENT_BEFORE_POSITION_REMOVE, new Event([
-            'data' => $this->_positions[$position->getId()],
+        $this->removeById($position->getId());
+    }
+
+    /**
+     * Removes position from the cart by ID
+     * @param string $id
+     */
+    public function removeById($id)
+    {
+        $this->trigger(self::EVENT_BEFORE_POSITION_REMOVE, new CartActionEvent([
+            'action' => CartActionEvent::ACTION_BEFORE_REMOVE,
+            'position' => $this->_positions[$id],
         ]));
-        $this->trigger(self::EVENT_CART_CHANGE, new Event([
-            'data' => ['action' => 'remove', 'position' => $this->_positions[$position->getId()]],
+        $this->trigger(self::EVENT_CART_CHANGE, new CartActionEvent([
+            'action' => CartActionEvent::ACTION_BEFORE_REMOVE,
+            'position' => $this->_positions[$id],
         ]));
-        unset($this->_positions[$position->getId()]);
+        unset($this->_positions[$id]);
         if ($this->storeInSession)
             $this->saveToSession();
     }
@@ -170,8 +185,8 @@ class ShoppingCart extends Component
     public function removeAll()
     {
         $this->_positions = [];
-        $this->trigger(self::EVENT_CART_CHANGE, new Event([
-            'data' => ['action' => 'removeAll'],
+        $this->trigger(self::EVENT_CART_CHANGE, new CartActionEvent([
+            'action' => CartActionEvent::ACTION_REMOVE_ALL,
         ]));
         if ($this->storeInSession)
             $this->saveToSession();
@@ -213,9 +228,11 @@ class ShoppingCart extends Component
      */
     public function setPositions($positions)
     {
-        $this->_positions = $positions;
-        $this->trigger(self::EVENT_CART_CHANGE, new Event([
-            'data' => ['action' => 'positions'],
+        $this->_positions = array_filter($positions, function (CartPositionInterface $position) {
+            return $position->quantity > 0;
+        });
+        $this->trigger(self::EVENT_CART_CHANGE, new CartActionEvent([
+            'action' => CartActionEvent::ACTION_SET_POSITIONS,
         ]));
         if ($this->storeInSession)
             $this->saveToSession();

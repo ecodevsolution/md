@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\widgets\ListView;
-use common\models\Image;
+use backend\models\Images;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -39,14 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
 				<tbody>
 					<?php 
 						foreach($model as $mod):
-						$models = Image::find()
+						$models = Images::find()
 							->where(['product_id'=>$mod->idproduk])
 							->AndWhere(['is_cover'=>1])
 							->One();
 					?>
 					<tr>
 						<td class="table-photo">
-							<img src="../../img/cart/<?= $models->image_name; ?>" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
+							<img src="../../img/cart/300x/<?= $models->image_name; ?>" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
 						</td>
 						<td>
 							<?= $mod->title; ?>
@@ -65,7 +65,13 @@ $this->params['breadcrumbs'][] = $this->title;
 							<?= Html::a('', ['update','id'=>$mod->idproduk], ['class' => 'fa fa-pencil']) ?>													
 						</td>
 						<td class="table-icon-cell">
-							<?= Html::a('', ['delete','id'=>$mod->idproduk], ['class' => 'fa fa-trash swal-btn-warning']) ?>																										
+							<?= Html::a('', ['delete','id'=>$mod->idproduk], [
+								'class' => 'fa fa-trash swal-btn-warning',
+								'data' => [								
+									'method' => 'POST',
+									],
+								]) 
+							?>							
 						</td>											
 					</tr>	
 					<?php endforeach; ?>

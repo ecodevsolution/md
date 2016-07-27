@@ -9,6 +9,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Uploadedfile;
+use yii\imagine\Image;
+use Imagine\Gd;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
 
 /**
  * BrandController implements the CRUD actions for Brand model.
@@ -66,9 +70,15 @@ class BrandController extends Controller
 			
 			$model->brand_logo = Uploadedfile::getInstance($model,'brand_logo');
 			$namaimage = md5(uniqid($model->brand_logo));
-			$model->brand_logo->saveAs('../../img/brand/' .$namaimage . '.' .$model->brand_logo->extension);
+			$model->brand_logo->saveAs('../../img/temp/' .$namaimage . '.' .$model->brand_logo->extension);
 			$model->brand_logo= $namaimage. '.' .$model->brand_logo->extension;
 			
+			Image::frame('../../img/temp/'.$model->brand_logo.'', 0, '225', 0)
+					->rotate(0)
+					->resize(new Box(140,29))
+					->save('../../img/brand/'.$model->brand_logo.'', ['quality' => 100]);
+					
+			unlink('../../img/temp/' . $model->brand_logo);				
 			$model->save();
             return $this->redirect(['view', 'id' => $model->idbrand]);
         } else {
@@ -87,8 +97,31 @@ class BrandController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+		$look = Brand::findOne($id);
+        if ($model->load(Yii::$app->request->post())){
+			
+			$model->brand_logo = Uploadedfile::getInstance($model,'brand_logo');
+			$namaimage = md5(uniqid($model->brand_logo));
+				
+			if(empty($model->brand_logo)){					
+				$model->brand_logo = $look->brand_logo;
+				$model->save();
+			}else if(isset($model->brand_logo)){
+				$models = $this->findModel($id);
+				unlink('../../img/brand/' . $models->brand_logo);	
+			
+				$model->brand_logo->saveAs('../../img/temp/'.$namaimage. '.'.$model->brand_logo->extension );
+				$model->brand_logo= $namaimage. '.'.$model->brand_logo->extension;
+				
+				Image::frame('../../img/temp/'.$model->brand_logo.'', 0, '225', 0)
+				->rotate(0)
+				->resize(new Box(140,29))
+				->save('../../img/brand/'.$model->brand_logo.'', ['quality' => 100]);
+		
+				unlink('../../img/temp/' . $model->brand_logo);		
+				$model->save();
+			}
+				
             return $this->redirect(['view', 'id' => $model->idbrand]);
         } else {
             return $this->render('update', [

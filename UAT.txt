@@ -1,0 +1,13 @@
+# Try and Error Maridagang
+
+1. Produk
+   - Insert -> DONE
+   - Update -> DONE
+   - Delete -> DONE
+   - Size   -> DONE
+
+2. Brand
+   - Insert -> DONE
+   - Update -> DONE
+   - Delete -> DONE
+   - Size   -> DONE

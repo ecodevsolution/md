@@ -104,6 +104,10 @@ class TestCase extends Test
      */
     protected function mockApplication($config = null)
     {
+        if (isset(Yii::$app)) {
+            return;
+        }
+        Yii::$container = new Container();
         $config = $config === null ? $this->appConfig : $config;
         if (is_string($config)) {
             $configFile = Yii::getAlias($config);
@@ -116,8 +120,6 @@ class TestCase extends Test
             if (!isset($config['class'])) {
                 $config['class'] = 'yii\web\Application';
             }
-
-            Yii::$container = new Container();
             return Yii::createObject($config);
         } else {
             throw new InvalidConfigException('Please provide a configuration array to mock up an application.');
@@ -129,6 +131,14 @@ class TestCase extends Test
      */
     protected function destroyApplication()
     {
+        if (\Yii::$app) {
+            if (\Yii::$app->has('session', true)) {
+                \Yii::$app->session->close();
+            }
+            if (\Yii::$app->has('db', true)) {
+                Yii::$app->db->close();
+            }
+        }
         Yii::$app = null;
         Yii::$container = new Container();
     }

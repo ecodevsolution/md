@@ -94,9 +94,9 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getImage()
+    public function getImages()
     {
-        return $this->hasMany(Image::className(), ['product_id' => 'idproduk']);
+        return $this->hasMany(Images::className(), ['product_id' => 'idproduk']);
     }
 
     /**
