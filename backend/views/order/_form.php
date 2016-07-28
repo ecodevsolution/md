@@ -436,7 +436,13 @@ use yii\widgets\ActiveForm;
                         <td>Rp <?= $model->shipping; ?></td>
                     </tr>
                 </table>
+				<?php $form = ActiveForm::begin(); ?>
+					<input type="text" name="resi"  class="form-control" style="width:70%;margin-bottom:10px;margin-left:20px">            
+					<input type="hidden" name="order" value="<?= $model->idorder; ?>">            
+					<input type="submit" value="Process" class="btn btn-primary" style="margin-right:25px;right:0;bottom:27px;position: absolute;" />		
+				<?php ActiveForm::end(); ?>
             </div>
+
         </section>
     </div>
     <div class="col-md-6 col-xs-12">

@@ -9,6 +9,11 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Uploadedfile;
+use yii\imagine\Image;
+use Imagine\Gd;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
+
 
 /**
  * BannerAdsController implements the CRUD actions for BannerAds model.
@@ -21,7 +26,7 @@ class BannerAdsController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    //'delete' => ['post'],
                 ],
             ],
         ];
@@ -64,10 +69,17 @@ class BannerAdsController extends Controller
 
         if ($model->load(Yii::$app->request->post())){
 			
-			$model->banner = Uploadedfile::getInstance($model,'banner');
-			$namaimage = md5(uniqid($model->banner));
-			$model->banner->saveAs('../../img/banner/' .$namaimage . '.' .$model->banner->extension);
-			$model->banner= $namaimage. '.' .$model->banner->extension;
+			$model->banner=UploadedFile::getInstance($model,'banner');
+			$imageName = md5(uniqid($model->banner));
+			$model->banner->saveAs('../../img/temp/'.$imageName. '.'.$model->banner->extension );
+			$model->banner= $imageName. '.'.$model->banner->extension;
+			
+			Image::frame('../../img/temp/'.$model->banner.'', 0, 'FFF', 0)
+					->rotate(0)
+					->resize(new Box(269,199))
+					->save('../../img/banner/'.$model->banner.'', ['quality' => 100]);
+		
+			unlink('../../img/temp/' . $model->banner);										
 			$model->save();
 				
             return $this->redirect(['view', 'id' => $model->idbannerads]);
@@ -92,19 +104,27 @@ class BannerAdsController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 			
 			$model->banner=UploadedFile::getInstance($model,'banner');
-			$imageName = md5(uniqid($model->banner));
-			//
-			if(empty($model->banner)){
+			$imageName = md5(uniqid($model->banner));	
 				
+			if(empty($model->banner)){					
 				$model->banner = $look->banner;
 				$model->save();
 			}else if(isset($model->banner)){
-				$model->banner->saveAs('../../img/banner/'.$imageName. '.'.$model->banner->extension );
+				$models = $this->findModel($id);
+				unlink('../../img/banner/' . $models->banner);	
+			
+				$model->banner->saveAs('../../img/temp/'.$imageName. '.'.$model->banner->extension );
 				$model->banner= $imageName. '.'.$model->banner->extension;
-
+				
+				Image::frame('../../img/temp/'.$model->banner.'', 0, 'FFF', 0)
+				->rotate(0)
+				->resize(new Box(269,199))
+				->save('../../img/banner/'.$model->banner.'', ['quality' => 100]);
+		
+				unlink('../../img/temp/' . $model->banner);		
 				$model->save();
 			}
-			
+
             return $this->redirect(['view', 'id' => $model->idbannerads]);
         } else {
             return $this->render('update', [
@@ -121,7 +141,12 @@ class BannerAdsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $look = BannerAds::findOne($id);
+		$image ='../../img/banner/'.$look->banner;
+		//var_dump($image);
+		if (unlink($image)) {
+			$model = $this->findModel($id)->delete();
+		}
 
         return $this->redirect(['index']);
     }

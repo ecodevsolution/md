@@ -6,27 +6,28 @@
 	$this->params['breadcrumbs'][] = $this->title;
 	
 ?>
-	<div class="inbox-mail">
-		<div class="col-md-4 compose">		
+	<div class="inbox-mail">	
+		<div class="col-md-4 compose box-typical box-typical-padding">		
 			<nav class="nav-sidebar panel">
 				<ul class="nav tabs">
 				
 					<?php
 						foreach($model as $models):
 					?>
-					<li class="active"><a href="?r=privillage-user/index&id=<?= $models->idrole; ?>"><i class="fa fa-user"></i>   <?= $models->rolename?> <div class="clearfix"></div></a></li>
+					<li class="active"><a href="?r=privillage-user/index&id=<?= $models->idrole; ?>"><i class="fa fa-user fa-2x"></i>   <?= $models->rolename?> <div class="clearfix"></div></a></li>
+					<hr/>
 					<?php endforeach; ?>
 				</ul>
 			</nav>
 		</div>
 		<!-- tab content -->
 		<form action="?r=privillage-user/post" method="POST">
-			<div class="col-md-8 tab-content tab-content-in">
+			<div class="col-md-8 tab-content tab-content-in compose box-typical box-typical-padding">
 				<div class="tab-pane active text-style" id="tab1">
 					<div class="inbox-right">
 				
 						<div class="mailbox-content">
-							<h5>Access Menu </h5> <h5 style="float:right"><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /> Check All</h5><br/>
+							<h5>Access Menu </h5> <h5 style="float:right;font-size:14px"><INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /> Check All</h5><br/>
 							<table class="table">
 								<tbody>
 									<?php

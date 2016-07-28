@@ -29,7 +29,10 @@ class BannerAds extends \yii\db\ActiveRecord
     {
         return [
             [['flag'], 'integer'],
-            [['banner', 'tag'], 'string', 'max' => 50]
+            [['banner', 'tag'], 'string', 'max' => 50],
+			['banner', 'image', 'extensions' => ['png', 'jpg'], 
+				'minWidth' => 270, 'minHeight' => 200,
+			],
         ];
     }
 

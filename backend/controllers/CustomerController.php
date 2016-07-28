@@ -8,6 +8,9 @@ use backend\models\CustomerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\Order;
+use backend\models\OrderStatus;
+use backend\models\OrderItem;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
@@ -20,7 +23,7 @@ class CustomerController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    //'delete' => ['post'],
                 ],
             ],
         ];
@@ -78,13 +81,40 @@ class CustomerController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $customer = $this->findModel($id);
+		
+		$status = OrderStatus::find()
+				->where(['idorder'=>$id])
+				->orderBy(['idstatus'=>SORT_DESC])
+				->Limit(3)
+				->all();
+		$item = OrderItem::find()				
+				->joinWith('product')
+				->where(['order_id'=>$id])
+				->all();
+		$model = Order::find()
+				->joinWith('customer')
+				->where(['order.idcustomer'=>$id])
+				->all();
+				
+		$connection = \Yii::$app->db;
+		$sql = $connection->createCommand("select month(date) as date, count(*) as jml 
+										from `order` where idcustomer = '".$id."' 
+										and year(date) = year(now()) group by month(date)");
+									
+		$graph = $sql->queryAll();
+			
+        if ($customer->load(Yii::$app->request->post())){
+							
+			$model->save();
             return $this->redirect(['view', 'id' => $model->idcustomer]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+				'status' => $status,
+				'item'=>$item,
+				'customer'=>$customer,
+				'graph' => $graph,
             ]);
         }
     }

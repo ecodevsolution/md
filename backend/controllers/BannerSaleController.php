@@ -9,6 +9,11 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Uploadedfile;
+use yii\imagine\Image;
+use Imagine\Gd;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
+
 
 /**
  * BannerSaleController implements the CRUD actions for BannerSale model.
@@ -21,7 +26,7 @@ class BannerSaleController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    //'delete' => ['post'],
                 ],
             ],
         ];
@@ -64,11 +69,18 @@ class BannerSaleController extends Controller
 
         if ($model->load(Yii::$app->request->post())){
 			
-			$model->sale_slider = Uploadedfile::getInstance($model,'sale_slider');
-			$namaimage = md5(uniqid($model->sale_slider));
-			$model->sale_slider->saveAs('../../img/sale/' .$namaimage . '.' .$model->sale_slider->extension);
-			$model->sale_slider= $namaimage. '.' .$model->sale_slider->extension;
+			$model->sale_slider=UploadedFile::getInstance($model,'sale_slider');
+			$imageName = md5(uniqid($model->sale_slider));
+			$model->sale_slider->saveAs('../../img/temp/'.$imageName. '.'.$model->sale_slider->extension );
+			$model->sale_slider= $imageName. '.'.$model->sale_slider->extension;
 			
+			Image::frame('../../img/temp/'.$model->sale_slider.'', 0, '225', 0)
+					->rotate(0)
+					->resize(new Box(253,353))
+					->save('../../img/sale/'.$model->sale_slider.'', ['quality' => 100]);
+		
+			unlink('../../img/temp/' . $model->sale_slider);										
+			$model->save();			
 			
 			$model->save();
             return $this->redirect(['view', 'id' => $model->idbanner]);
@@ -92,20 +104,27 @@ class BannerSaleController extends Controller
 		
         if ($model->load(Yii::$app->request->post())){
 
-			
 			$model->sale_slider=UploadedFile::getInstance($model,'sale_slider');
-			$imageName = md5(uniqid($model->sale_slider));
-			//
-			if(empty($model->sale_slider)){
+			$imageName = md5(uniqid($model->sale_slider));	
 				
+			if(empty($model->sale_slider)){					
 				$model->sale_slider = $look->sale_slider;
 				$model->save();
 			}else if(isset($model->sale_slider)){
-				$model->sale_slider->saveAs('../../img/sale/'.$imageName. '.'.$model->sale_slider->extension );
+				$models = $this->findModel($id);
+				unlink('../../img/sale/' . $models->sale_slider);	
+			
+				$model->sale_slider->saveAs('../../img/temp/'.$imageName. '.'.$model->sale_slider->extension );
 				$model->sale_slider= $imageName. '.'.$model->sale_slider->extension;
-
+				
+				Image::frame('../../img/temp/'.$model->sale_slider.'', 0, '225', 0)
+				->rotate(0)
+				->resize(new Box(253,353))
+				->save('../../img/sale/'.$model->sale_slider.'', ['quality' => 100]);
+		
+				unlink('../../img/temp/' . $model->sale_slider);		
 				$model->save();
-			}
+			}						
             return $this->redirect(['view', 'id' => $model->idbanner]);
         } else {
             return $this->render('update', [
@@ -122,8 +141,11 @@ class BannerSaleController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $look = BannerSale::findOne($id);
+		$image ='../../img/sale/'.$look->sale_slider;		
+		if (unlink($image)) {
+			$model = $this->findModel($id)->delete();
+		}
         return $this->redirect(['index']);
     }
 

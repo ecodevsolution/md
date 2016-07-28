@@ -1298,7 +1298,7 @@ div.star-rating a{transition:initial}
 .old-price{margin:0;display:inline-block;vertical-align:middle}
 .std .price-box p{margin:0}
 .old-price .price-label{white-space:nowrap;display:none}
-.old-price .price{color:#999;text-decoration:line-through;font-size:14px;vertical-align:middle}
+.old-price .price{color:#999;text-decoration:line-through;font-size:10px;vertical-align:middle}
 
 /* Special price */
 .special-price{margin:0;display:inline-block;vertical-align:middle;line-height:1}
@@ -3181,7 +3181,8 @@ a.search-icon{display:inline-block;width:25px;text-align:center}
 .small-list .price{font-size:12px}
 .small-list .regular-price .price{font-size:15px}
 .small-list .special-price .price{font-size:15px}
-.small-list .old-price .price{font-size:12px}
+.small-list .old-price .price{font-size:9px}
+.menu.side-menu>li.menu-static-width>a:after,.menu.side-menu>li.menu-item-has-children>a:after,.menu.side-menu>li.menu-item-has-children li.menu-item-has-children>a:after,.menu.side-menu>li.menu-full-width>a:after{content:"\e814";font-family:"porto";width:10px;height:10px;top:50%;right:0;left:auto;margin-top:-7px;position:absolute;font-size:13px;color:#08c}
 
 /*homepage filterproducts for one product*/
 .one-product h4.filter-title{font-size:16px;text-align:center;color:#333;font-weight:700;line-height:1.4;padding:14px 0;background-color:#fff;margin:0}

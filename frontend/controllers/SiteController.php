@@ -90,8 +90,20 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-
+		$product = Product::find()
+				->joinWith(['mainCategory'])
+				->joinWith(['subCategory'])
+				->joinWith(['detailCategory'])
+				->orderBy(['idproduk'=>SORT_DESC])
+				->where(['discount'=>0])
+				->Limit(10)
+				->all();
+		
 		$sale = BannerSale::find()
+				->all();
+				
+		$banner = BannerAds::find()
+				->where(['flag'=>1])
 				->all();
 		
 		$adsleft = BannerAds::find()
@@ -109,6 +121,7 @@ class SiteController extends Controller
 				->all();
 		
 		$slider = Slider::find()
+				->joinWith(['mainCategory'])
 				->all();
 		
 		$tag = Product::find()
@@ -126,6 +139,8 @@ class SiteController extends Controller
 			'icon'=>$icon,
 			'slider'=>$slider,
 			'tag'=>$tag,
+			'banner'=>$banner,
+			'product'=>$product,
 				
 		]);
     }

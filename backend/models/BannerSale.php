@@ -27,7 +27,10 @@ class BannerSale extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sale_slider', 'tag'], 'string', 'max' => 50]
+            [['sale_slider', 'tag'], 'string', 'max' => 50],
+			['sale_slider', 'image', 'extensions' => ['png', 'jpg'], 
+				'minWidth' => 253, 'minHeight' => 353,
+			],
         ];
     }
 

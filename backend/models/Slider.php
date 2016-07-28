@@ -29,7 +29,10 @@ class Slider extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category', 'slider_img', 'tag', 'tag_highligt'], 'string', 'max' => 50]
+            [['category', 'slider_img', 'tag', 'tag_highligt'], 'string', 'max' => 50],
+			['slider_img', 'image', 'extensions' => ['png', 'jpg'], 
+				'minWidth' => 1140, 'minHeight' => 500,
+			],
         ];
     }
 

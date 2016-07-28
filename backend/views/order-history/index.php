@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							?> 
 						</td>
 						<td class="table-icon-cell">
-							<?= Html::a('', ['update','id'=>$models['idorder']], ['class' => 'font-icon font-icon-arrow-right']) ?>													
+							<?= Html::a('', ['//order/update','id'=>$models['idorder']], ['class' => 'font-icon font-icon-arrow-right']) ?>													
 						</td>										
 					</tr>	
 					<?php endforeach; ?>

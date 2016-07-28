@@ -121,7 +121,7 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIddetail0()
+    public function getDetailCategory()
     {
         return $this->hasOne(DetailCategory::className(), ['iddetail' => 'iddetail']);
     }
@@ -137,7 +137,7 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdsub0()
+    public function getSubCategory()
     {
         return $this->hasOne(SubCategory::className(), ['idsubcategory' => 'idsub']);
     }

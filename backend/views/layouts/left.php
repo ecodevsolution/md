@@ -42,7 +42,8 @@
                 <span class="lbl">Store Setup</span>
             </span>
             <ul>               							
-				<li><a href="?r=seo/seo&id=1"><span class="lbl">SEO</span></a></li>				
+				<li><a href="?r=seo/seo&id=1"><span class="lbl">SEO</span></a></li>	
+				<li><a href="?r=store/index"><span class="lbl">Information Store</span></a></li>	
             </ul>
         </li>
 		

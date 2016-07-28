@@ -101,7 +101,7 @@ class PrivillageUserController extends \yii\web\Controller
 			    	$details->flag = 1;
 			    	$details->save();
 			    endforeach;
-			    var_dump($_POST['idmenu'][$key]);
+			    //var_dump($_POST['idmenu'][$key]);
 
 	    	endforeach;
 

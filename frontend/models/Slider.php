@@ -52,4 +52,8 @@ class Slider extends \yii\db\ActiveRecord
             'more_description' => 'More Description',
         ];
     }
+	 public function getMainCategory()
+    {
+        return $this->hasOne(MainCategory::className(), ['idmain' => 'category']);
+    }
 }

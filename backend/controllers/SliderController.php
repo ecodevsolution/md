@@ -9,6 +9,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Uploadedfile;
+use yii\imagine\Image;
+use Imagine\Gd;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
 
 /**
  * SliderController implements the CRUD actions for Slider model.
@@ -21,7 +25,7 @@ class SliderController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                   // 'delete' => ['post'],
                 ],
             ],
         ];
@@ -65,13 +69,19 @@ class SliderController extends Controller
 
         if ($model->load(Yii::$app->request->post())){
 			
-			$model->slider_img = Uploadedfile::getInstance($model,'slider_img');
-			$namaimage = md5(uniqid($model->slider_img));
-			$model->slider_img->saveAs('../../img/slider/' .$namaimage . '.' .$model->slider_img->extension);
-			$model->slider_img= $namaimage. '.' .$model->slider_img->extension;
+			$model->slider_img=UploadedFile::getInstance($model,'slider_img');
+			$imageName = md5(uniqid($model->slider_img));
+			$model->slider_img->saveAs('../../img/temp/'.$imageName. '.'.$model->slider_img->extension );
+			$model->slider_img= $imageName. '.'.$model->slider_img->extension;
 			
+			Image::frame('../../img/temp/'.$model->slider_img, 0, 'FFF', 0)
+					->rotate(0)
+					->resize(new Box(850,372))
+					->save('../../img/slider/'.$model->slider_img.'', ['quality' => 100]);
+		
+			unlink('../../img/temp/' . $model->slider_img);
+											
 			$model->save();
-			
             return $this->redirect(['view', 'id' => $model->idslider]);
         } else {
             return $this->render('create', [
@@ -89,8 +99,32 @@ class SliderController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+		$look = Slider::findOne($id);
+		
+        if ($model->load(Yii::$app->request->post())){
+			
+			$model->slider_img=UploadedFile::getInstance($model,'slider_img');
+			$imageName = md5(uniqid($model->slider_img));	
+				
+			if(empty($model->slider_img)){					
+				$model->slider_img = $look->slider_img;
+				$model->save();
+			}else if(isset($model->slider_img)){
+				$models = $this->findModel($id);
+				unlink('../../img/slider/' . $models->slider_img);	
+			
+				$model->slider_img->saveAs('../../img/temp/'.$imageName. '.'.$model->slider_img->extension );
+				$model->slider_img= $imageName. '.'.$model->slider_img->extension;
+				
+				Image::frame('../../img/temp/'.$model->slider_img, 0, 'FFF', 0)
+				->rotate(0)
+				->resize(new Box(850,372))
+				->save('../../img/slider/'.$model->slider_img.'', ['quality' => 100]);
+		
+				unlink('../../img/temp/' . $model->slider_img);		
+				$model->save();
+			}
+				
             return $this->redirect(['view', 'id' => $model->idslider]);
         } else {
             return $this->render('update', [

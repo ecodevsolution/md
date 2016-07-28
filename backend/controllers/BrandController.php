@@ -73,10 +73,10 @@ class BrandController extends Controller
 			$model->brand_logo->saveAs('../../img/temp/' .$namaimage . '.' .$model->brand_logo->extension);
 			$model->brand_logo= $namaimage. '.' .$model->brand_logo->extension;
 			
-			Image::frame('../../img/temp/'.$model->brand_logo.'', 0, '225', 0)
+			Image::frame('../../img/temp/'.$model->brand_logo)
 					->rotate(0)
 					->resize(new Box(140,29))
-					->save('../../img/brand/'.$model->brand_logo.'', ['quality' => 100]);
+					->save('../../img/brand/'.$model->brand_logo.'', ['quality' => 50]);
 					
 			unlink('../../img/temp/' . $model->brand_logo);				
 			$model->save();
@@ -113,7 +113,7 @@ class BrandController extends Controller
 				$model->brand_logo->saveAs('../../img/temp/'.$namaimage. '.'.$model->brand_logo->extension );
 				$model->brand_logo= $namaimage. '.'.$model->brand_logo->extension;
 				
-				Image::frame('../../img/temp/'.$model->brand_logo.'', 0, '225', 0)
+				Image::frame('../../img/temp/'.$model->brand_logo)
 				->rotate(0)
 				->resize(new Box(140,29))
 				->save('../../img/brand/'.$model->brand_logo.'', ['quality' => 100]);

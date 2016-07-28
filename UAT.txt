@@ -11,3 +11,69 @@
    - Update -> DONE
    - Delete -> DONE
    - Size   -> DONE
+
+3. Category Product
+   
+   # Main Category
+	- Insert -> DONE
+	- Update -> DONE
+	- Delete -> DONE
+
+   # Sub Category
+	- Insert -> DONE
+	- Update -> DONE
+	- Delete -> DONE
+
+   # Detail Category
+	- Insert -> DONE
+	- Update -> DONE
+	- Delete -> DONE
+
+4. Slider
+   - Insert -> DONE
+   - Update -> DONE
+   - Delete -> DONE
+   - Size   -> DONE
+
+5. Ads Baner
+   - Insert -> DONE
+   - Update -> DONE
+   - Delete -> DONE
+   - Size   -> DONE
+
+6. Sale Baner
+   - Insert -> DONE
+   - Update -> DONE
+   - Delete -> DONE
+   - Size   -> DONE
+
+7. SEO
+   - Update -> DOne
+
+8. ROLE
+   - Insert -> DONE
+   - Update -> DONE
+   - Delete -> DONE
+
+9. PRIVILLAGE USER
+   - Insert         -> DONE
+   - Database Setup -> 
+   - Menu Setup     ->
+
+10. User
+   - Insert -> DONE
+   - Update -> DONE
+   - Delete -> DONE
+
+11. Customer
+   - View -> DONE
+
+12. ORDER
+   - Update Status -> DONE
+   - Add Resi -> DONE
+
+13. Order History
+   - View History -> DONE
+
+
+

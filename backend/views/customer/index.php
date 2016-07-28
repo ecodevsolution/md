@@ -16,9 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="tbl-cell tbl-cell-title">
 				<h3><?= Html::encode($this->title) ?></h3>
 			</div>
-			<div class="tbl-cell tbl-cell-action-bordered">
-				 <?= Html::a('', ['create'], ['class' => 'font-icon font-icon-pencil']) ?>
-			</div>
 		</div>
 	</header>
 	<div class="box-typical-body">
@@ -33,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<th>Birthday</th>
 						<th>Email</th>
 						<th>Status</th>
-						<th colspan="2">Action</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>	
@@ -72,10 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							?> 
 						</td>
 						<td class="table-icon-cell">
-							<?= Html::a('', ['update','id'=>$models->idcustomer], ['class' => 'fa fa-pencil']) ?>													
-						</td>
-						<td class="table-icon-cell">
-							<?= Html::a('', ['delete','id'=>$models->idcustomer], ['class' => 'fa fa-trash swal-btn-warning']) ?>																										
+							<?= Html::a('', ['update','id'=>$models['idcustomer']], ['class' => 'font-icon font-icon-arrow-right']) ?>													
 						</td>											
 					</tr>	
 					<?php endforeach; ?>
