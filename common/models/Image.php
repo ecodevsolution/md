@@ -59,7 +59,7 @@ class Image extends \yii\db\ActiveRecord
      */
     public function getPath()
     {
-        return Yii::getAlias('img/cart' . $this->getHash() );
+        return Yii::getAlias('img/cart/300x/' . $this->getHash() );
     }
 
     /**
@@ -67,7 +67,7 @@ class Image extends \yii\db\ActiveRecord
      */
     public function getUrl()
     {
-        return Yii::getAlias('img/cart/' . $this->getHash());
+        return Yii::getAlias('img/cart/300x/' . $this->getHash());
     }
 
     public function afterDelete()

@@ -92,7 +92,7 @@ class ShoppingCart extends Component
      * @param CartPositionInterface $position
      * @param int $quantity
      */
-    public function put($position, $quantity = 1)
+    public function put($position, $quantity)
     {
         if (isset($this->_positions[$position->getId()])) {
             $this->_positions[$position->getId()]->setQuantity(

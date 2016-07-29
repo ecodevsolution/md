@@ -34,10 +34,11 @@ return [
 				'brands-<brands>-<filter>' => 'catalog/brands',
 				'brandd-<brandd>-<filter>' => 'catalog/brandd',
 				'price' => 'catalog/price',
-				'detail-product-<id>' => 'product/detail-product',
+				'catalog-<sku>-<name>' => 'product/detail-product',
 
 				//PRODUCT CART LINK
-				'cart-add-<id>' => 'cart/add',			
+				'cart-add-<id>' => 'cart/add',	
+				'cart' => 'cart/add-cart',
 				'cart-price-<id>' => 'cart/price',
 				'shipping-<id>-<cities>' => 'cart/price',
 				'city-<id>' => 'cart/list-city',

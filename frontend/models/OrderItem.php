@@ -32,7 +32,9 @@ class OrderItem extends \yii\db\ActiveRecord
         return [
             [['order_id', 'qty'], 'integer'],
             [['discount', 'price'], 'number'],
-            [['product_id'], 'string', 'max' => 50]
+            [['product_id'], 'string', 'max' => 50],
+			[['qty'], 'integer', 'min'=>1, 'max'=>10],
+			[['qty'], 'required'],
         ];
     }
 

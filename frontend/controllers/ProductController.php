@@ -12,6 +12,7 @@ use frontend\models\Slider;
 
 use frontend\models\InfoBox;
 use frontend\models\BannerAds;
+use frontend\models\OrderItem;
 use frontend\models\BannerBottom;
 use frontend\models\BannerRight;
 use frontend\models\BannerSale;
@@ -77,9 +78,15 @@ class ProductController extends Controller
             ]);
         }
     }
-	public function actionDetailProduct($id)
+	public function actionDetailProduct($sku, $name)
 	{
-		$model = Product::findOne($id);
+		$order = new OrderItem();
+		
+		$title = str_replace('_',' ',$name);
+		$model = Product::find()
+			->where(['sku'=>$sku])
+			->AndWhere(['title'=>$title])
+			->One();
 		$brand = Product::find()
 				->joinWith('brand')
 				->select('brand.idbrand')
@@ -97,14 +104,6 @@ class ProductController extends Controller
 				->where(['flag'=>1])
 				->all();
 				
-		$adsright = BannerRight::find()
-				->where(['flag'=>1])
-				->all();
-		
-		$bottom = BannerBottom::find()
-				->where(['flag'=>1])
-				->all();
-		
 		$brand = Product::find()
 				->joinWith('brand')
 				->select('brand.idbrand')
@@ -118,19 +117,19 @@ class ProductController extends Controller
 					->all();	
 		$product = Product::find()
 					->JoinWith('image')
-					->where(['idproduk'=>$id])
+					->where(['sku'=>$sku])
+					->AndWhere(['product.title'=>$title])
 					->One();
 		return $this->render('detail',[
 			'model'=>$model,
 			'sale'=>$sale,
 			'adsleft'=>$adsleft,
-			'adsright'=>$adsright,
-			'bottom'=>$bottom,
 			'brand'=>$brand,
 			'icon'=>$icon,
 			'slider'=>$slider,
 			'tag'=>$tag,
 			'product'=>$product,
+			'order' => $order,
 		]);
 	}
     /**

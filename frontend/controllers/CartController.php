@@ -17,10 +17,10 @@ use  yii\web\Session;
 class CartController extends \yii\web\Controller
 {
     public function actionAdd($id)
-    {
+    {		
         $product = Product::findOne($id);
         if ($product) {
-            \Yii::$app->cart->put($product);
+            \Yii::$app->cart->put($product, 1);
 			$cart = \Yii::$app->cart;
 			$products = $cart->getPositions();
 			$total = $cart->getCost();
@@ -29,6 +29,30 @@ class CartController extends \yii\web\Controller
 				'total' => $total,
 			]);
         }
+    }
+	public function actionAddCart()
+    {		
+		$order = new OrderItem();
+        if ($order->load(Yii::$app->request->post())){			
+			if ($order->validate()) {
+				$id = $_POST['id'];
+				$product = Product::findOne($id);
+				if ($product) {
+					\Yii::$app->cart->put($product, $order->qty);
+					$cart = \Yii::$app->cart;
+					$products = $cart->getPositions();
+					$total = $cart->getCost();
+					return $this->render('list', [
+						'products' => $products,
+						'total' => $total,
+					]);
+					var_dump($product);
+				}				
+			} else {
+				Yii::$app->session->setFlash('error', 'quantity not valid !');
+				return Yii::$app->getResponse()->redirect(Yii::$app->homeUrl.''.$_POST['sku'].'-'.str_replace(' ','_',strtolower($_POST['title'])));
+			}
+		}									
     }
 	public function beforeAction($action) {
 		$this->enableCsrfValidation = false;
