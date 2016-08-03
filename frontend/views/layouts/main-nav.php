@@ -319,58 +319,73 @@
 										<ul class="menu">
 										<!---------------------------------------------------------- MENU ------------------------------------------------------------------------------->
 											<li class=" "><a href="<?= Yii::$app->homeUrl; ?>">Home</a></li>
+											<?php 	
+												$models=MainCategory::find()
+													->all();
+												foreach ($models as $model):
+													$count_submenu = SubCategory::find()
+													->where (["idmaincategory"=>$model->idmain])
+													->count();	
+												if($count_submenu > 0){
+											?>
 											<li class="menu-static-width  ">
-												<a href="//newsmartwave.net/magento/porto/index.php/demo6_en/fashion.html">Product </a>
+												<a href="category-<?= strtolower(str_replace(' ','_',$model->main_category_name)); ?>"><?= $model->main_category_name?> </a>
 												<div class="nav-sublist-dropdown" style="width: 600px; display: none; list-style: none;">
 													<div class="container">
 														<div class="mega-columns row">
 															<div class="block1 col-sm-7">
 																<div class="row">
 																	<ul>
-																		<?php 	
-																			$models=MainCategory::find()
+																		<?php 
+																		
+																			$modelsubs=SubCategory::find()
+																				->where (["idmaincategory"=>$model->idmain])
 																				->all();
-																			foreach ($models as $model):
+																			foreach ($modelsubs as $modelsub):																			
 																			
-																			$count_submenu = SubCategory::find()
-																							->where (["idmaincategory"=>$model->idmain])
-																							->count();
-																			if($count_submenu > 0){
 																		?>
 																		<li class="menu-item menu-item-has-children menu-parent-item col-sw-2  " style="list-style: none;">
-																			<a class="level1" href="category-<?= strtolower(str_replace(' ','_',$model->main_category_name)); ?>"><span><?= $model->main_category_name ?></span></a>
+																			<a class="level1" href="product-<?= strtolower(str_replace(' ','_',$model->main_category_name)); ?>-<?= strtolower(str_replace(' ','_',$modelsub->sub_category_name)); ?>"><span><?= $modelsub->sub_category_name ?></span></a>
 																			<div class="nav-sublist level1">
 																				<ul>
 																					<?php 
-																						$modelsubs=SubCategory::find()
-																							->where (["idmaincategory"=>$model->idmain])
+																						$modeldets=DetailCategory::find()
+																							->where (["idsubcategory"=>$modelsub->idsubcategory])
 																							->all();
-																						foreach ($modelsubs as $modelsub):
+																						foreach ($modeldets as $modeldet):
+																						
+																						$count_detail = DetailCategory::find()
+																							->where(["idsubcategory"=>$modelsub->idsubcategory])
+																							->count();
+																						if($count_detail > 0){		
 																					?>
-																					<li class="menu-item " style="list-style: none;"><a class="level2" href="product-<?= strtolower(str_replace(' ','_',$model->main_category_name)); ?>-<?= strtolower(str_replace(' ','_',$modelsub->sub_category_name)); ?>"><span><?= $modelsub->sub_category_name; ?></span></a></li>
-																					<?php endforeach; ?>
+
+																					<li class="menu-item " style="list-style: none;"><a class="level2" href="product_detail-<?= strtolower(str_replace(' ','_',$model->main_category_name)); ?>-<?= strtolower(str_replace(' ','_',$modelsub->sub_category_name)); ?>-<?= strtolower(str_replace(' ','_',$modeldet->detail_name)); ?>"></span><?= $modeldet->detail_name; ?></a></li>
+																						<?php } endforeach; ?>
 																				</ul>
 																			</div>
 																		</li>
-																		<?php
-			
-																		}else{
-																			echo"<li class='menu-item menu-item-has-children menu-parent-item col-sw-2' style='list-style: none;'>				
-																					<a class='level1' href='category-";?><?= strtolower(str_replace(' ','_',$model->main_category_name));?><?php echo"'>
-																						<span>$model->main_category_name</span>
-																					</a>
-																				</li>";
-																		}
-																			endforeach;
+																		<?php			
+																			endforeach;																			
 																		?>
 																	</ul>
 																</div>
 															</div>
-															<div class="right-mega-block col-sm-5"><img src="//newsmartwave.net/magento/porto/media/wysiwyg/porto/category/banner/fashion_b.png" alt="" style="position: absolute;right: 10px;top: -10px;height: 273px;width: auto;max-width: none;z-index: -1;border-radius: 8px;"></div>
+															<!--<div class="right-mega-block col-sm-5"><img src="//newsmartwave.net/magento/porto/media/wysiwyg/porto/category/banner/fashion_b.png" alt="" style="position: absolute;right: 10px;top: -10px;height: 70px;width: auto;max-width: none;z-index: -1;border-radius: 8px;"></div>-->
 														</div>
 													</div>
 												</div>
-											</li>											
+											</li>		
+
+											<?php
+			
+												}else{
+													echo"<li class=''><a href=".strtolower(str_replace(' ','_',$model->main_category_name)) .">".$model->main_category_name."</a></li>";						
+												}
+												endforeach;
+											?>
+											
+											
 										</ul>
 										<!----------------------------------------------------------- /END OF MENU------------------------------------------->
 									</div>

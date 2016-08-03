@@ -25,6 +25,7 @@ return [
 				'contact-us' => 'site/contact-us',
 				'order-tracking' => 'site/order-tracking',
 				'not-found' => 'site/error',
+				'logout' => 'site/logout',					
 				
 				//CATALOG AND PRODUCT LINK
 				'category-<route>' => 'catalog/category',
@@ -33,8 +34,10 @@ return [
 				'brand-<brand>-<filter>' => 'catalog/brand',
 				'brands-<brands>-<filter>' => 'catalog/brands',
 				'brandd-<brandd>-<filter>' => 'catalog/brandd',
+				'finish-order' => 'cart/finish-order',
 				'price' => 'catalog/price',
 				'catalog-<sku>-<name>' => 'product/detail-product',
+				'address-check-<id>' => 'cart/address-check',
 
 				//PRODUCT CART LINK
 				'cart-add-<id>' => 'cart/add',	
@@ -44,9 +47,15 @@ return [
 				'city-<id>' => 'cart/list-city',
 				'cart-orderpayment' => 'cart/orderpayment',
 				'cart-list' => 'cart/list',
+				'remove-shipping' => 'cart/remove-shipping',
+				'change-shipping' => 'cart/change-shipping',
 				'cart-update-<id>' => 'cart/update',
 				'cart-remove-<id>' => 'cart/remove',
+				'check-<id>-<a>' => 'cart/address-check',
+				'shipping' => 'cart/shipping',
 				'checkout' => 'cart/checkout',
+				'remove-item-<id>' => 'cart/remove-item',				
+				
 				
 				//CUSTOMER ACCOUNT
 				'success' => 'customer/success',

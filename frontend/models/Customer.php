@@ -81,10 +81,10 @@ class Customer extends \yii\db\ActiveRecord
      */
     public function getCustomerAddress()
     {
-        return $this->hasMany(CustomerAddress::className(), ['idcustomer' => 'idcustomer']);
+        return $this->hasOne(CustomerAddress::className(), ['idcustomer' => 'idcustomer']);
     }
 	public function getOrder()
     {
-        return $this->hasMany(Order::className(), ['idcustomer' => 'idcustomer']);
+        return $this->hasOne(Order::className(), ['idcustomer' => 'idcustomer']);
     }
 }

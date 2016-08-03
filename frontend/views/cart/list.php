@@ -1,17 +1,22 @@
 <?php
 use \yii\helpers\Html;
 use common\models\Image;
+use frontend\models\Product;
 use hok00age\RajaOngkir;
 use  yii\web\Session;
 use yii\web\View;
 use frontend\models\Kurir;
 
+include "inc/format_rupiah.php";
 $client = new RajaOngkir("d5d252c02222c480ca9e0347aa8f6442");
 $session = Yii::$app->session;
 /* @var $this yii\web\View */
 /* @var $products common\models\Product[] */
+		
 
 $this->title = "Shopping Cart";
+$title = "Shopping Cart";
+$this->params['breadcrumbs'][] = ucwords($title);	
 ?>
 	<script>
 		( function($) {
@@ -113,7 +118,7 @@ $this->title = "Shopping Cart";
 											?>
                                             <tr>
                                                 <td class="action-td"><a href="cart-remove-<?= $product->getId() ?>" title="Remove item" class="btn-remove btn-remove2"></a></td>
-                                                <td class="pr-img-td"><a href="#" title="<?= Html::encode($product->title) ?>" class="product-image"><img src="img/cart/<?= $model->image_name; ?>" style="width:80px;height:80px; alt="<?= Html::encode($product->title) ?>" /></a></td>
+                                                <td class="pr-img-td"><a href="#" title="<?= Html::encode($product->title) ?>" class="product-image"><img src="img/cart/300x/<?= $model->image_name; ?>" style="width:80px;height:80px; alt="<?= Html::encode($product->title) ?>" /></a></td>
                                                 <td class="product-name-td">
                                                     <h2 class="product-name">
                                                         <a href="#"><?= Html::encode($product->title) ?></a>
@@ -121,7 +126,7 @@ $this->title = "Shopping Cart";
                                                 </td>
                                                 <td>
                                                     <span class="cart-price">
-                                                    <span class="price">Rp <?= $product->price ?></span>                
+                                                    <span class="price">Rp <?= format_rupiah($product->price) ?></span>                
                                                     </span>
                                                 </td>
                                                 <td>
@@ -132,13 +137,13 @@ $this->title = "Shopping Cart";
 												<td>
                                                     <div class="qty-holder">														
 														<?= Html::a('-', ['./cart-update-'.$product->getId(), 'quantity' => $quantity - 1], ['class' => 'table_qty_dec', 'disabled' => ($quantity - 1) < 1])?>                                                        
-															<input name="qty" value="1" size="4" title="Qty" class="input-text qty" maxlength="12" />
+															<input type="hidden" name="qty" value="1" size="4" title="Qty" class="input-text qty" maxlength="12" readonly />
 														<?= Html::a('+', ['./cart-update-'.$product->getId(), 'quantity' => $quantity + 1], ['class' => 'table_qty_inc'])?>														                                                        
                                                     </div>
                                                 </td>
                                                 <td class="td-total">
                                                     <span class="cart-price">
-                                                    <span class="price">Rp <?= $product->getCost() ?></span>                            
+                                                    <span class="price">Rp <?= format_rupiah($product->getCost()) ?></span>                            
                                                     </span>
                                                 </td>
                                             </tr>
@@ -197,6 +202,67 @@ $this->title = "Shopping Cart";
                                 }
                                 //]]>
                             </script>
+							<?php
+								if(Yii::$app->user->isGuest){
+								if(isset($session['shipping']['service_price'])){
+							?>
+								<div class="shipping">
+                                <h2 class="opened">Estimate Shipping</h2>
+                                <div class="shipping-form" style="display: block;">
+                                    <form action="cart-list" method="post" id="shipping-zip-form">
+                                        <p>Enter your destination to get a shipping estimate.</p>
+                                        <ul class="form-list">
+                                            <li>
+                                                <label for="region_id">* State/Province</label>
+                                                <div class="input-box">
+													<select name="province" id="province"  class="validate-select" title="Province/State" >
+													<option selected value='<?= $session['shipping']['kode_prov'].';'.$session['shipping']['name_prov'];?>'><?= $session['shipping']['name_prov']; ?></option>
+													
+													</select>
+                                                </div>
+                                            </li>
+                                            <li>                                               
+                                                <label for="region_id">* City</label>
+                                                <div class="input-box">
+													<select name="province" id="city"  class="validate-select" title="City" >
+														<option selected value='<?= $session['shipping']['kode_city'].';'.$session['shipping']['city_name'];?>'><?= $session['shipping']['city_name']; ?></option>													
+													</select>
+                                                </div>
+                                            </li>
+											<li>
+                                                <label for="postcode">Courier</label>
+                                                <div class="input-box">
+                                                    <select class="validate-select" style="width:40%;" id="kurir" name="kurir">
+														<option selected value='<?= $session['shipping']['courier'];?>'><?= strtoupper($session['shipping']['courier']); ?></option>													
+													</select>
+																																																		
+													<select name="service" class="form-control" id="service" style="width:127px;height:34px;float:right;">
+														<option selected value='<?= $session['shipping']['service_name'];?>'><?= $session['shipping']['service_name']; ?></option>													
+													</select>
+																										
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <label for="postcode">Zip/Postal Code</label>
+                                                <div class="input-box">
+                                                    <input class="input-text validate-postcode" type="text" id="postcode" name="estimate_postcode" value="<?= $session['shipping']['zip']; ?>" readonly />
+                                                </div>
+                                            </li>
+                                        </ul>
+										
+                                        <div class="buttons-set">
+											<div class="actions">
+												<?= Html::a('Remove Shipping', ['remove-shipping'], ['class' => 'addtocart'])?>
+																							
+												<div class="clearer"></div>
+											</div>										
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+							<?php	
+								}else{
+							?>
                             <div class="shipping">
                                 <h2 class="opened">Estimate Shipping</h2>
                                 <div class="shipping-form" style="display: block;">
@@ -252,19 +318,22 @@ $this->title = "Shopping Cart";
                                                 </div>
                                             </li>
                                             <li>
-                                                <label for="postcode">Zip/Postal Code</label>
+                                                <label for="postcode">Zip/Postal Code </label>
                                                 <div class="input-box">
                                                     <input class="input-text validate-postcode" type="text" id="postcode" name="estimate_postcode" value="" />
                                                 </div>
                                             </li>
                                         </ul>
-										
+										<span class="text-danger"> <?= Yii::$app->session->getFlash('ErrShiping'); ?></span>
+										<span class="text-danger"> <?= Yii::$app->session->getFlash('checkout'); ?></span>
                                         <div class="buttons-set">
 											<input type="submit" value="Add Shipping" class="btn btn-primary form-control" />
                                         </div>
                                     </form>
+									
                                 </div>
                             </div>
+							<?php } }?>
                             <div class="totals">
                                 <h2>Cart Totals</h2>
                                 <div>
@@ -284,7 +353,7 @@ $this->title = "Shopping Cart";
 															$grndtotal = $total;
 														}
 													?>
-                                                    <strong><span class="price">Rp <?= $grndtotal; ?></span></strong>
+                                                    <strong><span class="price">Rp <?= format_rupiah($grndtotal); ?></span></strong>
                                                 </td>
                                             </tr>
                                         </tfoot>
@@ -295,7 +364,7 @@ $this->title = "Shopping Cart";
                                                 </td>
 												
                                                 <td style="" class="a-right">
-                                                    <span class="price">Rp <?= $total; ?></span>    
+                                                    <span class="price">Rp <?= format_rupiah($total); ?></span>    
                                                 </td>
                                             </tr>
 											<?php
@@ -307,7 +376,7 @@ $this->title = "Shopping Cart";
                                                 </td>
 												
                                                 <td style="" class="a-right">
-                                                    <span class="price">Rp <?= $session['shipping']['service_price']; ?></span>    
+                                                    <span class="price">Rp <?= format_rupiah($session['shipping']['service_price']); ?></span>    
                                                 </td>
                                             </tr>
 											<?php } ?>
@@ -326,21 +395,49 @@ $this->title = "Shopping Cart";
                 <div class="crosssell">
                     <h2>Based on your selection, you may be interested in the following items:</h2>
                     <ul id="crosssell-products-list" class="row">
-                        <li class="item col-sm-6 col-md-3">
-                            <a class="product-image" href="../../samsung-galaxy-5.html" title="Samsung Galaxy 5"><img src="../../img/checkout/small_product.png" width="84" height="84" alt="Samsung Galaxy 5" /></a>
-                            <div class="product-details">
-                                <h3 class="product-name"><a href="../../samsung-galaxy-5.html">Samsung Galaxy 5</a></h3>
-                                <div class="price-box">
-                                    <span class="regular-price" id="product-price-60">
-                                    <span class="price">$320.00</span>                                    </span>
-                                </div>
-                                <button type="button" title="Add to Cart" class="button btn-cart" onclick="setLocation('#')"><span><span>Add to Cart</span></span></button>
-                                <ul class="add-to-links">
-                                    <li><a href="../../wishlist/index/add/product/60/form_key/QsXTNa4hQTccXjwJ/index.html" class="link-wishlist">Add to Wishlist</a></li>
-                                    <li><span class="separator">|</span> <a href="../../catalog/product_compare/add/product/60/uenc/aHR0cDovL25ld3NtYXJ0d2F2ZS5uZXQvbWFnZW50by9wb3J/form_key/QsXTNa4hQTccXjwJ/index.html" class="link-compare">Add to Compare</a></li>
-                                </ul>
-                            </div>
-                        </li>                       
+						<?php
+							$modelz = Product::find()																				
+									->orderBy(['idproduk'=>SORT_DESC])
+									->Limit(4)
+									->all();
+							foreach($modelz as $models):
+							
+							$imgProduc = Image::find()
+								->where(['product_id'=>$models->idproduk])
+								->orderBy(['is_cover'=>1])
+								->One();
+						?>
+                        <li class="item col-sm-6 col-md-3">								
+							<a href="catalog-<?= strtolower(str_replace(' ','_',$models->sku)); ?>-<?= strtolower(str_replace(' ','_',$models->title)); ?>" title="<?= $models->title; ?>" class="product-image"><img src="img/cart/300x/<?= $imgProduc->image_name ?>" width="84" height="84" alt="<?= $models->title; ?>" /></a>											
+							<div class="product-details">
+								<h3 class="product-name"><a href="catalog-<?= strtolower(str_replace(' ','_',$models->sku)); ?>-<?= strtolower(str_replace(' ','_',$models->title)); ?>"><?= $models->title; ?></a></h3>
+								<div class="price-box">
+									<?php
+										if($models->discount > 0){
+										?>
+									<p class="old-price">
+										<span class="price-label">Regular Price:</span>
+										<span class="price" id="old-price-53">
+										Rp <?= format_rupiah($models->price) ?>                
+										</span>
+									</p>
+									<?php } ?>
+									<p class="special-price">
+										<span class="price-label">Special Price</span>
+										<span class="price" id="product-price-53">
+										Rp <?= format_rupiah($models->final_price) ?>                
+										</span>
+									</p>
+								</div>
+								<div class="actions">
+									<?= Html::a('Add to cart', ['./cart-add-'.$models->idproduk], ['class' => 'icon-cart addtocart'])?>
+																				
+									<div class="clearer"></div>
+								</div>
+							</div>
+                        </li> 
+						<?php endforeach; ?>       
+					 
                     </ul>
                     <script type="text/javascript">decorateList('crosssell-products-list', 'none-recursive')</script>
                 </div>

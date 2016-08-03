@@ -8,17 +8,22 @@
 	use yii\bootstrap\NavBar;
 	use yii\widgets\Breadcrumbs;
 	use frontend\assets\AppAsset;
-	use common\widgets\Alert;
-	use frontend\models\Metadescription;
-	use frontend\models\Metatitle;
-	use frontend\models\Author;
-	use frontend\models\Keyword;
-	use frontend\models\Logo;
+	use common\widgets\Alert;	
+	use frontend\models\Seo;
 	use frontend\models\UserForm;
+	use frontend\models\Image;
 	use yz\shoppingcart\ShoppingCart;
 	use yii\web\View;
+	use frontend\models\MainCategory;
+	use frontend\models\SubCategory;
+	use frontend\models\DetailCategory;
 	
 	AppAsset::register($this);
+	$model = UserForm::find()
+		->where(['idrole'=>1])
+		->One();
+	$cart = \Yii::$app->cart;
+	$products = $cart->getPositions();
 	
 	if (Yii::$app->controller->action->id === 'index') {
 ?>
@@ -28,15 +33,18 @@
 <html lang="<?= Yii::$app->language ?>">
 	<head>
 		<?php
-	
+			$seo = Seo::find()
+				->limit(1)
+				->one();
+				
 		?>
 			<meta charset="<?= Yii::$app->charset ?>">
 			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<meta name='keywords' content='' />
-			<meta name='author' content='' />
-			<meta name='description' content='' />
+			<meta name='keywords' content='<?= $seo->meta_keyword ?>' />
+			<meta name='author' content='<?= $seo->meta_author ?>' />
+			<meta name='description' content='<?= $seo->meta_description ?>' />
 			<?= Html::csrfMetaTags() ?>
-			<title><?= Html::encode($this->title) ?></title>
+			<title><?= Html::encode($seo->meta_title) ?></title>
 		<?php $this->head() ?>
 		<?php
 			$root = '@web';			
@@ -51,32 +59,7 @@
 			
 			$cart = \Yii::$app->cart;
 			$products = $cart->getPositions();
-		?>	
-		
-			<div id="loading-mask">
-				<div class ="background-overlay"></div>
-				<p id="loading_mask_loader" class="loader">
-					<i class="ajax-loader large animate-spin"></i>
-				</p>
-			</div>
-			
-			<div id="after-loading-success-message">
-				<div class ="background-overlay"></div>
-				<div id="success-message-container" class="loader" >
-					<div class="msg-box">Product was successfully added to your shopping cart.</div>
-					<button type="button" name="finish_and_checkout" id="finish_and_checkout" class="button btn-cart" >
-						<span>
-						<span>Go to cart page</span>
-						</span>
-					</button>
-					<button type="button" name="continue_shopping" id="continue_shopping" class="button btn-cart" >
-						<span>
-							<span>Continue</span>
-						</span>
-					</button>
-				</div>
-			</div>
-
+		?>						
 			<script type="text/javascript">
 				jQuery(function($){
 					var scrolled = false;
@@ -182,45 +165,39 @@
 							<div class="top-links-area">                      
 								<ul class="links">
 									<?php
-										if (!Yii::$app->user->isGuest) {
-											echo"
-											<li class='first'>
-												<a href='myaccount' title='My Account'>My Account</a>
-											</li>";
-											echo"
-											<li class='first'>"
-												. Html::beginForm(['/site/logout'], 'post')
-												. Html::submitButton(
-													'Logout (' . Yii::$app->user->identity->firstname.' '.Yii::$app->user->identity->lastname. ')',
-													['class' => 'btn btn-link','style'=>'color:#fff']
-												)
-												. Html::endForm()
-											. "</li>";
-										}else{
-											echo"
-											<li class='last' style='border-left: 1px solid #ccc'>
-												<a href='login' >Log In</a>
-											</li>";
-										}
-									?>									
+										if (!Yii::$app->user->isGuest) { 
+									?>
+										<li class="first"><a href="myaccount" title="My Account">My Account</a></li>
+										<li class="first"><a href="logout"  title="Logout" >Logout</a></li>									
+									<?php
+									 } else{
+									?>
+										<li><a href="login" title="Daily deal">Login</a></li>
+									<?php }?>									
+												
 								</ul>
-							</div>                   
+							</div>
+							<?php
+								if (!Yii::$app->user->isGuest) { 
+							?>
+								<p class="welcome-msg">Welcome <?= Yii::$app->user->identity->firstname.' '.Yii::$app->user->identity->lastname; ?></p>							
+							<?php } ?>
 							<div class="clearer"></div>
 						</div>
 					</div>
-					
+										
 					<div class="header container">
 						<h1 class="logo">
-							<strong>Maridagang</strong>
-							<a href="<?= Yii::$app->homeUrl; ?>" title="Maridagang" class="logo">
-								<img src="img/logo_white_plus.png" alt="Maridagang" />
+							<strong><?= $model->nama_toko; ?></strong>
+							<a href="<?= Yii::$app->homeUrl; ?>" title="<?= $model->nama_toko; ?>" class="logo">
+								<img src="img/logo/<?= $model->logo; ?>" alt="<?= $model->nama_toko; ?>" />
 							</a>
 						</h1>
 						
 						<div class="cart-area">
 							<div class="custom-block">
 								<i class="icon-phone" style="margin-right: 5px;"></i>
-								<span>(+62) 877-7668-7488</span>
+								<span>(+62) <?= $model->phone; ?></span>
 								<span class="split"></span>
 								<a href="contact-us">CONTACT US</a>
 							</div>
@@ -245,28 +222,36 @@
 								<div class="topCartContent block-content theme-border-color">
 									<div class="inner-wrapper">
 										<ol class="mini-products-list">
+											<?php
+												foreach($products as $product):
+												$image = Image::find()
+														->where(['product_id'=>$product->idproduk])
+														->AndWhere(['is_cover'=>1])
+														->One();
+											?>
 											<li class="item">
-												<a href="detil_fashion.html" title="Samsung Galaxy - Small" class="product-image">
-													<img src="img/bag.png" alt="Samsung Galaxy - Small" />
+												<a href="catalog-<?= strtolower(str_replace(' ','_',$product->sku)); ?>-<?= strtolower(str_replace(' ','_',$product->title)); ?>" title="<?= $product->title; ?>" class="product-image">	
+													<img src="img/cart/300x/<?= $image->image_name?>" alt="<?= $product->title?>" style="width:84px;height:89" />
 												</a>
 												<div class="product-details">
 													<p class="product-name">
-														<a href="detil_fashion.html">Samsung Galaxy - Small</a>
+														<a href="catalog-<?= strtolower(str_replace(' ','_',$product->sku)); ?>-<?= strtolower(str_replace(' ','_',$product->title)); ?>"><?= $product->title?></a>
 													</p>
-													<p class="qty-price">1 X <span class="price">$250.00</span></p>
-													<a href="dailydeal/index.html" title="Remove This Item" onclick="return confirm('Are you sure you would like to remove this item from the shopping cart?');" class="btn-remove"><i class="icon-cancel"></i></a>
+													<p class="qty-price"><?= $product->getQuantity(); ?> X <span class="price">Rp. <?= number_format($product->price,0,".","."); ?></span></p>
+													<a href="remove-item-<?= $product->idproduk?>" title="Remove This Item" onclick="return confirm('Are you sure you would like to remove this item from the shopping cart?');" class="btn-remove"><i class="icon-cancel"></i></a>
 												</div>
 												<div class="clearer"></div>
-											</li>                                
+											</li> 
+											<?php endforeach; ?>
 										</ol>
 										
 										<div class="totals">
 											<span class="label">Total: </span>
-											<span class="price-total"><span class="price"><?= $subtotal; ?> IDR</span></span>
+											<span class="price-total"><span class="price">Rp. <?= $subtotal; ?></span></span>
 										</div>
 										
 										<div class="actions">
-											<a class="btn btn-default" href="cart">
+											<a class="btn btn-default" href="cart-list">
 												<i class="icon-basket"></i>
 												View Cart
 											</a>
@@ -315,45 +300,55 @@
 				
 				<div class="mobile-nav side-block container">
 					<div class="menu-all-pages-container">
-						<ul class="menu">				
+						<ul class="menu">
+							<?php 	
+								$models=MainCategory::find()
+									->all();
+								foreach ($models as $model):
+								
+								$count_submenu = SubCategory::find()
+												->where (["idmaincategory"=>$model->idmain])
+												->count();
+								if($count_submenu > 0){
+							?>
 							<li class="menu-item menu-item-has-children menu-parent-item  ">
 								<a href="motors.html">Motors</a>
 								<ul>
-									<li class="menu-item  ">
-										<a class="level1" href="motors/cars-and-trucks.html">
-										<span>Cars and Trucks</span>
-										</a>
-									</li>
-									<li class="menu-item  ">
-										<a class="level1" href="motors/motorcycles.html">
-										<span>Motorcycles &amp; Powersports</span>
-										</a>
-									</li>
-									<li class="menu-item menu-item-has-children menu-parent-item  ">
+									<?php 
+									
+										$modelsubs=SubCategory::find()
+											->where (["idmaincategory"=>$model->idmain])
+											->all();	
+										foreach ($modelsubs as $modelsub):
+										
+										$count_menu = DetailCategory::find()
+											->where (["idsubcategory"=>$modelsub->idsubcategory])
+											->count();
+										
+										if($count_menu > 0){
+											$class ="menu-item menu-item-has-children menu-parent-item ";
+										}else{
+											$class ="";
+										}
+									?>
+									
+									<li class="<?= $class; ?>">
 										<a class="level1" href="motors/parts.html"><span>Parts &amp; Accessories</span></a>
 										<ul>
+											<?php 
+												$modeldets=DetailCategory::find()
+													->where (["idsubcategory"=>$modelsub->idsubcategory])
+													->all();
+												foreach ($modeldets as $modeldet): 
+											?>
 											<li class="menu-item "><a class="level2" href="motors/parts/motorcycle-parts.html"><span>Motorcycle Parts</span></a></li>
-											<li class="menu-item "><a class="level2" href="motors/parts/atv-parts.html"><span>ATV Parts</span></a></li>
-											<li class="menu-item "><a class="level2" href="motors/parts/snowmobile-parts.html"><span>Snowmobile Parts</span></a></li>
-											<li class="menu-item "><a class="level2" href="motors/parts/personal-watercraft-parts.html"><span>Personal Watercraft Parts</span></a></li>
-											<li class="menu-item "><a class="level2" href="motors/parts/other-vehicle-parts.html"><span>Other Vehicle Parts</span></a></li>
+											<?php endforeach; ?>
 										</ul>
 									</li>
-									<li class="menu-item  ">
-										<a class="level1" href="motors/boats.html">
-										<span>Boats</span>
-										</a>
-									</li>
-									<li class="menu-item  ">
-										<a class="level1" href="motors/auto-tools-supplies.html">
-										<span>Auto Tools &amp; Supplies</span>
-										</a>
-									</li>
+									<?php endforeach; ?>						
 								</ul>
 							</li>
-							<li class="menu-item">
-								<a href="login">Sign in</a>
-							</li>							
+							<?php endforeach; ?>													
                         </ul>
 					</div>
 				</div>
@@ -484,10 +479,7 @@
 												</strong>
 											</div>											
 											<div class="block-content">
-												<?php 
-													$model = UserForm::find()
-														   ->where(['idrole'=>1])
-														   ->One();
+												<?php 													
 													echo $model->description;	   
 												?>
 												

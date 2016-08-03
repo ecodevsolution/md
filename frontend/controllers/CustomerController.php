@@ -226,11 +226,13 @@ class CustomerController extends \yii\web\Controller
 					->where(['idcustomer'=>Yii::$app->user->identity->idcustomer])
 					->count();
 					
-			$order = Order::find()
-					->where(['idcustomer'=>Yii::$app->user->identity->idcustomer])
-					->orderBy(['date'=>SORT_DESC])	
-					->Limit(5)
-					->all();
+			$order = Customer::find()
+					->joinWith(['order'])
+					->joinWith(['customerAddress'])
+					->orderBy(['order.idorder'=>SORT_DESC])
+					->where(['customer.idcustomer'=>Yii::$app->user->identity->idcustomer])
+					->limit(5)
+					->All();
 			
 			return $this->render('myorder',[
 				'order'=>$order,
