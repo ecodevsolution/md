@@ -20,15 +20,16 @@ AppAsset::register($this);
 		</head>
 		<body>
 
-    <div class="page-center">
-        <div class="page-center-in">
-            <div class="container-fluid">		
-						<?php $this->beginBody() ?>
-							<?= $content ?>
-						<?php $this->endBody() ?>					
+			<div class="page-center">
+				<div class="page-center-in">
+					<div class="container-fluid">		
+							<?php $this->beginBody() ?>
+								<?= $content ?>
+							<?php $this->endBody() ?>					
 					</div>
 				</div>
 			</div>
+			
 		</body>
 	</html>
 <?php $this->endPage() ?>

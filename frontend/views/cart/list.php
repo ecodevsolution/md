@@ -20,12 +20,27 @@ $this->params['breadcrumbs'][] = ucwords($title);
 ?>
 	<script>
 		( function($) {
+			
+			function loading_city(){
+				$('#loading_city').html("<img src='img/ajax_loader.gif'/>").fadeIn('fast');
+			}
+			function loading_city_hide(){
+				$('#loading_city').fadeOut('fast');
+			}
+			function loading_service(){
+				$('#loading_service').html("<img src='img/ajax_loader.gif'/>").fadeIn('fast');
+			}
+			function loading_service_hide(){
+				$('#loading_service').fadeOut('fast');
+			} 
+			
 			$(document).ready(function()
 			{
-					$('#province').change(function()
+				$('#province').change(function()
 				{
 					var id=$(this).val();
 					var dataString = 'id='+ id;
+					loading_city();
 					$.ajax
 					({
 						type: 'GET',
@@ -34,7 +49,9 @@ $this->params['breadcrumbs'][] = ucwords($title);
 						cache: false,
 						success: function(html)
 						{
+							loading_city_hide();
 							$('#city').html(html);
+							
 							
 						} 
 					});
@@ -49,6 +66,7 @@ $this->params['breadcrumbs'][] = ucwords($title);
 					var id=$(this).val();
 					var city = $('#cities').val();
 					var dataString = 'id='+ id +'&'+'cities'+city;
+					loading_service();
 					$.ajax
 					({
 						type: 'GET',
@@ -58,6 +76,7 @@ $this->params['breadcrumbs'][] = ucwords($title);
 						success: function(html)
 						{
 							$('#package').html(html);
+							loading_service_hide();
 							
 						} 
 					});
@@ -296,7 +315,7 @@ $this->params['breadcrumbs'][] = ucwords($title);
                                             </li>
                                             <li>                                               
                                                 <div class="input-box" id="city">
-												 
+												 <div id="loading_city"></div>
                                                 </div>
                                             </li>
 											<li>
@@ -313,7 +332,7 @@ $this->params['breadcrumbs'][] = ucwords($title);
 														<?php endforeach; ?>
 													</select>
 													<div id="package" style="float:right;margin-top:-39px; !important">
-										
+														<div id="loading_service"></div>
 													</div>
                                                 </div>
                                             </li>

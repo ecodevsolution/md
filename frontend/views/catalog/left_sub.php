@@ -382,14 +382,14 @@
 						<form action="price" method="GET">
 						<span class="price-range ml-10">
 							<label class="muted alert-gray blok" for="">Rp</label>
-							<input type="text" name="pr_min" class="form-small" value="" id="pr-min" title="Harga Terendah" placeholder="Min" />
+							<input type="text" name="pr_min" class="form-small" value="" id="pr-min" title="Minimum Price" placeholder="Min" />
 							<input type="hidden" value="<?= $link; ?>" name="<?= $name ?>" >
 							<input type="hidden" value="<?php if(isset($b)){ echo"$b"; }; ?>" name="b" >
 						</span>
 						<label for="" class=" connector ml-5 mr-5">To</label>
 						<span class="price-range ml-10">
 							<label class="muted alert-gray bloks" for="">Rp</label>
-							<input type="text" name="pr_max" class="form-small" value="" id="pr-max" title="Harga Tertinggi" placeholder="Maks" />
+							<input type="text" name="pr_max" class="form-small" value="" id="pr-max" title="Maximum Price" placeholder="Max" />
 						</span>
 						<input type="submit" class="btn btn-primary" style="float:right;margin-top:10px;"value="Filter">
                         <div class="clearer"></div>
@@ -424,7 +424,13 @@
             });
         });
     </script>
-	
+	<?php
+		$countPromo = Product::find()
+			->joinWith(['image'])
+			->where(['status'=>2])
+			->count();
+		if($countPromo > 0){
+	?>
     <h2 class="sidebar-title" style="margin-bottom:10px">PROMO</h2>
     <div class="sidebar-filterproducts custom-block">
         <div class="filter-products owl-top-narrow">
@@ -471,6 +477,6 @@
 	
             </div>
         </div>
-
     </div>
+	<?php } ?>
 </div>

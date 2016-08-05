@@ -17,6 +17,9 @@
 	use frontend\models\MainCategory;
 	use frontend\models\SubCategory;
 	use frontend\models\DetailCategory;
+	use frontend\models\UserSocial;
+	use frontend\models\UserBank;
+	use frontend\models\Bank;
 	
 	AppAsset::register($this);
 	$model = UserForm::find()
@@ -53,6 +56,7 @@
 			'position' => View::POS_HEAD]);
 			
 			$this->registerCssFile('css/7322e5188218fbdefb9daa9d38c6e561.css', ['media' => 'print']);			
+			//$this->registerCssFile('css/32d64625d5d5ecd44a8e834c1f7f8284.css', ['media' => 'all']);			
 			
 			$itemsInCart = Yii::$app->cart->getCount();
 			$subtotal = Yii::$app->cart->getCost();
@@ -247,7 +251,7 @@
 										
 										<div class="totals">
 											<span class="label">Total: </span>
-											<span class="price-total"><span class="price">Rp. <?= $subtotal; ?></span></span>
+											<span class="price-total"><span class="price">Rp. <?= number_format($subtotal,0,".","."); ?></span></span>
 										</div>
 										
 										<div class="actions">
@@ -280,7 +284,7 @@
 						
 						<div class="search-area">
 							<a href="javascript:void(0);" class="search-icon"><i class="icon-search"></i></a>
-							<form id="search_mini_form" action="# method="get">
+							<form id="search_mini_form" action="#" method="get">
 								<div class="form-search ">
 									<label for="search">Search:</label>
 									<input id="search" type="text" name="q" class="input-text" placeholder="Search here.."/>								
@@ -302,22 +306,22 @@
 					<div class="menu-all-pages-container">
 						<ul class="menu">
 							<?php 	
-								$models=MainCategory::find()
+								$cat=MainCategory::find()
 									->all();
-								foreach ($models as $model):
+								foreach ($cat as $cats):
 								
 								$count_submenu = SubCategory::find()
-												->where (["idmaincategory"=>$model->idmain])
+												->where (["idmaincategory"=>$cats->idmain])
 												->count();
 								if($count_submenu > 0){
 							?>
 							<li class="menu-item menu-item-has-children menu-parent-item  ">
-								<a href="motors.html">Motors</a>
+								<a href="category-<?= strtolower(str_replace(' ','_',$cats->main_category_name)); ?>"><?= $cats->main_category_name?> </a>
 								<ul>
 									<?php 
 									
 										$modelsubs=SubCategory::find()
-											->where (["idmaincategory"=>$model->idmain])
+											->where (["idmaincategory"=>$cats->idmain])
 											->all();	
 										foreach ($modelsubs as $modelsub):
 										
@@ -333,7 +337,7 @@
 									?>
 									
 									<li class="<?= $class; ?>">
-										<a class="level1" href="motors/parts.html"><span>Parts &amp; Accessories</span></a>
+										<a class="level1" href="product-<?= strtolower(str_replace(' ','_',$cats->main_category_name)); ?>-<?= strtolower(str_replace(' ','_',$modelsub->sub_category_name)); ?>"><span><?= $modelsub->sub_category_name ?></span></a>
 										<ul>
 											<?php 
 												$modeldets=DetailCategory::find()
@@ -341,14 +345,27 @@
 													->all();
 												foreach ($modeldets as $modeldet): 
 											?>
-											<li class="menu-item "><a class="level2" href="motors/parts/motorcycle-parts.html"><span>Motorcycle Parts</span></a></li>
+											<li class="menu-item " style="list-style: none;"><a class="level2" href="product_detail-<?= strtolower(str_replace(' ','_',$cats->main_category_name)); ?>-<?= strtolower(str_replace(' ','_',$modelsub->sub_category_name)); ?>-<?= strtolower(str_replace(' ','_',$modeldet->detail_name)); ?>"></span><?= $modeldet->detail_name; ?></a></li>
 											<?php endforeach; ?>
 										</ul>
 									</li>
 									<?php endforeach; ?>						
 								</ul>
 							</li>
-							<?php endforeach; ?>													
+								<?php }else{
+									echo"<li class=''><a href=".strtolower(str_replace(' ','_',$cats->main_category_name)) .">".$cats->main_category_name."</a></li>";						
+								} endforeach; ?>
+								
+								<?php
+									if (!Yii::$app->user->isGuest) { 
+								?>
+									<li class=""><a href="myaccount" title="My Account">My Account</a></li>
+									<li class=""><a href="logout"  title="Logout" >Logout</a></li>									
+								<?php
+								 } else{
+								?>
+									<li><a href="login" title="Daily deal">Login</a></li>
+								<?php }?>								
                         </ul>
 					</div>
 				</div>
@@ -414,14 +431,14 @@
 														<i class="icon-location">&nbsp;</i>
 														<p>
 															<b>Address:</b>
-															<br/>123 Street Name, City, England
+															<br/><?= $model->address; ?>
 														</p>
 													</li>
 													<li>
 														<i class="icon-phone">&nbsp;</i>
 														<p>
 															<b>Phone:</b>
-															<br/>(123) 456-7890
+															<br/><?= $model->phone; ?>
 														</p>
 													</li>
 													<li>
@@ -429,14 +446,14 @@
 														<p>
 															<b>Email:</b>
 															<br/>
-															<a href="mailto:mail@example.com">mail@example.com</a>
+															<a href="mailto:<?= $model->email; ?>"><?= $model->email; ?></a>
 														</p>
 													</li>
 													<li>
 														<i class="icon-clock">&nbsp;</i>
 														<p>
 															<b>Working Days/Hours:</b>
-															<br/>Mon - Sun / 9:00AM - 8:00PM
+															<br/><?= $model->work_hour; ?>
 														</p>
 													</li>
 												</ul>
@@ -491,17 +508,37 @@
 						</div>
 						<div class="footer-bottom">
 							<div class="container">
-								<a href="index.html" class="logo">
-									<img src="img/logo_footer.png" alt=""/>
+								<a href="<?= Yii::$app->homeUrl; ?>" class="logo">
+									<img src="img/logo/<?= $model->logo; ?>" style="width:68px;height:31px" alt=""/>
 								</a>
 								<div class="social-icons">
-									<a href="http://www.example.com/" style="background-position:-60px 0; width:30px; height:30px;" class="icon1-class" title="Facebook" target="_blank">&nbsp;</a>
-									<a href="http://www.example.com/" style="background-position:0 0; width:30px; height:30px;" class="icon2-class" title="" target="_blank">&nbsp;</a>
-									<a href="http://www.example.com/" style="background-position:-300px 0; width:30px; height:30px;" class="icon3-class" title="" target="_blank">&nbsp;</a>
+									<?php
+										$social = UserSocial::find()
+												->joinWith('social')
+												->all();
+										foreach($social as $socials):
+									?>
+										<a href="<?= $socials->link ?>" style="<?= $socials->social->position?>" class="<?= $socials->social->class ?>" title="<?= $socials->social->name; ?>" target="_blank">&nbsp;</a>
+									<?php endforeach; ?>		
 								</div>
 								<div class="custom-block">
-									<img src="img/payments.png" alt="" style="max-width: 100%;" />
+									<?php
+										$bank = UserBank::find()												
+												->all();
+										foreach($bank as $banks):
+										
+										$bank_logo = Bank::find()
+												->where(['bankid'=>$banks->bank])
+												->all();
+											foreach($bank_logo as $bank_logos):
+									?>
+												<img src="img/bank/<?= $bank_logos->logo; ?>" alt="" style="width:49px;height:28px" />
+											
+											<?php endforeach; ?>											
+									<?php endforeach; ?>
 								</div>
+								
+								
 								<address>&copy; Copyright <?= date("Y"); ?><a href="http://maridagang.com"> Maridagang </a>. All Rights Reserved.</address>
 							</div>
 						</div>

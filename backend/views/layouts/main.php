@@ -19,6 +19,11 @@ AppAsset::register($this);
 		);
 	} else {
 		$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@web/backend/layout');
+		
+		$root = '@web';			
+			$this->registerJsFile($root."/js/lib/tether/tether.min.js",
+			['depends' => [\yii\web\JqueryAsset::className()],
+			'position' => View::POS_HEAD]);
 	
 ?>
 <?php $this->beginPage() ?>

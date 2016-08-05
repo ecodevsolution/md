@@ -116,10 +116,7 @@ class SiteController extends Controller
 				->select('brand.idbrand')
 				->distinct()
 				->all();
-		
-		$icon = InfoBox::find()
-				->all();
-		
+	
 		$slider = Slider::find()
 				->joinWith(['mainCategory'])
 				->all();
@@ -135,8 +132,7 @@ class SiteController extends Controller
         return $this->render('homepage',[
 			'sale'=>$sale,
 			'adsleft'=>$adsleft,
-			'brand'=>$brand,
-			'icon'=>$icon,
+			'brand'=>$brand,			
 			'slider'=>$slider,
 			'tag'=>$tag,
 			'banner'=>$banner,

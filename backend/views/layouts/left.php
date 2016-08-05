@@ -43,6 +43,8 @@
             </span>
             <ul>               							
 				<li><a href="?r=seo/seo&id=1"><span class="lbl">SEO</span></a></li>	
+				<li><a href="?r=user-bank/index"><span class="lbl">Bank</span></a></li>	
+				<li><a href="?r=user-social/index"><span class="lbl">Social Media</span></a></li>	
 				<li><a href="?r=store/index"><span class="lbl">Information Store</span></a></li>	
             </ul>
         </li>

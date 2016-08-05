@@ -10,11 +10,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping database structure for shop
-CREATE DATABASE IF NOT EXISTS `shop` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `shop`;
-
-
 -- Dumping structure for table shop.aboutus
 CREATE TABLE IF NOT EXISTS `aboutus` (
   `idabout` int(11) NOT NULL AUTO_INCREMENT,
@@ -22,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `aboutus` (
   PRIMARY KEY (`idabout`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shop.aboutus: ~0 rows (approximately)
+-- Dumping data for table shop.aboutus: ~1 rows (approximately)
 /*!40000 ALTER TABLE `aboutus` DISABLE KEYS */;
 INSERT INTO `aboutus` (`idabout`, `description`) VALUES
 	(1, '<p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut consequat nibh mollis ligula mollis convallis. Morbi dignissim faucibus enim, sed fermentum ex commodo ut. Pellentesque laoreet arcu eu nulla elementum suscipit. Morbi rutrum quam ut tincidunt tincidunt. Nullam a condimentum dolor.&nbsp;</p>');
@@ -31,19 +26,21 @@ INSERT INTO `aboutus` (`idabout`, `description`) VALUES
 
 -- Dumping structure for table shop.bank
 CREATE TABLE IF NOT EXISTS `bank` (
-  `idbank` varchar(50) NOT NULL,
-  `bank_name` varchar(50) DEFAULT NULL,
-  `account_no` varchar(50) DEFAULT NULL,
-  `account_name` varchar(50) NOT NULL,
-  `branch` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`idbank`)
+  `bankid` varchar(50) NOT NULL,
+  `logo` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`bankid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table shop.bank: ~2 rows (approximately)
+-- Dumping data for table shop.bank: ~7 rows (approximately)
 /*!40000 ALTER TABLE `bank` DISABLE KEYS */;
-INSERT INTO `bank` (`idbank`, `bank_name`, `account_no`, `account_name`, `branch`) VALUES
-	('BCA', 'BANK CENTRAL ASIA', '627xxxxxx', 'Muhamad Adinugraha', 'Pondok Gede'),
-	('MANDIRI', 'BANK MANDIRI', '10042932xxxx', 'PT BAGUS PRRATAMA MANDIRI', 'Kemang Pratama');
+INSERT INTO `bank` (`bankid`, `logo`) VALUES
+	('BCA', 'bankbca.jpg'),
+	('BNI', 'bankbni.png'),
+	('BRI', 'bankbri.png'),
+	('MANDIRI', '1454432419.jpg'),
+	('MEGA', 'bankmega.png'),
+	('MNC', 'bankmnc.png'),
+	('PANIN', 'bankpanin.png');
 /*!40000 ALTER TABLE `bank` ENABLE KEYS */;
 
 
@@ -54,13 +51,14 @@ CREATE TABLE IF NOT EXISTS `banner_ads` (
   `tag` varchar(50) DEFAULT NULL,
   `flag` int(11) DEFAULT NULL,
   PRIMARY KEY (`idbannerads`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shop.banner_ads: ~0 rows (approximately)
+-- Dumping data for table shop.banner_ads: ~3 rows (approximately)
 /*!40000 ALTER TABLE `banner_ads` DISABLE KEYS */;
 INSERT INTO `banner_ads` (`idbannerads`, `banner`, `tag`, `flag`) VALUES
-	(1, '6d9278947579dc0d40dd666ab3cc8e02.jpg', 'Examples', 1),
-	(2, '709ff4fa5996cae86a213bd0067a90ee.png', 'A', 1);
+	(5, '0d22d41af68d33016a723bf94ac92688.jpg', 'Free', 1),
+	(6, '0771cab0863e773173b72ea2670b50e3.jpg', 'Free', 1),
+	(7, '5ea090b33237e22d7356227f18ca69ea.jpg', 'Free', 1);
 /*!40000 ALTER TABLE `banner_ads` ENABLE KEYS */;
 
 
@@ -70,14 +68,13 @@ CREATE TABLE IF NOT EXISTS `banner_sale` (
   `sale_slider` varchar(50) DEFAULT NULL,
   `tag` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idbanner`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shop.banner_sale: ~3 rows (approximately)
+-- Dumping data for table shop.banner_sale: ~2 rows (approximately)
 /*!40000 ALTER TABLE `banner_sale` DISABLE KEYS */;
 INSERT INTO `banner_sale` (`idbanner`, `sale_slider`, `tag`) VALUES
-	(1, '739cd8b1a7e255e1b3b68263d9ff0661.png', 'Sales'),
-	(2, '9b8a3404aae7ed558aabc706af401ac3.png', 'adsd'),
-	(3, 'e0df334aec82af73540e3bd097e5631f.png', 'sale');
+	(5, '3cb580e1c1036c3968744fc0e3d0b4c1.jpg', 'Sale'),
+	(6, '0704279f074c5e36004f7fccb837bc11.jpg', 'Sale');
 /*!40000 ALTER TABLE `banner_sale` ENABLE KEYS */;
 
 
@@ -87,13 +84,14 @@ CREATE TABLE IF NOT EXISTS `brand` (
   `brand_logo` varchar(50) NOT NULL DEFAULT '0',
   `brand_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idbrand`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shop.brand: ~2 rows (approximately)
+-- Dumping data for table shop.brand: ~3 rows (approximately)
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` (`idbrand`, `brand_logo`, `brand_name`) VALUES
-	(2, '0', 'Adidas'),
-	(3, 'dc9b127afa5e3fa2e301bfce887a57b1.jpg', 'Nike');
+	(11, '5b529344c88b6a7a3c9fcffee4231139.png', 'Adidas'),
+	(12, 'f407ebb509beffa5a08d187087f7c364.png', 'Camel'),
+	(13, '40503349d0985341df7f99dfb06130a8.png', 'Nike');
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 
 
@@ -131,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=187 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table shop.customer: ~19 rows (approximately)
+-- Dumping data for table shop.customer: ~21 rows (approximately)
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
 INSERT INTO `customer` (`idcustomer`, `is_guest`, `titles`, `firstname`, `lastname`, `auth_key`, `bod`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
 	(159, 1, '1', 'adi', 'nugraha', 'qIS7tNRyblKgVtvhaNt_BYccoCOC2H_Z', NULL, '$2y$13$r7B8mC68hV8i1vTJqBq5feLyZC1CyBh05bYavetTIlGT.DdoFoqLi', NULL, 'email@email.com', 0, 50616, 0),
@@ -153,7 +151,7 @@ INSERT INTO `customer` (`idcustomer`, `is_guest`, `titles`, `firstname`, `lastna
 	(182, 0, '1', 'c', 's', 'SIumOk9hjsLa6RnlZ5WXtJ4KjVlmX_Pa', NULL, '$2y$13$6PHzsC.wUoNrxve8Mp/jy.izpiXnRa0tPTYNp66kIhP4W0aTiI13W', NULL, 'asd@asdasd.com', 0, 20160607, 0),
 	(183, 0, '1', 'fg', 'asda', 'jtLrjkqtW7VtYpHa-YiHQA7JzsYDw5sp', NULL, '$2y$13$VuOgVsgvCxDHLnptvA2awOmbuqbY2kZ4Eo/OJo/vzfqUqEq0iWnB.', NULL, 'asd@asdasdasd.com', 0, 20160607, 0),
 	(184, 0, '1', 'asda', 'asdasd', 'FQW-7UvpHjstoCtDiqH61czCatdrnC2p', NULL, '$2y$13$UUt6m4/aQ4gTJ91WAmTcqO5.fY1BX0NXNI4jeGseUpTMRMG4iYP5W', NULL, 'asd@asdasdasd23.com', 0, 20160607, 0),
-	(185, 0, '2', 'qodrina', 'ramadhan', 'jbQ46xbZUm3mUur4BC9l0N15cEeI9beI', NULL, '$2y$13$R/4ngggyi1yRYntJC0mrTOAkWgMtXjmKuNLURc38qJGG0eV0qfGE6', NULL, 'qodrinaramadhan@gmail.com', 10, 20160608, 0),
+	(185, 0, '2', 'qodrina', 'ramadhan', 'jbQ46xbZUm3mUur4BC9l0N15cEeI9beI', '27 Maret 1992', '$2y$13$R/4ngggyi1yRYntJC0mrTOAkWgMtXjmKuNLURc38qJGG0eV0qfGE6', NULL, 'qodrinaramadhan@gmail.com', 10, 20160608, 0),
 	(186, 0, '1', 'adi', 'nugraha', 'DHiRMn3HwU6OS1Nw8k0PBYGsNyP1RC6d', NULL, '$2y$13$8Yt0LF8yD7QoWQAkEhZy/enDsPaxRI/OlEvPX.LlYI08ls4hDgniq', NULL, 'muhamad@gmai.com', 10, 20160609, 0);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 
@@ -173,9 +171,9 @@ CREATE TABLE IF NOT EXISTS `customer_address` (
   PRIMARY KEY (`idaddress`),
   KEY `FK_customer_address_customer` (`idcustomer`),
   CONSTRAINT `FK_customer_address_customer` FOREIGN KEY (`idcustomer`) REFERENCES `customer` (`idcustomer`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shop.customer_address: ~14 rows (approximately)
+-- Dumping data for table shop.customer_address: ~15 rows (approximately)
 /*!40000 ALTER TABLE `customer_address` DISABLE KEYS */;
 INSERT INTO `customer_address` (`idaddress`, `idcustomer`, `address`, `alias`, `zip`, `city`, `idcity`, `province`, `idprovince`, `phone`) VALUES
 	(2, 159, 'jalan silliwangi', 'My Address', '23234', 'Cilegon', NULL, 'Banten', NULL, '081210854342'),
@@ -191,7 +189,8 @@ INSERT INTO `customer_address` (`idaddress`, `idcustomer`, `address`, `alias`, `
 	(12, 175, 'jalan silliwangi', 'My Address', '17414', 'Jakarta Selatan', NULL, 'DKI Jakarta', NULL, '081210854342'),
 	(13, 177, 'jalan silliwangi', 'My Address', NULL, NULL, NULL, NULL, NULL, '081210854342'),
 	(16, 185, 'Jalan Silliwangi 3 ', 'My Address', '17414', 'Jakarta Barat', 151, 'DKI Jakarta', 6, '081210854342'),
-	(17, 185, 'Jalan Haji Karim no 29 ', 'Billing Address', '17414', 'Bekasi', 54, 'Jawa Barat', 9, '081210854342');
+	(17, 185, 'Jalan Haji Karim no 29 ', 'Billing Address', '17414', 'Bekasi', 54, 'Jawa Barat', 9, '081210854342'),
+	(18, 185, 'Jalan Raya Bogor ', 'Billing Address', '17414', 'Bogor', 78, 'Jawa Barat', 9, '081210854342');
 /*!40000 ALTER TABLE `customer_address` ENABLE KEYS */;
 
 
@@ -204,20 +203,15 @@ CREATE TABLE IF NOT EXISTS `detail_category` (
   PRIMARY KEY (`iddetail`),
   KEY `FK_detail_category_sub_category` (`idsubcategory`),
   CONSTRAINT `FK_detail_category_sub_category` FOREIGN KEY (`idsubcategory`) REFERENCES `sub_category` (`idsubcategory`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shop.detail_category: ~9 rows (approximately)
+-- Dumping data for table shop.detail_category: ~4 rows (approximately)
 /*!40000 ALTER TABLE `detail_category` DISABLE KEYS */;
 INSERT INTO `detail_category` (`iddetail`, `idsubcategory`, `detail_name`, `flag`) VALUES
-	(1, 1, 'Lengan panjang', 1),
-	(2, 2, 'Running', 1),
-	(3, 2, 'Gym', 1),
-	(4, 5, 'Panjang', 1),
-	(5, 5, 'Pendek', 1),
-	(6, 6, 'Classic Hat', 1),
-	(7, 6, 'Kupluk', 1),
-	(8, 1, 'Lengan pendek', 1),
-	(9, 1, 'Lengan ', 1);
+	(10, 10, 'Tops & Blouses', 1),
+	(11, 10, 'Shoes & Boots', 1),
+	(12, 11, 'Pants & Denim', 1),
+	(13, 11, '	Tops & Blouses', 1);
 /*!40000 ALTER TABLE `detail_category` ENABLE KEYS */;
 
 
@@ -255,39 +249,20 @@ CREATE TABLE IF NOT EXISTS `image` (
   PRIMARY KEY (`idimage`),
   KEY `fk-image-product_id-product_id` (`product_id`),
   CONSTRAINT `fk-image-product_id-product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`idproduk`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table shop.image: ~9 rows (approximately)
+-- Dumping data for table shop.image: ~8 rows (approximately)
 /*!40000 ALTER TABLE `image` DISABLE KEYS */;
 INSERT INTO `image` (`idimage`, `product_id`, `image_name`, `title`, `is_cover`) VALUES
-	(32, 24, '53892be1a230a893ce132a354a5e21a1.jpg', '0', 1),
-	(33, 24, '239d585932f6f5c829ce2eafee90da6b.jpg', '0', 0),
-	(34, 24, '6bd50b74da11480ec5238fd2c57d3a95.jpg', '0', 0),
-	(37, 26, '47b1ee696f14a069681902777d65cf76.jpg', '0', 1),
-	(38, 26, 'b6fdf49fdcca14ea0777738c336f1010.jpg', '0', 0),
-	(41, NULL, 'c2eb2616f4b58c947fd96ea46613da3a.png', '0', 1),
-	(42, NULL, '6ca5586d28455039cf0e70771ed0e4d1.png', '0', 0),
-	(46, NULL, '4101adc65b5b8e4743c4ff09ad2ae001.png', 'A', 0),
-	(47, NULL, 'ac2ff19cc46c92534dfac5456f4cd92d.png', 'b', 1);
+	(1, 1, '641d4a839b0df31edf3bb5e76d108c10.jpg', 'Top', 1),
+	(2, 1, '6f1fd0241d9c411c4b651f455262c61b.jpg', 'Full Body', 0),
+	(3, 2, '47b1ff596f6a9ea82190d5060ab4533c.jpg', 'Top', 1),
+	(4, 2, '5bd1a73565feb1126e162d184955918e.jpg', 'Full Body', 0),
+	(5, 2, '18c503e9bb0913fcf9aa1b895fdbc03f.jpg', 'Full Body', 0),
+	(6, 3, '4cbc02f2bce9b1f6c97dde799c97da89.jpg', 'Top', 1),
+	(7, 3, '391ce83ca764f270366131c2fc180f8f.jpg', 'Full Body', 0),
+	(8, 4, 'ad185d7d19476da7ee7ebc4d879c6d5c.jpg', 'Top', 1);
 /*!40000 ALTER TABLE `image` ENABLE KEYS */;
-
-
--- Dumping structure for table shop.info_box
-CREATE TABLE IF NOT EXISTS `info_box` (
-  `idbox` int(11) NOT NULL AUTO_INCREMENT,
-  `logo` varchar(50) DEFAULT NULL,
-  `tag_info` varchar(50) DEFAULT NULL,
-  `tag_desc` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`idbox`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
--- Dumping data for table shop.info_box: ~3 rows (approximately)
-/*!40000 ALTER TABLE `info_box` DISABLE KEYS */;
-INSERT INTO `info_box` (`idbox`, `logo`, `tag_info`, `tag_desc`) VALUES
-	(1, 'icon fa fa-dollar', 'MONEY BACK', '30 DAY MONEY BACK GUARANTEE.'),
-	(2, 'icon fa fa-gift', 'SPECIAL SALE', 'ALL ITEMS-SALE UP TO 20% OFF'),
-	(3, 'icon fa fa-truck', 'FREE SHIPPING', 'FREE SHIP-ON ODER OVER Rp 1.000.000,00');
-/*!40000 ALTER TABLE `info_box` ENABLE KEYS */;
 
 
 -- Dumping structure for table shop.kurir
@@ -306,22 +281,6 @@ INSERT INTO `kurir` (`idkurir`, `name`, `price`) VALUES
 /*!40000 ALTER TABLE `kurir` ENABLE KEYS */;
 
 
--- Dumping structure for table shop.logo
-CREATE TABLE IF NOT EXISTS `logo` (
-  `idlogo` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) DEFAULT NULL,
-  `username` varchar(50) DEFAULT NULL,
-  `logo` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`idlogo`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- Dumping data for table shop.logo: ~0 rows (approximately)
-/*!40000 ALTER TABLE `logo` DISABLE KEYS */;
-INSERT INTO `logo` (`idlogo`, `title`, `username`, `logo`) VALUES
-	(1, 'DEMO', 'adinugraha', '1cd1266d9920e1833e3b58f4ce7d5e1b.png');
-/*!40000 ALTER TABLE `logo` ENABLE KEYS */;
-
-
 -- Dumping structure for table shop.main_category
 CREATE TABLE IF NOT EXISTS `main_category` (
   `idmain` int(11) NOT NULL AUTO_INCREMENT,
@@ -329,16 +288,16 @@ CREATE TABLE IF NOT EXISTS `main_category` (
   `username` varchar(50) DEFAULT NULL,
   `flag` int(11) DEFAULT NULL,
   PRIMARY KEY (`idmain`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table shop.main_category: ~5 rows (approximately)
 /*!40000 ALTER TABLE `main_category` DISABLE KEYS */;
 INSERT INTO `main_category` (`idmain`, `main_category_name`, `username`, `flag`) VALUES
-	(1, 'Pakaian', 'junot', 1),
-	(2, 'Sepatu', 'junot', 1),
-	(3, 'Aksesoris', 'junot', 1),
-	(4, 'Tas', 'junot', 1),
-	(5, 'Oy', NULL, 1);
+	(7, 'Fashion', NULL, 1),
+	(8, 'Electronics', NULL, 1),
+	(9, 'Music', NULL, 1),
+	(10, 'Motors', NULL, 1),
+	(11, 'Home & Garden', NULL, 1);
 /*!40000 ALTER TABLE `main_category` ENABLE KEYS */;
 
 
@@ -400,13 +359,14 @@ CREATE TABLE IF NOT EXISTS `order` (
   `urutan` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`idorder`,`urutan`),
   KEY `urutan` (`urutan`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table shop.order: ~19 rows (approximately)
+-- Dumping data for table shop.order: ~23 rows (approximately)
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
 INSERT INTO `order` (`idorder`, `idcustomer`, `idaddress`, `idinvoice`, `idshipping`, `service`, `total_weight`, `bank`, `account_name`, `sub_total`, `shipping`, `tax`, `grandtotal`, `status`, `date`, `noresi`, `urutan`) VALUES
 	(1122387585, 110, 42, 42, 'jne', '', 0, 'BCA', 'Muhamad adinugraha', 100000, 13000, 10000, 113000, 1, '2016-04-02 19:08:54', NULL, 1),
 	(1128053192, 107, 39, 39, 'jne', '', 0, 'BCA', 'Muhamad adinugraha', 100000, 13000, 10000, 113000, 1, '2016-04-02 19:03:00', NULL, 2),
+	(1147732282, 185, 18, 18, 'jne', '', 0, 'BCA', 'adinugraha', 325000, 8000, 0, 333000, 1, '2016-08-04 11:11:24', NULL, 23),
 	(1157147591, 175, 12, 12, 'jne', '', 0, 'BCA', 'muhamad adinugraha', 200000, 9000, 0, 209000, 1, '2016-06-07 16:52:29', NULL, 3),
 	(1157220578, 165, 5, 5, 'REG', '', 0, 'BCA', 'Muhamad Adinugraha', 7500000, 0, 0, 7510000, 1, '2016-06-05 10:37:20', NULL, 4),
 	(1157503402, 124, 59, 59, 'jne', '', 0, 'BCA', 'Muhamad adinugraha', 100000, 13000, 10000, 113000, 1, '2016-04-09 10:31:46', NULL, 5),
@@ -414,14 +374,17 @@ INSERT INTO `order` (`idorder`, `idcustomer`, `idaddress`, `idinvoice`, `idshipp
 	(1170540685, 112, 44, 44, 'jne', '', 0, 'BCA', 'Muhamad adinugraha', 100000, 13000, 10000, 113000, 1, '2016-04-02 19:09:32', NULL, 7),
 	(1171790585, 166, 6, 6, 'REG', '', 0, 'BCA', 'Muhamad Adinugraha', 7500000, 10000, 0, 7510000, 1, '2016-06-05 10:38:07', NULL, 8),
 	(1203877446, 120, 52, 52, 'jne', '', 0, 'BCA', 'Muhamad adinugraha', 100000, 28000, 10000, 128000, 1, '2016-04-09 08:01:23', NULL, 9),
+	(1204470465, 185, 17, 17, 'jne', '', 0, 'BCA', 'Muhamad Adinugrah', 500000, 8000, 0, 508000, 3, '2016-08-03 06:15:11', NULL, 20),
+	(1208439127, 185, 18, 18, 'jne', '', 0, 'BCA', 'Muhamad Adinugrah', 500000, 8000, 0, 508000, 1, '2016-08-04 09:37:46', NULL, 21),
 	(1209561300, 109, 41, 41, 'jne', '', 0, 'BCA', 'Muhamad adinugraha', 100000, 13000, 10000, 113000, 1, '2016-04-02 19:08:44', NULL, 10),
 	(1222689817, 121, 53, 53, 'jne', '', 0, 'BCA', 'Muhamad adinugraha', 100000, 14000, 10000, 114000, 1, '2016-04-09 08:03:32', NULL, 11),
-	(1228264191, 171, 9, 9, 'jne', '', 0, 'BCA', 'Muhamad Adinugraha', 7500000, 10000, 0, 7510000, 1, '2016-06-05 10:44:35', NULL, 12),
+	(1228264191, 171, 9, 9, 'jne', '', 0, 'BCA', 'Muhamad Adinugraha', 7500000, 10000, 0, 7510000, 2, '2016-06-05 10:44:35', NULL, 12),
 	(1231429997, 170, 8, 8, 'jne', '', 0, 'BCA', 'Muhamad Adinugraha', 7500000, 10000, 0, 7510000, 2, '2016-06-05 10:42:16', NULL, 13),
 	(1242140823, 123, 57, 57, 'jne', '', 0, 'BCA', 'Muhamad adinugraha', 100000, 17000, 10000, 117000, 1, '2016-04-09 08:23:17', NULL, 14),
 	(1263161047, 113, 45, 45, 'jne', '', 0, 'BCA', 'Muhamad adinugraha', 100000, 14000, 10000, 114000, 1, '2016-04-09 07:25:05', NULL, 15),
 	(1285960326, 159, 11, 11, 'jne', '', 0, 'BCA', 'muhamad adinugraha', 200000, 9000, 0, 209000, 6, '2016-06-07 16:48:17', NULL, 16),
 	(1313111449, 159, 43, 43, 'jne', '', 0, 'BCA', 'Muhamad adinugraha', 100000, 13000, 10000, 113000, 1, '2016-04-02 19:09:23', NULL, 17),
+	(1320300657, 185, 18, 18, 'jne', '', 0, 'BCA', 'Adinugraha', 225000, 8000, 0, 233000, 1, '2016-08-04 11:08:00', NULL, 22),
 	(1345782205, 159, 10, 10, 'jne', '', 0, 'BCA', 'Muhamad Adinugraha', 7500000, 10000, 0, 7510000, 2, '2016-06-05 10:45:21', NULL, 18),
 	(1389556092, 159, 16, 17, 'jne', '', 0, 'BCA', 'Muhamad Adinugraha', 7500000, 10000, 0, 7510000, 6, '2016-06-05 10:40:11', NULL, 19);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
@@ -436,9 +399,9 @@ CREATE TABLE IF NOT EXISTS `order_item` (
   `discount` float NOT NULL DEFAULT '0',
   `price` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`iddetail`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table shop.order_item: ~25 rows (approximately)
+-- Dumping data for table shop.order_item: ~29 rows (approximately)
 /*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
 INSERT INTO `order_item` (`iddetail`, `order_id`, `product_id`, `qty`, `discount`, `price`) VALUES
 	(1, 0, '0', 0, 0, 0),
@@ -465,7 +428,11 @@ INSERT INTO `order_item` (`iddetail`, `order_id`, `product_id`, `qty`, `discount
 	(22, 1231429997, '24', 75, 10, 100000),
 	(23, 1345782205, '18', 75, 10, 100000),
 	(24, 1285960326, '18', 2, 10, 100000),
-	(25, 1157147591, '18', 2, 10, 100000);
+	(25, 1157147591, '18', 2, 10, 100000),
+	(26, 1204470465, '2', 2, 0, 250000),
+	(27, 1208439127, '1', 2, 10, 250000),
+	(28, 1320300657, '3', 1, 0, 225000),
+	(29, 1147732282, '4', 1, 0, 325000);
 /*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
 
 
@@ -477,9 +444,9 @@ CREATE TABLE IF NOT EXISTS `order_status` (
   `date` date NOT NULL,
   `updateby` varchar(50) NOT NULL,
   PRIMARY KEY (`idstatus`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shop.order_status: ~45 rows (approximately)
+-- Dumping data for table shop.order_status: ~52 rows (approximately)
 /*!40000 ALTER TABLE `order_status` DISABLE KEYS */;
 INSERT INTO `order_status` (`idstatus`, `idorder`, `status`, `date`, `updateby`) VALUES
 	(5, 1285960326, 2, '2016-07-12', 'adi nugraha'),
@@ -529,7 +496,11 @@ INSERT INTO `order_status` (`idstatus`, `idorder`, `status`, `date`, `updateby`)
 	(49, 1285960326, 6, '2016-07-12', 'adi nugraha'),
 	(50, 1285960326, 6, '2016-07-12', 'adi nugraha'),
 	(51, 1231429997, 2, '2016-07-13', 'adi nugraha'),
-	(52, 1231429997, 2, '2016-07-13', 'adi nugraha');
+	(52, 1231429997, 2, '2016-07-13', 'adi nugraha'),
+	(53, 1228264191, 2, '2016-07-22', 'adi nugraha'),
+	(54, 1204470465, 3, '2016-08-04', 'adi nugraha'),
+	(55, 1204470465, 3, '2016-08-04', 'adi nugraha'),
+	(56, 1204470465, 3, '2016-08-04', 'adi nugraha');
 /*!40000 ALTER TABLE `order_status` ENABLE KEYS */;
 
 
@@ -543,7 +514,7 @@ CREATE TABLE IF NOT EXISTS `privillage_user` (
   `status` varchar(50) DEFAULT NULL,
   `flag` int(11) DEFAULT NULL,
   PRIMARY KEY (`idprivillage`)
-) ENGINE=InnoDB AUTO_INCREMENT=1017 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1053 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table shop.privillage_user: ~12 rows (approximately)
 /*!40000 ALTER TABLE `privillage_user` DISABLE KEYS */;
@@ -597,13 +568,15 @@ CREATE TABLE IF NOT EXISTS `product` (
   CONSTRAINT `FK_product_detail_category` FOREIGN KEY (`iddetail`) REFERENCES `detail_category` (`iddetail`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_product_main_category` FOREIGN KEY (`idmain`) REFERENCES `main_category` (`idmain`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_product_sub_category` FOREIGN KEY (`idsub`) REFERENCES `sub_category` (`idsubcategory`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table shop.product: ~2 rows (approximately)
+-- Dumping data for table shop.product: ~4 rows (approximately)
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
 INSERT INTO `product` (`idproduk`, `iduser`, `idmain`, `idsub`, `iddetail`, `idbrand`, `title`, `sale`, `condition`, `tag`, `sku`, `stock`, `minqty`, `maxqty`, `weight`, `short_description`, `description`, `tax`, `service`, `discount`, `price`, `final_price`, `status`) VALUES
-	(24, 0, 1, 1, 8, 2, 'Fashion Jacket', 0, 1, 'Fashion, Jacket', '00007870909004', 100, 1, 10, 1000, 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<ul>\r\n<li>Any Product types that You want - Simple, Configurable, Bundled and Grouped Products</li>\r\n<li>Downloadable/Digital Products, Virtual Products</li>\r\n<li>Inventory Management with Backordered items</li>\r\n<li>Customer Personalized Products - upload text for embroidery, monogramming, etc.</li>\r\n<li>Create Store-specific attributes on the fly</li>\r\n<li>Advanced Pricing Rules and support for Special Prices</li>\r\n<li>Tax Rates per location, customer group and product type</li>\r\n<li>Detailed Configuration Options in Theme Admin Penl</li>\r\n</ul>', 0, 2750, 0, 275000.0000, 277750.0000, 1),
-	(26, 0, 1, 1, 1, 3, 'Pink Fashion Dress', 0, 1, 'Pink , Fashion', '102929001011', 10, 1, 10, 1000, 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<ul>\r\n<li>Any Product types that You want - Simple, Configurable, Bundled and Grouped Products</li>\r\n<li>Downloadable/Digital Products, Virtual Products</li>\r\n<li>Inventory Management with Backordered items</li>\r\n<li>Customer Personalized Products - upload text for embroidery, monogramming, etc.</li>\r\n<li>Create Store-specific attributes on the fly</li>\r\n<li>Advanced Pricing Rules and support for Special Prices</li>\r\n<li>Tax Rates per location, customer group and product type</li>\r\n<li>Detailed Configuration Options in Theme Admin Penl</li>\r\n</ul>', 0, 1020, 0, 102000.0000, 103020.0000, 1);
+	(1, 0, 7, 10, 10, 11, 'Pink Women Shirt', 0, 1, NULL, '11223344', 1, 1, 10, 1000, 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<ul>\r\n<li>Any Product types that You want - Simple, Configurable, Bundled and Grouped Products</li>\r\n<li>Downloadable/Digital Products, Virtual Products</li>\r\n<li>Inventory Management with Backordered items</li>\r\n<li>Customer Personalized Products - upload text for embroidery, monogramming, etc.</li>\r\n<li>Create Store-specific attributes on the fly</li>\r\n<li>Advanced Pricing Rules and support for Special Prices</li>\r\n<li>Tax Rates per location, customer group and product type</li>\r\n<li>Detailed Configuration Options in Theme Admin Penl</li>\r\n</ul>', 0, 2500, 10, 250000.0000, 252500.0000, 1),
+	(2, 0, 7, 10, 10, 12, 'Milli Cardigan', 0, 1, NULL, '22118832112', 2, 1, 10, 1000, 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<ul>\r\n<li>Simple, Configurable (e.g. size, color, etc.), Bundled and Grouped Products</li>\r\n<li>Downloadable/Digital Products, Virtual Products</li>\r\n<li>Inventory Management with Backordered items</li>\r\n<li>Customer Personalized Products - upload text for embroidery, monogramming, etc.</li>\r\n<li>Create Store-specific attributes on the fly</li>\r\n<li>Advanced Pricing Rules and support for Special Prices</li>\r\n<li>Tax Rates per location, customer group and product type</li>\r\n</ul>', 0, 2500, 0, 250000.0000, 252500.0000, 1),
+	(3, 0, 7, 10, 10, 12, 'Noa Sheer Blouse', 0, 1, NULL, '11223344121', 100, 1, 100, 1000, 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<ul>\r\n<li>Simple, Configurable (e.g. size, color, etc.), Bundled and Grouped Products</li>\r\n<li>Downloadable/Digital Products, Virtual Products</li>\r\n<li>Inventory Management with Backordered items</li>\r\n<li>Customer Personalized Products - upload text for embroidery, monogramming, etc.</li>\r\n<li>Create Store-specific attributes on the fly</li>\r\n<li>Advanced Pricing Rules and support for Special Prices</li>\r\n<li>Tax Rates per location, customer group and product type</li>\r\n</ul>', 0, 2250, 0, 225000.0000, 227250.0000, 1),
+	(4, 0, 7, 10, 10, 11, 'Sheri Collar Shirt', 0, 1, NULL, '1122334490', 100, 1, 10, 1000, 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\r\n<ul>\r\n<li>Simple, Configurable (e.g. size, color, etc.), Bundled and Grouped Products</li>\r\n<li>Downloadable/Digital Products, Virtual Products</li>\r\n<li>Inventory Management with Backordered items</li>\r\n<li>Customer Personalized Products - upload text for embroidery, monogramming, etc.</li>\r\n<li>Create Store-specific attributes on the fly</li>\r\n<li>Advanced Pricing Rules and support for Special Prices</li>\r\n<li>Tax Rates per location, customer group and product type</li>\r\n</ul>', 0, 3250, 0, 325000.0000, 328250.0000, 1);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 
 
@@ -629,13 +602,12 @@ CREATE TABLE IF NOT EXISTS `role` (
   `idrole` int(11) NOT NULL AUTO_INCREMENT,
   `rolename` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idrole`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shop.role: ~0 rows (approximately)
+-- Dumping data for table shop.role: ~1 rows (approximately)
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
 INSERT INTO `role` (`idrole`, `rolename`) VALUES
-	(1, 'Administration'),
-	(2, 'Owner');
+	(1, 'Owner');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 
 
@@ -649,10 +621,10 @@ CREATE TABLE IF NOT EXISTS `seo` (
   PRIMARY KEY (`idseo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shop.seo: ~0 rows (approximately)
+-- Dumping data for table shop.seo: ~1 rows (approximately)
 /*!40000 ALTER TABLE `seo` DISABLE KEYS */;
 INSERT INTO `seo` (`idseo`, `meta_title`, `meta_keyword`, `meta_description`, `meta_author`) VALUES
-	(1, 'sa', 'sa', 'asd', 'sa');
+	(1, 'Demo', 'demo', '<p>Template Demo</p>', 'Maridagang Team');
 /*!40000 ALTER TABLE `seo` ENABLE KEYS */;
 
 
@@ -664,16 +636,33 @@ CREATE TABLE IF NOT EXISTS `slider` (
   `tag` varchar(50) DEFAULT NULL,
   `tag_highligt` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idslider`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shop.slider: ~3 rows (approximately)
+-- Dumping data for table shop.slider: ~2 rows (approximately)
 /*!40000 ALTER TABLE `slider` DISABLE KEYS */;
 INSERT INTO `slider` (`idslider`, `category`, `slider_img`, `tag`, `tag_highligt`) VALUES
-	(3, '1', '0370fc3d96f9e3dda4797974c6edfe63.jpg', 'THE NEW', 'IMAC'),
-	(4, '2', '48ddf8d871bfd78089e6da4e33ea7b36.png', 'Coba', '1'),
-	(5, '1', 'eb23201bac3476a7ac6f6027b3d1df3d.png', 'a', 'b'),
-	(6, '3', '8cf09d409d0c0037b0861cc00408f280.png', 'c', 'd');
+	(9, '7', '739fa05ed8397da10da0663ba239098a.png', 'Shoping', 'Easy as you want'),
+	(10, '7', '9d6668dd3b36da31bca7df8c0f7c1a0e.jpg', '', '');
 /*!40000 ALTER TABLE `slider` ENABLE KEYS */;
+
+
+-- Dumping structure for table shop.social
+CREATE TABLE IF NOT EXISTS `social` (
+  `idsocial` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `position` varchar(50) NOT NULL,
+  `class` varchar(50) NOT NULL,
+  PRIMARY KEY (`idsocial`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table shop.social: ~4 rows (approximately)
+/*!40000 ALTER TABLE `social` DISABLE KEYS */;
+INSERT INTO `social` (`idsocial`, `name`, `position`, `class`) VALUES
+	(1, 'Instagram', 'background-position:-150px -90px; width:30px; heig', 'icon4-class'),
+	(2, 'Facebook', 'background-position:-60px 0; width:30px; height:30', 'icon1-class'),
+	(3, 'Twitter', 'background-position:0 0; width:30px; height:30px;', 'icon2-class'),
+	(4, 'LinkedIn', 'background-position:-300px 0; width:30px; height:3', 'icon3-class');
+/*!40000 ALTER TABLE `social` ENABLE KEYS */;
 
 
 -- Dumping structure for table shop.sub_category
@@ -685,20 +674,19 @@ CREATE TABLE IF NOT EXISTS `sub_category` (
   PRIMARY KEY (`idsubcategory`),
   KEY `FK_sub_category_main_category` (`idmaincategory`),
   CONSTRAINT `FK_sub_category_main_category` FOREIGN KEY (`idmaincategory`) REFERENCES `main_category` (`idmain`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shop.sub_category: ~9 rows (approximately)
+-- Dumping data for table shop.sub_category: ~8 rows (approximately)
 /*!40000 ALTER TABLE `sub_category` DISABLE KEYS */;
 INSERT INTO `sub_category` (`idsubcategory`, `idmaincategory`, `sub_category_name`, `flag`) VALUES
-	(1, 1, 'Atasan', 1),
-	(2, 2, 'Sepatu Olahraga', 1),
-	(3, 2, 'Sandal atau Flip', 1),
-	(4, 2, 'Boots', 1),
-	(5, 2, 'Kaos Kaki', 1),
-	(6, 3, 'Topi', 1),
-	(7, 3, 'Dompet', 1),
-	(8, 3, 'Kacamata', 1),
-	(9, 1, 'Bawahan', 1);
+	(10, 7, 'Women', 1),
+	(11, 7, 'Man', 1),
+	(12, 7, 'Kids', 1),
+	(13, 7, 'Jewerlly', 1),
+	(14, 8, 'Cameras', 1),
+	(15, 8, 'Laptop', 1),
+	(16, 10, 'Spareparts', 1),
+	(17, 10, 'Motorcycles', 1);
 /*!40000 ALTER TABLE `sub_category` ENABLE KEYS */;
 
 
@@ -730,15 +718,51 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table shop.user: ~3 rows (approximately)
+-- Dumping data for table shop.user: ~1 rows (approximately)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `idrole`, `idcity`, `idprovince`, `courier`, `province`, `city`, `firstname`, `lastname`, `email`, `nama_toko`, `paket`, `domain`, `auth_key`, `password_hash`, `password_reset_token`, `balanced`, `address`, `phone`, `work_hour`, `description`, `logo`, `status`, `created_at`, `updated_at`) VALUES
-	(1, 1, 0, 0, '', '', '21', 'adi', 'nugraha', 'adinugraha@gmail.com', '', 0, '', 'xHP3gCf8cgB-4a4SpgAS7KmgEip5LcAx', '$2y$13$HnyEJQ6vaR0odcHUy90LA.WeWod3hor1D2ilxKUvBE6nlzjkgeIv.', NULL, 0, '123 Street Name, City, Indonesia', '(123) 456-7890', 'Mon - Sun / 9:00AM - 8:00PM', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,', '', 10, 1451849723, 1451849723),
-	(2, 1, NULL, NULL, NULL, NULL, NULL, 's', 'sad', 'asdas@asdasd.com', 'My Store', NULL, NULL, 'SrbzEPqOCzynWSFV3roR5xxPV_UT9k54', '$2y$13$SlGpuw2raSOz3y8eeQAg.ufh5oSOEypTl3BWkP6zbJJUrIL2vNW1.', NULL, 0, '123 Street Name, City, Indonesia', '(123) 456-7890', 'Mon - Sun / 9:00AM - 8:00PM', NULL, 'logo.jpg', 10, 20160711, 0),
-	(3, 1, NULL, NULL, NULL, NULL, NULL, 's', 'sad', 'adasd@sdasd.com', 'My Store', NULL, NULL, 'Faw2Sob4iA_yP38u_shl11rtsvQDVt59', '$2y$13$yOxJGo2WJRmhO1/dBphYG.RBwU1YtGtZAihFu2uhOHPbrIgBUOWru', NULL, 0, '123 Street Name, City, Indonesia', '(123) 456-7890', 'Mon - Sun / 9:00AM - 8:00PM', NULL, 'logo.jpg', 10, 20160711, 0);
+	(1, 1, 55, 9, '', 'Jawa Barat', 'Bekasi', 'adi', 'nugraha', 'adinugraha@gmail.com', 'My Store', 0, '', 'xHP3gCf8cgB-4a4SpgAS7KmgEip5LcAx', '$2y$13$HnyEJQ6vaR0odcHUy90LA.WeWod3hor1D2ilxKUvBE6nlzjkgeIv.', NULL, 0, '<p>123 Street Name, City, Indonesia</p>', '(123) 456-7890', 'Mon - Sun / 9:00AM - 8:00PM', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,</p>', '7a78151051274516dac2a791348ca91e.png', 10, 1451849723, 1451849723);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+
+
+-- Dumping structure for table shop.user_bank
+CREATE TABLE IF NOT EXISTS `user_bank` (
+  `iduserbank` int(11) NOT NULL AUTO_INCREMENT,
+  `bank` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `rekening` varchar(50) NOT NULL,
+  PRIMARY KEY (`iduserbank`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table shop.user_bank: ~6 rows (approximately)
+/*!40000 ALTER TABLE `user_bank` DISABLE KEYS */;
+INSERT INTO `user_bank` (`iduserbank`, `bank`, `name`, `rekening`) VALUES
+	(1, 'BCA', 'Demo', '12345678'),
+	(2, 'MANDIRI', 'Demo', '12345678'),
+	(3, 'BRI', 'Demo', '12345678'),
+	(4, 'MEGA', 'Demo', '12345678'),
+	(5, 'BNI', 'Demo', '12345678'),
+	(7, 'PANIN', 'Demo', '12345678');
+/*!40000 ALTER TABLE `user_bank` ENABLE KEYS */;
+
+
+-- Dumping structure for table shop.user_social
+CREATE TABLE IF NOT EXISTS `user_social` (
+  `idsocial` int(11) NOT NULL AUTO_INCREMENT,
+  `icon` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `link` varchar(50) NOT NULL,
+  PRIMARY KEY (`idsocial`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table shop.user_social: ~2 rows (approximately)
+/*!40000 ALTER TABLE `user_social` DISABLE KEYS */;
+INSERT INTO `user_social` (`idsocial`, `icon`, `name`, `link`) VALUES
+	(1, 'LinkedIn', 'LinkedIn', 'http://linkedin.com/demo'),
+	(3, 'Twitter', 'Twitter', 'http://twitter.com');
+/*!40000 ALTER TABLE `user_social` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

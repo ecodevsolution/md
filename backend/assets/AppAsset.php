@@ -20,7 +20,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
 		//'js/lib/jquery/jquery.min.js',
-		'js/lib/tether/tether.min.js',
+		//'js/lib/tether/tether.min.js',
 		'js/lib/bootstrap/bootstrap.min.js',
 		'js/plugins.js',
 		'js/lib/jqueryui/jquery-ui.min.js',

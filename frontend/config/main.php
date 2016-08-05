@@ -83,6 +83,10 @@ return [
                 ],
             ],
         ],
+		'session' => [
+            'name' => 'PHPFRONTSESSID',
+            
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

@@ -40,7 +40,7 @@ $this->registerCss("
 				</div>
 			</div>
 			<div class="price-box">
-				<?php
+				<!--<?php
 					if($model->discount > 0){
 					?>
 				<p class="old-price">
@@ -49,7 +49,7 @@ $this->registerCss("
 					Rp <?= number_format($model->price,0,".","."); ?>                
 					</span>
 				</p>
-				<?php } ?>
+				<?php } ?>-->
 				<p class="special-price">
 					<span class="price-label">Special Price</span>
 					<span class="price" id="product-price-53">

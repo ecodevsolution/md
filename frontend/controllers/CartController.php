@@ -20,14 +20,19 @@ class CartController extends \yii\web\Controller
     {		
         $product = Product::findOne($id);
         if ($product) {
-            \Yii::$app->cart->put($product, 1);
-			$cart = \Yii::$app->cart;
-			$products = $cart->getPositions();
-			$total = $cart->getCost();
-            return $this->render('list', [
-				'products' => $products,
-				'total' => $total,
-			]);
+			if($product->stock >= 1){
+				\Yii::$app->cart->put($product, 1);
+				$cart = \Yii::$app->cart;
+				$products = $cart->getPositions();
+				$total = $cart->getCost();
+				return $this->render('list', [
+					'products' => $products,
+					'total' => $total,
+				]);
+			}else{
+				Yii::$app->session->setFlash('error', 'quantity not valid !');
+				return Yii::$app->getResponse()->redirect(Yii::$app->homeUrl.'catalog-'.$product->sku.'-'.str_replace(' ','_',strtolower($product->title)));
+			}
         }
     }
 	public function actionAddCart()
@@ -38,15 +43,21 @@ class CartController extends \yii\web\Controller
 				$id = $_POST['id'];
 				$product = Product::findOne($id);
 				if ($product) {
-					\Yii::$app->cart->put($product, $order->qty);
-					$cart = \Yii::$app->cart;
-					$products = $cart->getPositions();
-					$total = $cart->getCost();
-					return $this->render('list', [
-						'products' => $products,
-						'total' => $total,
-					]);
-					var_dump($product);
+					if($product->stock >= $order->qty){
+						\Yii::$app->cart->put($product, $order->qty);
+						$cart = \Yii::$app->cart;
+						$products = $cart->getPositions();
+						$total = $cart->getCost();
+						
+						return $this->render('list', [
+							'products' => $products,
+							'total' => $total,
+						]);
+					}else{
+						Yii::$app->session->setFlash('error', 'quantity not valid !');
+						return Yii::$app->getResponse()->redirect(Yii::$app->homeUrl.'catalog-'.$product->sku.'-'.str_replace(' ','_',strtolower($product->title)));
+					}
+					//var_dump($product);
 				}				
 			} else {
 				Yii::$app->session->setFlash('error', 'quantity not valid !');
